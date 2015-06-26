@@ -302,7 +302,7 @@ public class SAXVSMDirectSampler {
     Params res = new Params(params[0], params[1], params[2],
         SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD, strategy);
 
-    consoleLogger.info(sb.append(", will use ").append(res.toString()).toString());
+    consoleLogger.info(sb.append("will use ").append(res.toString()).toString());
     return res;
   }
 

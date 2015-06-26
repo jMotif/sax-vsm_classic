@@ -1,4 +1,4 @@
-package net.seninp.jmotif.direct;
+package net.seninp.jmotif;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import net.seninp.jmotif.direct.SAXVSMClassifierParams;
 import net.seninp.jmotif.sax.SAXException;
 import net.seninp.jmotif.text.Params;
 import net.seninp.jmotif.text.TextProcessor;

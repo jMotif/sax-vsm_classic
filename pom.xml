@@ -196,7 +196,7 @@
 							</descriptorRefs>
 							<archive>
 								<manifest>
-									<mainClass>net.seninp.jmotif.sax.SAXcliConverter</mainClass>
+									<mainClass>net.seninp.jmotif.direct.SAXVSMDirectSampler</mainClass>
 								</manifest>
 							</archive>
 							<!-- <filters> <filter>src/assembly/filter.properties</filter> </filters> 
