@@ -5,6 +5,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import net.seninp.jmotif.sax.NumerosityReductionStrategy;
+import net.seninp.jmotif.sax.SAXProcessor;
 import net.seninp.jmotif.text.Params;
 import net.seninp.jmotif.text.TextProcessor;
 import net.seninp.jmotif.text.WordBag;
@@ -98,7 +100,7 @@ public class SAXVSMDirectSampler {
   public static void main(String[] args) throws Exception {
 
     try {
-      
+
       SAXVSMDirectSamplerParams params = new SAXVSMDirectSamplerParams();
       JCommander jct = new JCommander(params, args);
 
@@ -111,19 +113,27 @@ public class SAXVSMDirectSampler {
       sb.append("SAX-VSM DiRect Sampler").append(CR);
       sb.append("parameters:").append(CR);
 
-      sb.append("  train data:                  ").append(SAXVSMDirectSamplerParams.TRAIN_FILE).append(CR);
-      sb.append("  test data:                   ").append(SAXVSMDirectSamplerParams.TEST_FILE).append(CR);
-      sb.append("  SAX sliding window sizes:    ").append("[").append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MIN)
-         .append(" - ").append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MAX).append("]").append(CR);
-      sb.append("  SAX PAA sizes:    ").append("[").append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN)
-         .append(" - ").append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX).append("]").append(CR);
-      sb.append("  SAX alphabet sizes:    ").append("[").append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN)
-         .append(" - ").append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MAX).append("]").append(CR);
+      sb.append("  train data:                  ").append(SAXVSMDirectSamplerParams.TRAIN_FILE)
+          .append(CR);
+      sb.append("  test data:                   ").append(SAXVSMDirectSamplerParams.TEST_FILE)
+          .append(CR);
+      sb.append("  SAX sliding window sizes:    ").append("[")
+          .append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MIN).append(" - ")
+          .append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MAX).append("]").append(CR);
+      sb.append("  SAX PAA sizes:    ").append("[")
+          .append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN).append(" - ")
+          .append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX).append("]").append(CR);
+      sb.append("  SAX alphabet sizes:    ").append("[")
+          .append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN).append(" - ")
+          .append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MAX).append("]").append(CR);
 
-      sb.append("  SAX normalization threshold: ").append(SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD).append(CR);
-      
-      sb.append("  CV hold out:                 ").append(SAXVSMDirectSamplerParams.HOLD_OUT_NUM).append(CR);
-      sb.append("  max Iterations:              ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM).append(CR);
+      sb.append("  SAX normalization threshold: ")
+          .append(SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD).append(CR);
+
+      sb.append("  CV hold out:                 ").append(SAXVSMDirectSamplerParams.HOLD_OUT_NUM)
+          .append(CR);
+      sb.append("  max Iterations:              ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM)
+          .append(CR);
 
       trainData = UCRUtils.readUCRData(SAXVSMDirectSamplerParams.TRAIN_FILE);
       consoleLogger.info("trainData classes: " + trainData.size() + ", series length: "
@@ -145,6 +155,8 @@ public class SAXVSMDirectSampler {
       System.exit(-10);
     }
 
+    Date start = new Date();
+
     lowerBounds = new int[] { SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MIN,
         SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN, SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN };
 
@@ -162,10 +174,14 @@ public class SAXVSMDirectSampler {
     consoleLogger.info("running sampling for " + NumerosityReductionStrategy.NONE.toString()
         + " strategy...");
     Params noredParams = sample(NumerosityReductionStrategy.NONE);
+    Date finish = new Date();
 
     classify(classicParams);
     classify(exactParams);
     classify(noredParams);
+
+    consoleLogger.info("all done in " + Long.valueOf(finish.getTime() - start.getTime()).toString()
+        + " ms; that is " + SAXProcessor.timeToString(start.getTime(), finish.getTime()));
   }
 
   private static void classify(Params params) throws Exception {
