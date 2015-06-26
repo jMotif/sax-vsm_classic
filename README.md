@@ -67,13 +67,8 @@ The code implements the DiRect sampler which can be called from the command line
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
 	classification results: strategy NONE, window 33, PAA 17, alphabet 15,  accuracy 0.97333,  error 0.02667
 
-As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DIRECT in the space `PAA ∗ W ndow ∗ Alphabet`, red points correspond to high error values
-while green points correspond to low error values in cross-validation experiments.
-Note the green points concentration at W=42. Middle panel shows the
-classification error heat map obtained by a complete scan of all 432 points of
-the hypercube slice when W=42. Right panel shows the classification error
-heat map of the same slice when the parameters search optimized by DIRECT,
-the optimal solution (P=8,A=4) was found by sampling of 43 points.
+As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DIRECT in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DIRECT, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
+
 ![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling_arrowhead.png)
 
 3.0 EXPLORING PATTERNS
