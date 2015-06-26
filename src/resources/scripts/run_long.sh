@@ -1,0 +1,17 @@
+java -Xmx16G -jar sax-vsm.jar -train Adiac/Adiac_TRAIN -test Adiac/Adiac_TEST -wmin 10 -wmax 176 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 1 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train ARSim/ARSim_TRAIN -test ARSim/ARSim_TEST -wmin 10 -wmax 500 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 50 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train FordA/Ford_A_TRAIN -test FordA/Ford_A_TEST -wmin 10 -wmax 500 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 100 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train FordB/Ford_B_TRAIN -test FordB/Ford_B_TEST -wmin 10 -wmax 500 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 100 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train Cricket_X/Cricket_X_TRAIN -test Cricket_X/Cricket_X_TEST -wmin 10 -wmax 300 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 2 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train Cricket_Y/Cricket_Y_TRAIN -test Cricket_Y/Cricket_Y_TEST -wmin 10 -wmax 300 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 2 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train Cricket_Z/Cricket_Z_TRAIN -test Cricket_Z/Cricket_Z_TEST -wmin 10 -wmax 300 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 2 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train ElectricDevices/ElectricDevices_TRAIN -test ElectricDevices/ElectricDevices_TEST -wmin 10 -wmax 96 -pmin 2 -pmax 60 -amin 2 -amax 12 --hold_out 35 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train MedicalImages/MedicalImages_TRAIN -test MedicalImages/MedicalImages_TEST -wmin 10 -wmax 99 -pmin 2 -pmax 30 -amin 2 -amax 10 --hold_out 1 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train WordsSynonyms/WordsSynonyms_TRAIN -test WordsSynonyms/WordsSynonyms_TEST -wmin 10 -wmax 270 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 1 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train uWaveGestureLibrary_X/uWaveGestureLibrary_X_TRAIN -test uWaveGestureLibrary_X/uWaveGestureLibrary_X_TEST -wmin 10 -wmax 315 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 5 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train uWaveGestureLibrary_Y/uWaveGestureLibrary_Y_TRAIN -test uWaveGestureLibrary_Y/uWaveGestureLibrary_Y_TEST -wmin 10 -wmax 315 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 5 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train uWaveGestureLibrary_Z/uWaveGestureLibrary_Z_TRAIN -test uWaveGestureLibrary_Z/uWaveGestureLibrary_Z_TEST -wmin 10 -wmax 315 -pmin 2 -pmax 60 -amin 2 -amax 10 --hold_out 5 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train HandOutlines/HandOutlines_TRAIN -test HandOutlines/HandOutlines_TEST -wmin 10 -wmax 1500 -pmin 2 -pmax 100 -amin 2 -amax 10 --hold_out 50 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train StarLightCurves/StarLightCurves_TRAIN -test StarLightCurves/StarLightCurves_TEST -wmin 10 -wmax 1024 -pmin 2 -pmax 100 -amin 2 -amax 10 --hold_out 30 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train InlineSkate/InlineSkate_TRAIN -test InlineSkate/InlineSkate_TEST -wmin 10 -wmax 1500 -pmin 2 -pmax 100 -amin 2 -amax 12 --hold_out 1 -i 30 --threshold 0.001
+java -Xmx16G -jar sax-vsm.jar -train NonInvasiveFatalECG/NonInvasiveFatalECG_Thorax1_TRAIN -test NonInvasiveFatalECG/NonInvasiveFatalECG_Thorax2_TEST -wmin 10 -wmax 750 -pmin 2 -pmax 60 -amin 2 -amax 12 --hold_out 5 -i 30 --threshold 0.001
