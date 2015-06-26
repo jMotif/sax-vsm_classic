@@ -99,8 +99,9 @@ public class WordBag implements Cloneable {
     else {
       if (frequency > 0) {
         this.words.put(word, new AtomicInteger(frequency));
-      }else{
-        System.out.println("!!! oops");
+        // }else{
+        // System.out.println("!!! oops");
+        // TODO: why that ^^^^^ was here????
       }
     }
   }

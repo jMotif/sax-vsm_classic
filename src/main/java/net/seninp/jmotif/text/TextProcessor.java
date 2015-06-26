@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.seninp.jmotif.sax.NumerosityReductionStrategy;
@@ -432,29 +434,34 @@ public final class TextProcessor {
   /**
    * Computes a cosine similarity.
    * 
-   * @param data1 The data vector 1.
-   * @param data2 The data vector 2.
+   * @param map1 The data vector 1.
+   * @param map2 The data vector 2.
    * @return The cosine distance.
    */
-  public double cosineDistance(HashMap<String, Double> data1, HashMap<String, Double> data2) {
-    // sanity word order check
-    if (!(data2.keySet().containsAll(data1.keySet()))
-        || !(data2.keySet().size() == data1.keySet().size())) {
-      throw new RuntimeException("COSINE SIMILARITY ERROR: word sets are different in length!");
+  public double cosineDistance(HashMap<String, Double> map1, HashMap<String, Double> map2) {
+
+    Set<String> unionKey = map2.keySet();
+    if (!(map1.keySet().equals(map2.keySet()))) {
+      System.err.println("WARN: Uneven vectors in the cosineDistance(), adjusting...");
+      unionKey = new HashSet<String>(map1.keySet());
+      // seninp: I take intersect here, because zeroes do not matter
+      //
+      unionKey.retainAll(map2.keySet());
     }
 
-    double[] vector1 = new double[data1.size()];
-    double[] vector2 = new double[data2.size()];
+    double[] vector1 = new double[unionKey.size()];
+    double[] vector2 = new double[unionKey.size()];
 
     int i = 0;
-    for (String s : data1.keySet()) {
-      vector1[i] = data1.get(s);
-      vector2[i] = data2.get(s);
+    for (String s : unionKey) {
+      vector1[i] = map1.get(s).doubleValue();
+      vector2[i] = map2.get(s).doubleValue();
       i++;
     }
 
     double numerator = dotProduct(vector1, vector2);
-    double denominator = magnitude(vector1) * magnitude(vector2);
+    // seninp: but here I need the magnitude of the raw vectors
+    double denominator = magnitude(map1.values()) * magnitude(map2.values());
 
     return numerator / denominator;
   }

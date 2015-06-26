@@ -12,6 +12,11 @@ import com.beust.jcommander.Parameter;
  */
 public class SAXVSMDirectSamplerParams {
 
+  //
+  // -train src/resources/data/cbf/CBF_TRAIN -test src/resources/data/cbf/CBF_TEST -wmin 10 -wmax
+  // 120 -pmin 3 -pmax 10 -amin 2 -amax 10 --hold_out 1 -i 3
+  //
+
   // general setup
   //
   @Parameter
