@@ -134,6 +134,7 @@ public class SAXVSMDirectSampler {
           .append(CR);
       sb.append("  max Iterations:              ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM)
           .append(CR);
+      consoleLogger.info(sb.toString());
 
       trainData = UCRUtils.readUCRData(SAXVSMDirectSamplerParams.TRAIN_FILE);
       consoleLogger.info("trainData classes: " + trainData.size() + ", series length: "
