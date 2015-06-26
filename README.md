@@ -1,11 +1,11 @@
 SAX-VSM [![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch=master)](https://travis-ci.org/jMotif/sax-vsm_classic)
 ============
 
-#### SAX-VSM Java implementation to support our ICDM-13 publication:
+##### SAX-VSM code release to support our ICDM-13 publication:
 
-Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf) Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
+Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
-The algorithm is based on the following work:
+##### The algorithm is based on the following work:
 
 [1] Lin, J., Keogh, E., Wei, L. and Lonardi, S., [*Experiencing SAX: a Novel Symbolic Representation of Time Series*](http://cs.gmu.edu/~jessica/SAX_DAMI_preprint.pdf). [DMKD Journal](http://link.springer.com/article/10.1007%2Fs10618-007-0064-z), 2007.
 
@@ -15,7 +15,7 @@ The algorithm is based on the following work:
 
 [4] The DiRect implementation source code is partially based on [JCOOL](https://github.com/cvut/JCOOL).
 
-#### This code is released under GPL v.2.0.
+##### This code is released under [GPL v.2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 
 0.0 In a nutshell
 ------------
@@ -36,6 +36,19 @@ The code is written in Java and I use maven to build it:
 	[INFO] BUILD SUCCESSFUL
 
 2.0 Running classifier
+------------
+Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
+
+	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -w 33 -p 17 -a 15 
+	trainData classes: 2, series length: 150
+	 training class: 2 series: 26
+	 training class: 1 series: 24
+	testData classes: 2, series length: 150
+	 test class: 2 series: 74
+	 test class: 1 series: 76
+	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
+
+3.0 Running sampler
 ------------
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
@@ -69,23 +82,14 @@ The code implements the DiRect sampler which can be called from the command line
 
 As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DIRECT in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DIRECT, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
 
-![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling_arrowhead.png)
+![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
-3.0 EXPLORING PATTERNS
+4.0 Interpretable classification
 ------------
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
 ![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
-4.0 CLASSIFICATION
-------------
-`SAXVSMClassifier` implements the classification procedure. It reads both tran and test datasets, discretizes series, builds TFIDF vectors, and performs the classifciation:
-
-	$ java -cp "sax-vsm-classic20.jar" edu.hawaii.jmotif.direct.SAXVSMClassifier data/Gun_Point/Gun_Point_TRAIN data/Gun_Point/Gun_Point_TEST 33 17 5 EXACT
-	processing paramleters: [data/Gun_Point/Gun_Point_TRAIN, data/Gun_Point/Gun_Point_TEST, 33, 17, 5, EXACT]
-	...
-	classification results: EXACT, window 33, PAA 17, alphabet 5,  accuracy 0.98,  error 0.02
-	
 5.0 NOTES
 ------------
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
@@ -106,14 +110,7 @@ Finally, note, that when cosine similarity is computed within the classification
 
 6.0 ACCURACY TABLE
 ------------
-The following table was obtained in automated mode using the following command:
-
-	java -Xmx16G -cp "sax-vsm.jar" \\
-	  edu.hawaii.jmotif.direct.SAXVSMContinuousDirectSampler \\
-	  CBF/CBF_TRAIN CBF/CBF_TEST 10 120 10 60 2 16 1 30
-	...
-
-which choses a parameters set yielding the minimal CV error. If CV error is the same for a number of sets, the sampler choses a set with the smallest sliding window.
+The following table was obtained in automated mode using shown above DiRect sampler. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
@@ -172,3 +169,7 @@ which choses a parameters set yielding the minimal CV error. If CV error is the 
 | Wafer                       | 2       | 152     | 0.0045        | 0.0201   | 0.0010  |
 | WordsSynonyms               | 25      | 270     | 0.3824        | 0.3511   | 0.4404  |
 | Yoga                        | 2       | 426     | 0.1697        | 0.1637   | 0.1510  |
+
+
+## Made with Aloha!
+![Made with Aloha!](https://raw.githubusercontent.com/GrammarViz2/grammarviz2_src/master/src/resources/assets/aloha.jpg)
