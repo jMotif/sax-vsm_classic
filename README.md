@@ -11,7 +11,7 @@ The algorithm is based on the following work:
 
 [2] Salton, G., Wong, A., Yang., C., [*A vector space model for automatic indexing*](http://dl.acm.org/citation.cfm?id=361220). Commun. ACM 18, 11, 613–620, 1975.
 
-[3] Jones, D. R. , Perttunen, C. D., and Stuckman, B. E.,  [*Lipschitzianoptimization  without  the  lipschitz  constant*](http://link.springer.com/article/10.1007%2FBF00941892#page-1), Journal  of  Optimization Theory and Applications, vol. 79, no. 1, pp. 157–181, 1993
+[3] Jones, D. R. , Perttunen, C. D., and Stuckman, B. E.,  [*Lipschitzian optimization  without  the  lipschitz  constant*](http://link.springer.com/article/10.1007%2FBF00941892#page-1), Journal  of  Optimization Theory and Applications, vol. 79, no. 1, pp. 157–181, 1993
 
 [4] The DiRect implementation source code is partially based on [JCOOL](https://github.com/cvut/JCOOL).
 
