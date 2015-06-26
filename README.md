@@ -1,11 +1,11 @@
-SAX-VSM
+SAX-VSM [![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch=master)](https://travis-ci.org/jMotif/sax-vsm_classic)
 ============
 
-This project provides the source code released to support our ICDM publication:
+#### SAX-VSM Java implementation to support our ICDM-13 publication:
 
 Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf) Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
-Our algorithm is based on the following work:
+The algorithm is based on the following work:
 
 [1] Lin, J., Keogh, E., Wei, L. and Lonardi, S., [*Experiencing SAX: a Novel Symbolic Representation of Time Series*](http://cs.gmu.edu/~jessica/SAX_DAMI_preprint.pdf). [DMKD Journal](http://link.springer.com/article/10.1007%2Fs10618-007-0064-z), 2007.
 
@@ -13,54 +13,67 @@ Our algorithm is based on the following work:
 
 [3] Jones, D. R. , Perttunen, C. D., and Stuckman, B. E.,  [*Lipschitzianoptimization  without  the  lipschitz  constant*](http://link.springer.com/article/10.1007%2FBF00941892#page-1), Journal  of  Optimization Theory and Applications, vol. 79, no. 1, pp. 157–181, 1993
 
-[4] Finkel, Daniel E. [*DIRECT Optimization Algorithm User Guide*](http://www4.ncsu.edu/~ctk/Finkel_Direct/DirectUserGuide_pdf.pdf), 2003.
+[4] The DiRect implementation source code is partially based on [JCOOL](https://github.com/cvut/JCOOL).
 
-I am still working to make the code user friendly, if you have any suggestions, please email me.
+#### This code is released under GPL v.2.0.
 
-1.0 BUILDING
+1.0 In a nutshell
 ------------
-The code is written in Java and we use Ant to build it:
+![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
+
+1.0 Building
+------------
+The code is written in Java and I use maven to build it:
 	
-	$ ant -f jar.build.xml 
-	Buildfile: /media/Stock/git/sax-vsm_classic.git/jar.build.xml
+	$ mvn package -P single
+	[INFO] Scanning for projects...
+	[INFO] ------------------------------------------------------------------------
+	[INFO] Building sax-vsm
+	[INFO]    task-segment: [package]
 	...
-	[jar] Building jar: /media/Stock/git/sax-vsm_classic.git/sax-vsm-classic20.jar
-	[delete] Deleting directory /media/Stock/git/sax-vsm_classic.git/tmp
-	BUILD SUCCESSFUL
+	[INFO] Building jar: /media/Stock/git/sax-vsm_classic.git/target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+	[INFO] ------------------------------------------------------------------------
+	[INFO] BUILD SUCCESSFUL
 
 2.0 OPTIMIZING DISCRETIZATION PARAMETERS
 ------------
 The code implements a modified for SAX-VSM DIRECT algorithm. Below is the trace of running sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]. This is the run trace:
 
-	$java -cp "sax-vsm-classic20.jar" edu.hawaii.jmotif.direct.SAXVSMDirectSampler data/Gun_Point/Gun_Point_TRAIN data/Gun_Point/Gun_Point_TEST 10 150 5 75 2 18 1 20
-	running sampling for CLASSIC strategy...
+	$ java -jar target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
+	trainData classes: 2, series length: 150
+	 training class: 2 series: 26
+	 training class: 1 series: 24
+	testData classes: 2, series length: 150
+	 test class: 2 series: 74
+	 test class: 1 series: 76
+	running sampling for MINDIST strategy...
 	iteration: 0, minimal value 0.18 at 80, 40, 10
 	iteration: 1, minimal value 0.04 at 80, 17, 10
-	iteration: 2, minimal value 0.02 at 80, 17, 15
-	min CV error 0.02 reached at [80, 17, 15], 
+	iteration: 2, minimal value 0.04 at 80, 17, 10
+	min CV error 0.04 reached at [80, 17, 10], will use Params [windowSize=80, paaSize=17, alphabetSize=10, nThreshold=0.01, nrStartegy=MINDIST]
 	running sampling for EXACT strategy...
 	iteration: 0, minimal value 0.0 at 80, 40, 10
 	iteration: 1, minimal value 0.0 at 80, 40, 10
 	iteration: 2, minimal value 0.0 at 80, 40, 10
-	min CV error 0.00 reached at [80, 40, 10], [33, 17, 10], 
-	running sampling for NOREDUCTION strategy...
+	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=EXACT]
+	running sampling for NONE strategy...
 	iteration: 0, minimal value 0.0 at 80, 40, 10
 	iteration: 1, minimal value 0.0 at 80, 40, 10
 	iteration: 2, minimal value 0.0 at 80, 40, 10
-	min CV error 0.00 reached at [80, 40, 10], [33, 17, 10], 
-	classification results: CLASSIC, window 80, PAA 17, alphabet 15,  accuracy 0.94667,  error 0.05333
-	classification results: EXACT, window 33, PAA 17, alphabet 10,  accuracy 0.98667,  error 0.01333
-	classification results: NOREDUCTION, window 33, PAA 17, alphabet 10,  accuracy 0.98,  error 0.02
+	min CV error 0.00 reached at [80, 40, 10], [64, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=NONE]
+	classification results: strategy MINDIST, window 80, PAA 17, alphabet 10,  accuracy 0.92667,  error 0.07333
+	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
+	classification results: strategy NONE, window 33, PAA 17, alphabet 15,  accuracy 0.97333,  error 0.02667
 
 In addition to a modified DIRECT version, which samples only integer points, we provide a reference implementation. For many datasets, the continuous sampler not only finds better parameters (while converging for much longer), but provides an effective visualization of optimal parameter ranges:
 
-![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/RCode/figures/direct_sampling_arrowhead.png)
+![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling_arrowhead.png)
 
 3.0 EXPLORING PATTERNS
 ------------
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
-![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/RCode/figures/gun_point_heat.png)
+![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
 4.0 CLASSIFICATION
 ------------
