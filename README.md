@@ -110,14 +110,7 @@ Finally, note, that when cosine similarity is computed within the classification
 
 6.0 ACCURACY TABLE
 ------------
-The following table was obtained in automated mode using the following command:
-
-	java -Xmx16G -cp "sax-vsm.jar" \\
-	  edu.hawaii.jmotif.direct.SAXVSMContinuousDirectSampler \\
-	  CBF/CBF_TRAIN CBF/CBF_TEST 10 120 10 60 2 16 1 30
-	...
-
-which choses a parameters set yielding the minimal CV error. If CV error is the same for a number of sets, the sampler choses a set with the smallest sliding window.
+The following table was obtained in automated mode using shown above DiRect sampler. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
