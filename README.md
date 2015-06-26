@@ -35,7 +35,9 @@ The code is written in Java and I use maven to build it:
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESSFUL
 
-2.0 Running classifier
+1.0 Running classifier
+
+2.0 Running sampler
 ------------
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
@@ -71,22 +73,13 @@ As shown in our work, DiRect provides a significant speed-up when compared with 
 
 ![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
-3.0 EXPLORING PATTERNS
+3.0 Interpretable classification
 ------------
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
 ![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
-4.0 CLASSIFICATION
-------------
-`SAXVSMClassifier` implements the classification procedure. It reads both tran and test datasets, discretizes series, builds TFIDF vectors, and performs the classifciation:
-
-	$ java -cp "sax-vsm-classic20.jar" edu.hawaii.jmotif.direct.SAXVSMClassifier data/Gun_Point/Gun_Point_TRAIN data/Gun_Point/Gun_Point_TEST 33 17 5 EXACT
-	processing paramleters: [data/Gun_Point/Gun_Point_TRAIN, data/Gun_Point/Gun_Point_TEST, 33, 17, 5, EXACT]
-	...
-	classification results: EXACT, window 33, PAA 17, alphabet 5,  accuracy 0.98,  error 0.02
-	
-5.0 NOTES
+4.0 NOTES
 ------------
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
@@ -104,7 +97,7 @@ The normalization threshold (used in SAX discretization) is also quite important
 
 Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was missclassified, but you may want to assign it to one of the classes randomly.
 
-6.0 ACCURACY TABLE
+5.0 ACCURACY TABLE
 ------------
 The following table was obtained in automated mode using the following command:
 
@@ -172,3 +165,7 @@ which choses a parameters set yielding the minimal CV error. If CV error is the 
 | Wafer                       | 2       | 152     | 0.0045        | 0.0201   | 0.0010  |
 | WordsSynonyms               | 25      | 270     | 0.3824        | 0.3511   | 0.4404  |
 | Yoga                        | 2       | 426     | 0.1697        | 0.1637   | 0.1510  |
+
+
+## Made with Aloha!
+![Made with Aloha!](https://raw.githubusercontent.com/GrammarViz2/grammarviz2_src/master/src/resources/assets/aloha.jpg)
