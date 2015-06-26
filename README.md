@@ -17,7 +17,7 @@ The algorithm is based on the following work:
 
 #### This code is released under GPL v.2.0.
 
-1.0 In a nutshell
+0.0 In a nutshell
 ------------
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
@@ -35,9 +35,11 @@ The code is written in Java and I use maven to build it:
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESSFUL
 
-2.0 OPTIMIZING DISCRETIZATION PARAMETERS
+2.0 Running classifier
 ------------
-The code implements a modified for SAX-VSM DIRECT algorithm. Below is the trace of running sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]. This is the run trace:
+Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
+
+The code implements the DiRect sampler which can be called from the command line. Below is the trace of running the sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
 
 	$ java -jar target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
 	trainData classes: 2, series length: 150
@@ -65,8 +67,13 @@ The code implements a modified for SAX-VSM DIRECT algorithm. Below is the trace 
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
 	classification results: strategy NONE, window 33, PAA 17, alphabet 15,  accuracy 0.97333,  error 0.02667
 
-In addition to a modified DIRECT version, which samples only integer points, we provide a reference implementation. For many datasets, the continuous sampler not only finds better parameters (while converging for much longer), but provides an effective visualization of optimal parameter ranges:
-
+As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DIRECT in the space `PAA ∗ W ndow ∗ Alphabet`, red points correspond to high error values
+while green points correspond to low error values in cross-validation experiments.
+Note the green points concentration at W=42. Middle panel shows the
+classification error heat map obtained by a complete scan of all 432 points of
+the hypercube slice when W=42. Right panel shows the classification error
+heat map of the same slice when the parameters search optimized by DIRECT,
+the optimal solution (P=8,A=4) was found by sampling of 43 points.
 ![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling_arrowhead.png)
 
 3.0 EXPLORING PATTERNS
