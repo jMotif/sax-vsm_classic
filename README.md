@@ -35,9 +35,20 @@ The code is written in Java and I use maven to build it:
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESSFUL
 
-1.0 Running classifier
+2.0 Running classifier
+------------
+Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
 
-2.0 Running sampler
+	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -w 33 -p 17 -a 15 
+	trainData classes: 2, series length: 150
+	 training class: 2 series: 26
+	 training class: 1 series: 24
+	testData classes: 2, series length: 150
+	 test class: 2 series: 74
+	 test class: 1 series: 76
+	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
+
+3.0 Running sampler
 ------------
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
@@ -73,13 +84,13 @@ As shown in our work, DiRect provides a significant speed-up when compared with 
 
 ![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
-3.0 Interpretable classification
+4.0 Interpretable classification
 ------------
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
 ![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
-4.0 NOTES
+5.0 NOTES
 ------------
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
@@ -97,7 +108,7 @@ The normalization threshold (used in SAX discretization) is also quite important
 
 Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was missclassified, but you may want to assign it to one of the classes randomly.
 
-5.0 ACCURACY TABLE
+6.0 ACCURACY TABLE
 ------------
 The following table was obtained in automated mode using the following command:
 
