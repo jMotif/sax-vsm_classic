@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import net.seninp.jmotif.direct.SAXVSMClassifierParams;
 import net.seninp.jmotif.sax.SAXException;
 import net.seninp.jmotif.text.Params;
 import net.seninp.jmotif.text.TextProcessor;

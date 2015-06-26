@@ -1,4 +1,4 @@
-package net.seninp.jmotif.direct;
+package net.seninp.jmotif;
 
 import java.util.ArrayList;
 import java.util.List;
