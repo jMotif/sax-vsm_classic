@@ -62,33 +62,35 @@ The code implements the DiRect sampler which can be called from the command line
 	 test class: 2 series: 74
 	 test class: 1 series: 76
 	running sampling for MINDIST strategy...
-	iteration: 0, minimal value 0.18 at 80, 40, 10
-	iteration: 1, minimal value 0.04 at 80, 17, 10
-	iteration: 2, minimal value 0.04 at 80, 17, 10
+	 iteration: 0, minimal value 0.18 at 80, 40, 10
+	 iteration: 1, minimal value 0.04 at 80, 17, 10
+	 iteration: 2, minimal value 0.04 at 80, 17, 10
 	min CV error 0.04 reached at [80, 17, 10], will use Params [windowSize=80, paaSize=17, alphabetSize=10, nThreshold=0.01, nrStartegy=MINDIST]
 	running sampling for EXACT strategy...
-	iteration: 0, minimal value 0.0 at 80, 40, 10
-	iteration: 1, minimal value 0.0 at 80, 40, 10
-	iteration: 2, minimal value 0.0 at 80, 40, 10
+	 iteration: 0, minimal value 0.0 at 80, 40, 10
+	 iteration: 1, minimal value 0.0 at 80, 40, 10
+	 iteration: 2, minimal value 0.0 at 80, 40, 10
 	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=EXACT]
 	running sampling for NONE strategy...
-	iteration: 0, minimal value 0.0 at 80, 40, 10
-	iteration: 1, minimal value 0.0 at 80, 40, 10
-	iteration: 2, minimal value 0.0 at 80, 40, 10
+	 iteration: 0, minimal value 0.0 at 80, 40, 10
+	 iteration: 1, minimal value 0.0 at 80, 40, 10
+	 iteration: 2, minimal value 0.0 at 80, 40, 10
 	min CV error 0.00 reached at [80, 40, 10], [64, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=NONE]
 	classification results: strategy MINDIST, window 80, PAA 17, alphabet 10,  accuracy 0.92667,  error 0.07333
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
 	classification results: strategy NONE, window 33, PAA 17, alphabet 15,  accuracy 0.97333,  error 0.02667
 
-As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DIRECT in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DIRECT, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
+As shown in our work, DiRect provides a significant speed-up when compared with the grid serach. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DiRect in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DiRect, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
 
-![An example of DIRECT samplers run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
+![An example of the DiRect sampler run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
 4.0 Interpretable classification
 ------------
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
-![An example of class-characteristic patterns locations in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
+![An example of class-characteristic patterns localization in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
+
+Note, that the time series ranges highlighted by the approach correspond to distinctive class features: class Gun is characterized the most by articulated movements for prop retrieval and aiming, class Point is characterized by the ‘overshoot’ phenomenon and simple (when compared to Gun) movement before aiming.
 
 5.0 NOTES
 ------------
