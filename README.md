@@ -169,7 +169,7 @@ The following table was obtained in automated mode using shown above DiRect samp
 | uWaveGestureLibrary_Y       | 8       | 315     | *0.338358*      | 0.365997 | 0.3638  |
 | uWaveGestureLibrary_Z       | 8       | 315     | 0.350363      | *0.3417*   | 0.3565  |
 | Wafer                       | 2       | 152     | 0.0045        | 0.0201   | *0.0010*  |
-| WordsSynonyms               | 25      | 270     | 0.3824        | *0.3511*   | 0.4404  |
+| WordsSynonyms               | 25      | 270     | 0.3824        | **0.3511**   | 0.4404  |
 | Yoga                        | 2       | 426     | 0.1697        | 0.1637   | *0.1510*  |
 
 
