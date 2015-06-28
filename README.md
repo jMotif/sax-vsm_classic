@@ -3,7 +3,7 @@ SAX-VSM [![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch
 
 ##### SAX-VSM code release to support our ICDM-13 publication:
 
-Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
+Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
 ##### The algorithm is based on the following work:
 
@@ -116,61 +116,61 @@ The following table was obtained in automated mode using shown above DiRect samp
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
-| 50words                     | 50      | 270     | 0.3692        | 0.3099   | 0.3736  |
-| Adiac                       | 37      | 176     | 0.3887        | 0.396    | 0.4169  |
-| Arrowhead                   | 3       | 495-625 | 0.5029        | 0.5314   | 0.3429  |
-| ARSim                       | 2       | 500     | 0.4890        | 0.4035   | 0.4405  |
-| Beef                        | 5       | 470     | 0.4667        | 0.5000   | 0.2333  |
-| CBF                         | 3       | 128     | 0.1478        | 0.0033   | 0.0100  |
-| ChlorineConcentration       | 3       | 166     | 0.3500        | 0.3516   | 0.3409  |
-| CinC_ECG_torso              | 4       | 1,639   | 0.1029        | 0.3493   | 0.3442  |
-| Coffee                      | 2       | 286     | 0.2500        | 0.1786   | 0.0000  |
-| Cricket                     | 2       | 308     | 0.0510        | 0.0102   | 0.8163  |
-| Cricket_X                   | 12      | 300     | 0.4256        | 0.2231   | 0.3077  |
-| Cricket_Y                   | 12      | 300     | 0.3564        | 0.2077   | 0.3180  |
-| Cricket_Z                   | 12      | 300     | 0.3795        | 0.2077   | 0.2974  |
-| DiatomSizeReduction         | 4       | 345     | 0.0654        | 0.0327   | 0.1209  |
-| Earthquakes                 | 2       | 512     | 0.3022        | 0.295    | 0.2518  |
-| ECG200                      | 2       | 96      | 0.1200        | 0.2300   | 0.1400  |
-| ECGFiveDays                 | 2       | 136     | 0.2033        | 0.2323   | 0.0012  |
-| ElectricDevices             | 7       | 96      | 0.4559        | 0.3298   | 0.3739  |
-| FaceAll                     | 14      | 131     | 0.2864        | 0.1923   | 0.2450  |
-| FaceFour                    | 4       | 350     | 0.2159        | 0.1705   | 0.11364 |
-| FacesUCR                    | 14      | 131     | 0.2307        | 0.0951   | 0.1088  |
-| Fish                        | 7       | 463     | 0.2171        | 0.1657   | 0.0171  |
-| FordA                       | 2       | 500     | 0.3136        | 0.2758   | 0.18561 |
+| 50words                     | 50      | 270     | 0.3692        | *0.3099*   | 0.3736  |
+| Adiac                       | 37      | 176     | *0.3887*        | 0.396    | 0.4169  |
+| Arrowhead                   | 3       | 495-625 | 0.5029        | 0.5314   | *0.3429*  |
+| ARSim                       | 2       | 500     | 0.4890        | *0.4035*   | 0.4405  |
+| Beef                        | 5       | 470     | 0.4667        | 0.5000   | *0.2333*  |
+| CBF                         | 3       | 128     | 0.1478        | *0.0033*   | 0.0044  |
+| ChlorineConcentration       | 3       | 166     | 0.3500        | 0.3516   | *0.3354*  |
+| CinC_ECG_torso              | 4       | 1,639   | *0.1029*        | 0.3493   | 0.2913  |
+| Coffee                      | 2       | 286     | 0.2500        | 0.1786   | *0.0000*  |
+| Cricket                     | 2       | 308     | 0.0510        | *0.0102*   | 0.0910  |
+| Cricket_X                   | 12      | 300     | 0.4256        | *0.2231*   | 0.3077  |
+| Cricket_Y                   | 12      | 300     | 0.3564        | *0.2077*   | 0.3180  |
+| Cricket_Z                   | 12      | 300     | 0.3795        | *0.2077*   | 0.2974  |
+| DiatomSizeReduction         | 4       | 345     | 0.0654        | *0.0327*   | 0.1209  |
+| Earthquakes                 | 2       | 512     | 0.3022        | 0.295    | *0.2518*  |
+| ECG200                      | 2       | 96      | *0.1200*        | 0.2300   | 0.1400  |
+| ECGFiveDays                 | 2       | 136     | 0.2033        | 0.2323   | *0.0012*  |
+| ElectricDevices             | 7       | 96      | 0.4559        | *0.3298*   | 0.3739  |
+| FaceAll                     | 14      | 131     | 0.2864        | *0.1923*   | 0.2450  |
+| FaceFour                    | 4       | 350     | 0.2159        | 0.1705   | *0.11364* |
+| FacesUCR                    | 14      | 131     | 0.2307        | *0.0951*   | 0.1088  |
+| Fish                        | 7       | 463     | 0.2171        | 0.1657   | *0.0171*  |
+| FordA                       | 2       | 500     | 0.3136        | 0.2758   | *0.18561* |
 | FordB                       | 2       | 500     | 0.4037        | 0.3407   | 0.3309  |
-| GunPoint                    | 2       | 150     | 0.0867        | 0.0933   | 0.0133  |
-| HandOutlines                | 2       | 2,709   | 0.1378        | 0.1189   | 0.0703  |
-| Haptics                     | 5       | 1,092   | 0.6299        | 0.6234   | 0.5844  |
-| InlineSkate                 | 7       | 1,882   | 0.6582        | 0.6164   | 0.5927  |
-| ItalyPowerDemand            | 2       | 24      | 0.0447        | 0.0496   | 0.0894  |
-| Lighting2                   | 2       | 637     | 0.2459        | 0.1311   | 0.2131  |
-| Lighting7                   | 7       | 319     | 0.4247        | 0.2740   | 0.3973  |
-| MALLAT                      | 8       | 1,024   | 0.0857        | 0.0661   | 0.1992  |
-| Mallet                      | 8       | 256     | 0.0346        | 0.0236   | 0.0351  |
-| MedicalImages               | 10      | 99      | 0.3158        | 0.2632   | 0.5158  |
-| MoteStrain                  | 2       | 84      | 0.1214        | 0.1653   | 0.1246  |
-| NonInvasiveFetalECG_Thorax1 | 42      | 750     | 0.1710        | 0.2097   | 0.2921  |
-| OliveOil                    | 4       | 570     | 0.1333        | 0.1333   | 0.1333  |
-| OSULeaf                     | 6       | 427     | 0.4835        | 0.4091   | 0.1653  |
-| Passgraph                   | 2       | 364     | 0.3740        | 0.2901   | 0.3435  |
-| Shield                      | 3       | 1,179   | 0.1395        | 0.1395   | 0.1240  |
-| SonyAIBORobotSurface        | 2       | 70      | 0.3045        | 0.2745   | 0.3062  |
-| SonyAIBORobotSurfaceII      | 2       | 65      | 0.1406        | 0.1689   | 0.1259  |
-| StarLightCurves             | 3       | 1,024   | 0.1512        | 0.2080   | 0.07722 |
-| SwedishLeaf                 | 15      | 129     | 0.2112        | 0.0503   | 0.2784  |
-| Symbols                     | 6       | 398     | 0.1005        | 0.0067   | 0.1085  |
-| SyntheticControl            | 6       | 60      | 0.1200        | 0.0000   | 0.0167  |
-| Trace                       | 4       | 275     | 0.2400        | 0.0000   | 0.0000  |
-| Two_Patterns                | 4       | 128     | 0.0933        | 0.0957   | 0.0040  |
-| TwoLeadECG                  | 2       | 82      | 0.2529        | 0.0957   | 0.0141  |
-| uWaveGestureLibrary_X       | 8       | 315     | 0.260748      | 0.272473 | 0.3230  |
-| uWaveGestureLibrary_Y       | 8       | 315     | 0.338358      | 0.365997 | 0.3638  |
-| uWaveGestureLibrary_Z       | 8       | 315     | 0.350363      | 0.3417   | 0.3565  |
-| Wafer                       | 2       | 152     | 0.0045        | 0.0201   | 0.0010  |
-| WordsSynonyms               | 25      | 270     | 0.3824        | 0.3511   | 0.4404  |
-| Yoga                        | 2       | 426     | 0.1697        | 0.1637   | 0.1510  |
+| GunPoint                    | 2       | 150     | 0.0867        | 0.0933   | *0.0133*  |
+| HandOutlines                | 2       | 2,709   | 0.1378        | 0.1189   | *0.0703*  |
+| Haptics                     | 5       | 1,092   | 0.6299        | 0.6234   | *0.5844*  |
+| InlineSkate                 | 7       | 1,882   | 0.6582        | 0.6164   | *0.5927*  |
+| ItalyPowerDemand            | 2       | 24      | *0.0447*        | 0.0496   | 0.0894  |
+| Lighting2                   | 2       | 637     | 0.2459        | *0.1311*   | 0.2131  |
+| Lighting7                   | 7       | 319     | 0.4247        | *0.2740*   | 0.3973  |
+| MALLAT                      | 8       | 1,024   | 0.0857        | *0.0661*   | 0.1992  |
+| Mallet                      | 8       | 256     | 0.0346        | *0.0236*   | 0.0351  |
+| MedicalImages               | 10      | 99      | 0.3158        | *0.2632*   | 0.5158  |
+| MoteStrain                  | 2       | 84      | *0.1214*        | 0.1653   | 0.1246  |
+| NonInvasiveFetalECG_Thorax1 | 42      | 750     | *0.1710*        | 0.2097   | 0.2921  |
+| OliveOil                    | 4       | 570     | *0.1333*        | *0.1333*   | *0.1333*  |
+| OSULeaf                     | 6       | 427     | 0.4835        | 0.4091   | *0.0744*  |
+| Passgraph                   | 2       | 364     | 0.3740        | *0.2901*   | 0.3053  |
+| Shield                      | 3       | 1,179   | 0.1395        | 0.1395   | *0.1085*  |
+| SonyAIBORobotSurface        | 2       | 70      | 0.3045        | *0.2745*   | 0.3062  |
+| SonyAIBORobotSurfaceII      | 2       | 65      | 0.1406        | 0.1689   | *0.08919*  |
+| StarLightCurves             | 3       | 1,024   | 0.1512        | 0.2080   | *0.0772* |
+| SwedishLeaf                 | 15      | 129     | 0.2112        | *0.0503*   | 0.2784  |
+| Symbols                     | 6       | 398     | 0.1005        | *0.0067*   | 0.1085  |
+| SyntheticControl            | 6       | 60      | 0.1200        | *0.0000*   | 0.0167  |
+| Trace                       | 4       | 275     | 0.2400        | *0.0000*   | *0.0000*  |
+| Two_Patterns                | 4       | 128     | 0.0933        | 0.0957   | *0.0040*  |
+| TwoLeadECG                  | 2       | 82      | 0.2529        | 0.0957   | *0.0141*  |
+| uWaveGestureLibrary_X       | 8       | 315     | *0.260748*      | 0.272473 | 0.3230  |
+| uWaveGestureLibrary_Y       | 8       | 315     | *0.338358*      | 0.365997 | 0.3638  |
+| uWaveGestureLibrary_Z       | 8       | 315     | 0.350363      | *0.3417*   | 0.3565  |
+| Wafer                       | 2       | 152     | 0.0045        | 0.0201   | *0.0010*  |
+| WordsSynonyms               | 25      | 270     | 0.3824        | *0.3511*   | 0.4404  |
+| Yoga                        | 2       | 426     | 0.1697        | 0.1637   | *0.1510*  |
 
 
 ## Made with Aloha!
