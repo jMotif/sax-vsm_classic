@@ -19,6 +19,13 @@ Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication U
 
 0.0 In a nutshell
 ------------
+
+The proposed interpretable time series classificaion algorithm consists of two steps -- training and classification. 
+
+For training, labeled time series discretized with SAX via sliding window and "bags of words" constructed for each of the training classes (single bag per class). Processing bags with [TFIDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) yields a set of class-characteristic vectors -- one vector per class. Each element of that vector essentially is a discretized fragment of the input timeseries with attached to it weight, whose value reflects the "class-characteristic power" of that fragment.
+
+For classification, the unlabeled time series is discretized with SAX in order to transform it into a term frequency vector. Next, the cosine similarity computed between this vector and those constructed during training (i.e., vectors characterizing training classes). The unlabeled input time series assigned to a class with which the angle is smallest, i.e., the cosine value is largest. This is [ltc.nnn](http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html) schema in SMART notation. The process illustrated below:
+
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
 1.0 Building
