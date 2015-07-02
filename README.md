@@ -20,13 +20,13 @@ Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication U
 0.0 In a nutshell
 ------------
 
-The proposed interpretable time series classificaion algorithm consists of two steps -- training and classification. 
+The proposed interpretable time series classification algorithm consists of two steps -- training and classification. 
 
-For training, labeled time series discretized with [SAX](http://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html) via sliding window and "bag of words" constructed for each of the training classes (*single bag per class*). Processing bags with [TFIDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) yields a set of class-characteristic vectors -- one vector per class. Essentially, each element of that vector is a weighted discretized fragment of the input timeseries; the weight value reflects the "class-characteristic power" of the fragment.
+For training, labeled time series discretized with [SAX](http://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html) via sliding window and "bag of words" constructed for each of the training classes (*single bag per class*). Processing bags with [TFIDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) yields a set of class-characteristic vectors -- one vector per class. Essentially, each element of that vector is a weighted discretized fragment of the input time series; the weight value reflects the "class-characteristic power" of the fragment.
 
 For classification, the unlabeled time series is discretized with sliding window-based SAX (exactly the same transform as for training) in order to transform it into a term frequency vector. Next, the cosine similarity computed between this vector and those constructed during training (i.e., vectors characterizing training classes). The unlabeled input time series assigned to a class with which the angle is smallest, i.e., the cosine value is largest. This is [ltc.nnn](http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html) schema in SMART notation. 
 
-Because it is easy to see which patterns contribute the most to the cosine similarity vale, as well as to see which patterns have the highest weights after training, the algorithm naturally enables the interpretation of training and classification results.
+Because it is easy to see which patterns contribute the most to the cosine similarity value, as well as to see which patterns have the highest weights after training, the algorithm naturally enables the interpretation of training and classification results.
 
 The whole process is illustrated below:
 
