@@ -26,7 +26,7 @@ For training, labeled time series discretized with [SAX](http://jmotif.github.io
 
 For classification, the unlabeled time series is discretized with sliding window-based SAX (exactly the same transform as for training) in order to transform it into a term frequency vector. Next, the cosine similarity computed between this vector and those constructed during training (i.e., vectors characterizing training classes). The unlabeled input time series assigned to a class with which the angle is smallest, i.e., the cosine value is largest. This is [ltc.nnn](http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html) schema in SMART notation. 
 
-Because it is easy to see which patterns contribute the most for a final cosine similarity vale, as well as to see which patterns have the highest weights after training, the algorithm naturally enables the interpretation of training and classification results.
+Because it is easy to see which patterns contribute the most to the cosine similarity vale, as well as to see which patterns have the highest weights after training, the algorithm naturally enables the interpretation of training and classification results.
 
 The whole process is illustrated below:
 
