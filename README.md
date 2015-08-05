@@ -121,7 +121,7 @@ The normalization threshold (used in SAX discretization) is also quite important
 
 Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was missclassified, but you may want to assign it to one of the classes randomly.
 
-6.0 ACCURACY TABLE
+6.0 The classification accuracy table
 ------------
 The following table was obtained in automated mode using shown above DiRect sampler. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
