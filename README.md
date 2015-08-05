@@ -123,7 +123,7 @@ Finally, note, that when cosine similarity is computed within the classification
 
 6.0 The classification accuracy table
 ------------
-The following table was obtained in automated mode using shown above DiRect sampler. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
+The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
