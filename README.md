@@ -46,7 +46,7 @@ The code is written in Java and I use maven to build it:
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESSFUL
 
-2.0 Running classifier
+2.0 Running the classifier
 ------------
 Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
 
@@ -59,7 +59,7 @@ Class `SAXVSMClassifier` is runnable from command line; running it without param
 	 test class: 1 series: 76
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
 
-3.0 Running sampler
+3.0 Running the parameters sampler (optimizer)
 ------------
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
