@@ -130,6 +130,9 @@ public class SAXVSMDirectSampler {
       sb.append("  CV hold out: ").append(SAXVSMDirectSamplerParams.HOLD_OUT_NUM).append(CR);
       sb.append("  max Iterations: ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM).append(CR);
       consoleLogger.info(sb.toString());
+      sb.append("  Iteration halt threshold: ")
+          .append(SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD).append(CR);
+      consoleLogger.info(sb.toString());
 
       trainData = UCRUtils.readUCRData(SAXVSMDirectSamplerParams.TRAIN_FILE);
       consoleLogger.info("trainData classes: " + trainData.size() + ", series length: "
