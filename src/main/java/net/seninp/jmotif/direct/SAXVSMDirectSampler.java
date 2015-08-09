@@ -317,17 +317,9 @@ public class SAXVSMDirectSampler {
     }
 
     Params res = new Params(params[0], params[1], params[2],
-        SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD, strategy);
+        SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD, strategy, minimalValue);
 
     consoleLogger.info(sb.append("will use ").append(res.toString()).toString());
-    return res;
-  }
-
-  private static int[] toIntArray(Double[] array) {
-    int[] res = new int[array.length];
-    for (int i = 0; i < array.length; i++) {
-      res[i] = (int) Math.round(array[i]);
-    }
     return res;
   }
 
@@ -902,13 +894,13 @@ public class SAXVSMDirectSampler {
   }
 
   protected static String toLogStr(Params params, double accuracy, double error) {
-    StringBuffer sb = new StringBuffer();
-    sb.append("strategy ").append(params.getNrStartegy().toString()).append(COMMA);
+    StringBuffer sb = new StringBuffer("# ");
+    sb.append("error ").append(fmt.format(error)).append(COMMA);
+    sb.append("params: strategy ").append(params.getNrStartegy().toString()).append(COMMA);
     sb.append("window ").append(params.getWindowSize()).append(COMMA);
     sb.append("PAA ").append(params.getPaaSize()).append(COMMA);
     sb.append("alphabet ").append(params.getAlphabetSize()).append(COMMA);
-    sb.append(" accuracy ").append(fmt.format(accuracy)).append(COMMA);
-    sb.append(" error ").append(fmt.format(error));
+    sb.append("( CV error ").append(fmt.format(params.getCvError())).append(")");
     return sb.toString();
   }
 
