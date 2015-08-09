@@ -59,4 +59,7 @@ public class SAXVSMDirectSamplerParams {
   @Parameter(names = { "--iter", "-i" }, description = "max allowed iterations")
   public static int ITERATIONS_NUM = 1;
 
+  @Parameter(names = { "--break", "-b" }, description = "max allowed iterations")
+  public static double ITERATIONS_BREAK_THRESHOLD = 0.001;
+
 }

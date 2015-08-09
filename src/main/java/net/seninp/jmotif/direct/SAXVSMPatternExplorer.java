@@ -52,7 +52,7 @@ public class SAXVSMPatternExplorer {
   private static final DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.US);
   private static DecimalFormat df = new DecimalFormat("0.00###", otherSymbols);
 
-  private static final String COMMA = ", ";
+  // private static final String COMMA = ", ";
   private static final String CR = "\n";
 
   private static final TSProcessor tsp = new TSProcessor();

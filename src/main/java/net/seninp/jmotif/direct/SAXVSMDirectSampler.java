@@ -113,27 +113,22 @@ public class SAXVSMDirectSampler {
       sb.append("SAX-VSM DiRect Sampler").append(CR);
       sb.append("parameters:").append(CR);
 
-      sb.append("  train data:                  ").append(SAXVSMDirectSamplerParams.TRAIN_FILE)
-          .append(CR);
-      sb.append("  test data:                   ").append(SAXVSMDirectSamplerParams.TEST_FILE)
-          .append(CR);
-      sb.append("  SAX sliding window sizes:    ").append("[")
+      sb.append("  train data: ").append(SAXVSMDirectSamplerParams.TRAIN_FILE).append(CR);
+      sb.append("  test data: ").append(SAXVSMDirectSamplerParams.TEST_FILE).append(CR);
+      sb.append("  SAX sliding window sizes: ").append("[")
           .append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MIN).append(" - ")
           .append(SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MAX).append("]").append(CR);
-      sb.append("  SAX PAA sizes:    ").append("[")
-          .append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN).append(" - ")
-          .append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX).append("]").append(CR);
-      sb.append("  SAX alphabet sizes:    ").append("[")
+      sb.append("  SAX PAA sizes: ").append("[").append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN)
+          .append(" - ").append(SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX).append("]").append(CR);
+      sb.append("  SAX alphabet sizes: ").append("[")
           .append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN).append(" - ")
           .append(SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MAX).append("]").append(CR);
 
       sb.append("  SAX normalization threshold: ")
           .append(SAXVSMDirectSamplerParams.SAX_NORM_THRESHOLD).append(CR);
 
-      sb.append("  CV hold out:                 ").append(SAXVSMDirectSamplerParams.HOLD_OUT_NUM)
-          .append(CR);
-      sb.append("  max Iterations:              ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM)
-          .append(CR);
+      sb.append("  CV hold out: ").append(SAXVSMDirectSamplerParams.HOLD_OUT_NUM).append(CR);
+      sb.append("  max Iterations: ").append(SAXVSMDirectSamplerParams.ITERATIONS_NUM).append(CR);
       consoleLogger.info(sb.toString());
 
       trainData = UCRUtils.readUCRData(SAXVSMDirectSamplerParams.TRAIN_FILE);
@@ -181,8 +176,9 @@ public class SAXVSMDirectSampler {
     classify(exactParams);
     classify(noredParams);
 
-    consoleLogger.info("all done in " + Long.valueOf(finish.getTime() - start.getTime()).toString()
-        + " ms; that is " + SAXProcessor.timeToString(start.getTime(), finish.getTime()));
+    consoleLogger.info("all done in # "
+        + Long.valueOf(finish.getTime() - start.getTime()).toString() + " ms; that is "
+        + SAXProcessor.timeToString(start.getTime(), finish.getTime()));
   }
 
   private static void classify(Params params) throws Exception {
@@ -207,6 +203,7 @@ public class SAXVSMDirectSampler {
 
     // report results
     consoleLogger.info("classification results: " + toLogStr(params, accuracy, error));
+    System.out.println(toParserString(params, accuracy, error));
 
   }
 
@@ -271,14 +268,32 @@ public class SAXVSMDirectSampler {
 
     ArrayList<Integer> potentiallyOptimalRectangles = null;
 
+    ArrayList<Double> minCVvalues = new ArrayList<Double>();
+
     // optimization loop
     //
-    for (int ctr = 0; ctr < SAXVSMDirectSamplerParams.ITERATIONS_NUM; ctr++) {
+    int iterationCounter = 0;
+    while (iterationCounter < SAXVSMDirectSamplerParams.ITERATIONS_NUM) {
+
+      // get the minimal value off the last iteration and log the results
+      //
       resultMinimum = minimum(functionValues);
       double[] params = coordinates.get((int) resultMinimum[1]).getPoint().toArray();
-      consoleLogger.info("iteration: " + ctr + ", minimal value " + resultMinimum[0] + " at "
-          + (int) Math.round(params[0]) + ", " + (int) Math.round(params[1]) + ", "
+      consoleLogger.info("iteration: " + iterationCounter + ", minimal value " + resultMinimum[0]
+          + " at " + (int) Math.round(params[0]) + ", " + (int) Math.round(params[1]) + ", "
           + (int) Math.round(params[2]));
+
+      // check for the breaking condition based on threshold
+      //
+      minCVvalues.add(resultMinimum[0]);
+      if (hasToBreak(minCVvalues, SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD)) {
+        consoleLogger.info("breaking iteration: " + iterationCounter + " CV error less than "
+            + SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD + " two consequitive times.");
+        break;
+      }
+
+      // continue with sampling
+      //
       potentiallyOptimalRectangles = identifyPotentiallyRec();
       // For each potentially optimal rectangle
       for (int jj = 0; jj < potentiallyOptimalRectangles.size(); jj++) {
@@ -286,6 +301,19 @@ public class SAXVSMDirectSampler {
         samplingPotentialRec(j);
       }
       update();
+
+      // update the iteration counter
+      //
+      iterationCounter++;
+    }
+
+    if (iterationCounter == SAXVSMDirectSamplerParams.ITERATIONS_NUM) {
+      resultMinimum = minimum(functionValues);
+      double[] params = coordinates.get((int) resultMinimum[1]).getPoint().toArray();
+      consoleLogger.info("iteration: " + iterationCounter + ", minimal value " + resultMinimum[0]
+          + " at " + (int) Math.round(params[0]) + ", " + (int) Math.round(params[1]) + ", "
+          + (int) Math.round(params[2]));
+      consoleLogger.info("MAX allowed iterations num reached");
     }
 
     // make result
@@ -321,6 +349,22 @@ public class SAXVSMDirectSampler {
 
     consoleLogger.info(sb.append("will use ").append(res.toString()).toString());
     return res;
+  }
+
+  /**
+   * Check if last three iterations CV error is below the threshold.
+   * 
+   * @param minCVvalues
+   * @param iTERATIONS_BREAK_THRESHOLD
+   * @return
+   */
+  private static boolean hasToBreak(ArrayList<Double> minCVvalues, double threshold) {
+    int size = minCVvalues.size();
+    if (size > 2 && threshold >= (minCVvalues.get(size - 3) - minCVvalues.get(size - 2))
+        && threshold >= (minCVvalues.get(size - 2) - minCVvalues.get(size - 1))) {
+      return true;
+    }
+    return false;
   }
 
   private static void update() {
@@ -894,13 +938,25 @@ public class SAXVSMDirectSampler {
   }
 
   protected static String toLogStr(Params params, double accuracy, double error) {
-    StringBuffer sb = new StringBuffer("# ");
+    StringBuffer sb = new StringBuffer();
     sb.append("error ").append(fmt.format(error)).append(COMMA);
     sb.append("params: strategy ").append(params.getNrStartegy().toString()).append(COMMA);
     sb.append("window ").append(params.getWindowSize()).append(COMMA);
     sb.append("PAA ").append(params.getPaaSize()).append(COMMA);
     sb.append("alphabet ").append(params.getAlphabetSize()).append(COMMA);
     sb.append("( CV error ").append(fmt.format(params.getCvError())).append(")");
+    return sb.toString();
+  }
+
+  protected static String toParserString(Params params, double accuracy, double error) {
+    StringBuffer sb = new StringBuffer("#");
+    sb.append(SAXVSMDirectSamplerParams.TRAIN_FILE).append(COMMA);
+    sb.append(fmt.format(error)).append(COMMA);
+    sb.append(params.getNrStartegy().toString()).append(COMMA);
+    sb.append(params.getWindowSize()).append(COMMA);
+    sb.append(params.getPaaSize()).append(COMMA);
+    sb.append(params.getAlphabetSize()).append(COMMA);
+    sb.append(fmt.format(params.getCvError()));
     return sb.toString();
   }
 
