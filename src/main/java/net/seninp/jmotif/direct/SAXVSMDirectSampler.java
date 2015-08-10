@@ -303,7 +303,7 @@ public class SAXVSMDirectSampler {
       // For each potentially optimal rectangle
       for (int jj = 0; jj < potentiallyOptimalRectangles.size(); jj++) {
         int j = potentiallyOptimalRectangles.get(jj);
-        samplingPotentialRec(j);
+        samplePotentialRec(j);
       }
       update();
 
@@ -439,7 +439,7 @@ public class SAXVSMDirectSampler {
    * 
    * @param j
    */
-  private static void samplingPotentialRec(int j) {
+  private static void samplePotentialRec(int j) {
 
     double max_L = lengthsSide.get(j)[0], delta;
     Integer[] maxSideLengths;
