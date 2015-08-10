@@ -80,6 +80,7 @@ public class SAXVSMDirectSampler {
 
   private static final String COMMA = ", ";
   private static final String CR = "\n";
+  private static final int ITERATION_DELTA_THRESHOLD = 3;
   static {
     consoleLogger = (Logger) LoggerFactory.getLogger(SAXVSMDirectSampler.class);
     consoleLogger.setLevel(LOGGING_LEVEL);
@@ -290,8 +291,9 @@ public class SAXVSMDirectSampler {
       //
       minCVvalues.add(resultMinimum[0]);
       if (hasToBreak(minCVvalues, SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD)) {
-        consoleLogger.info("breaking iteration: " + iterationCounter + " CV error less than "
-            + SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD + " two consequitive times.");
+        consoleLogger.info("breaking iteration: " + iterationCounter
+            + " CV error delta is less than "
+            + SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD + " three consequitive times.");
         break;
       }
 
@@ -363,7 +365,9 @@ public class SAXVSMDirectSampler {
    */
   private static boolean hasToBreak(ArrayList<Double> minCVvalues, double threshold) {
     int size = minCVvalues.size();
-    if (size > 2 && threshold >= (minCVvalues.get(size - 3) - minCVvalues.get(size - 2))
+    if (size > ITERATION_DELTA_THRESHOLD
+        && threshold >= (minCVvalues.get(size - 4) - minCVvalues.get(size - 3))
+        && threshold >= (minCVvalues.get(size - 3) - minCVvalues.get(size - 2))
         && threshold >= (minCVvalues.get(size - 2) - minCVvalues.get(size - 1))) {
       return true;
     }
