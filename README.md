@@ -1,7 +1,7 @@
-SAX-VSM [![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch=master)](https://travis-ci.org/jMotif/sax-vsm_classic)
-============
+## SAX-VSM public code release
 
-##### SAX-VSM code release to support our ICDM-13 publication:
+[![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch=master)](https://travis-ci.org/jMotif/sax-vsm_classic)
+[![codecov.io](http://codecov.io/github/jMotif/sax-vsm_classic/coverage.svg?branch=master)](http://codecov.io/github/jMotif/sax-vsm_classic?branch=master)
 
 Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
