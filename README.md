@@ -19,8 +19,7 @@ Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication U
 
 [4] The DiRect implementation source code is partially based on [JCOOL](https://github.com/cvut/JCOOL).
 
-0.0 In a nutshell
-------------
+### 0.0 In a nutshell
 
 The proposed interpretable time series classification algorithm consists of two steps -- training and classification. 
 
@@ -34,7 +33,7 @@ The whole process is illustrated below:
 
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
-1.0 Building
+### 1.0 Building
 ------------
 The code is written in Java and I use maven to build it:
 	
@@ -48,8 +47,7 @@ The code is written in Java and I use maven to build it:
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESSFUL
 
-2.0 Running the classifier
-------------
+### 2.0 Running the classifier
 Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
 
 	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -w 33 -p 17 -a 15 
@@ -61,8 +59,7 @@ Class `SAXVSMClassifier` is runnable from command line; running it without param
 	 test class: 1 series: 76
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
 
-3.0 Running the parameters sampler (optimizer)
-------------
+### 3.0 Running the parameters sampler (optimizer)
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
 The code implements the DiRect sampler which can be called from the command line. Below is the trace of running the sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
@@ -97,16 +94,14 @@ As shown in our work, DiRect provides a significant speed-up when compared with 
 
 ![An example of the DiRect sampler run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
-4.0 Interpretable classification
-------------
+### 4.0 Interpretable classification
 The class named `SAXVSMPatternExplorer` prints the most significant class-characteristic patterns, their weights, and the time-series that contain those. The `best_words_heat.R` script allows to plot these. Here is an example for the Gun/Point data:
 
 ![An example of class-characteristic patterns localization in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
 Note, that the time series ranges highlighted by the approach correspond to distinctive class features: class Gun is characterized the most by articulated movements for prop retrieval and aiming, class Point is characterized by the ‘overshoot’ phenomenon and simple (when compared to Gun) movement before aiming.
 
-5.0 NOTES
-------------
+### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
 Also note that code implements 5 ways the TF (term frequency value) can be computed:
@@ -123,8 +118,7 @@ The normalization threshold (used in SAX discretization) is also quite important
 
 Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was missclassified, but you may want to assign it to one of the classes randomly.
 
-6.0 The classification accuracy table
-------------
+### 6.0 The classification accuracy table
 The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
@@ -185,5 +179,5 @@ The following table was obtained in automated mode when using DiRect-driven para
 | WordsSynonyms               | 25      | 270     | 0.3824        | **0.3511**   | 0.4404  |
 | Yoga                        | 2       | 426     | 0.1697        | 0.1637   | **0.1510**  |
 
-## Made with Aloha!
+### Made with Aloha!
 ![Made with Aloha!](https://raw.githubusercontent.com/GrammarViz2/grammarviz2_src/master/src/resources/assets/aloha.jpg)
