@@ -77,6 +77,8 @@
         <configuration>
           <excludes>
             <exclude>**/SAXVSMClassifier*.*</exclude>
+            <exclude>**/GoldsteinPriceFunction*.*</exclude>
+            <exclude>**/ShubertFunction*.*</exclude>
           </excludes>
         </configuration>
         <executions>
