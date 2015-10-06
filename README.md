@@ -20,7 +20,6 @@ Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication U
 [4] The DiRect implementation source code is partially based on [JCOOL](https://github.com/cvut/JCOOL).
 
 ### 0.0 In a nutshell
-
 The proposed interpretable time series classification algorithm consists of two steps -- training and classification. 
 
 For training, labeled time series discretized with [SAX](http://jmotif.github.io/sax-vsm_site/morea/algorithm/SAX.html) via sliding window and "bag of words" constructed for each of the training classes (*single bag per class*). Processing bags with [TFIDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) yields a set of class-characteristic vectors -- one vector per class. Essentially, each element of that vector is a weighted discretized fragment of the input time series whose weight value reflects its "class-characteristic power" and the class specificity.
@@ -34,7 +33,6 @@ The whole process is illustrated below:
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
 ### 1.0 Building
-------------
 The code is written in Java and I use maven to build it:
 	
 	$ mvn package -P single
