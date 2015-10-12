@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jMotif/sax-vsm_classic.svg?branch=master)](https://travis-ci.org/jMotif/sax-vsm_classic)
 [![codecov.io](http://codecov.io/github/jMotif/sax-vsm_classic/coverage.svg?branch=master)](http://codecov.io/github/jMotif/sax-vsm_classic?branch=master)
+[![License](http://img.shields.io/:license-gpl2-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 
 #### This code supports our publication:
 
