@@ -8,6 +8,8 @@
 
 Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](http://www2.hawaii.edu/~senin/assets/papers/sax-vsm-icdm13-short.FINAL_DRAFT.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
+SAX-VSM stack is also [available in R](https://github.com/jMotif/jmotif-R).
+
 #### The code is released under [GPL v.2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 
 #### The SAX-VSM algorithm is based on the following work:
