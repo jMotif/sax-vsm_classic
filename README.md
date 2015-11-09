@@ -10,7 +10,7 @@ Senin, P.; Malinchik, S., [*SAX-VSM: Interpretable Time Series ClassiCfication U
 
 ##### Note, that SAX-VSM stack is also [available in R](https://github.com/jMotif/jmotif-R).
 
-#### The SAX-VSM algorithm is based on the following work:
+#### Our algorithm is based on the following work:
 
 [1] Lin, J., Keogh, E., Wei, L. and Lonardi, S., [*Experiencing SAX: a Novel Symbolic Representation of Time Series*](http://cs.gmu.edu/~jessica/SAX_DAMI_preprint.pdf). [DMKD Journal](http://link.springer.com/article/10.1007%2Fs10618-007-0064-z), 2007.
 
