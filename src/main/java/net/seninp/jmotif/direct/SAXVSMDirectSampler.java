@@ -27,7 +27,10 @@ import com.beust.jcommander.JCommander;
 /**
  * Implements a cross-validation DIRECT-based procedure for SAX-VSM parameters optimization.
  * 
- * @author psenin
+ * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
+ * SAX-VSM needs.
+ * 
+ * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
  * 
  */
 public class SAXVSMDirectSampler {
@@ -158,21 +161,23 @@ public class SAXVSMDirectSampler {
     Date start = new Date();
 
     lowerBounds = new int[] { SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MIN,
-        SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN, SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN };
+        SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MIN,
+        SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MIN };
 
     upperBounds = new int[] { SAXVSMDirectSamplerParams.SAX_WINDOW_SIZE_MAX,
-        SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX, SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MAX };
+        SAXVSMDirectSamplerParams.SAX_PAA_SIZE_MAX,
+        SAXVSMDirectSamplerParams.SAX_ALPHABET_SIZE_MAX };
 
-    consoleLogger.info("running sampling for " + NumerosityReductionStrategy.MINDIST.toString()
-        + " strategy...");
+    consoleLogger.info(
+        "running sampling for " + NumerosityReductionStrategy.MINDIST.toString() + " strategy...");
     Params classicParams = sample(NumerosityReductionStrategy.MINDIST);
 
-    consoleLogger.info("running sampling for " + NumerosityReductionStrategy.EXACT.toString()
-        + " strategy...");
+    consoleLogger.info(
+        "running sampling for " + NumerosityReductionStrategy.EXACT.toString() + " strategy...");
     Params exactParams = sample(NumerosityReductionStrategy.EXACT);
 
-    consoleLogger.info("running sampling for " + NumerosityReductionStrategy.NONE.toString()
-        + " strategy...");
+    consoleLogger.info(
+        "running sampling for " + NumerosityReductionStrategy.NONE.toString() + " strategy...");
     Params noredParams = sample(NumerosityReductionStrategy.NONE);
     Date finish = new Date();
 
@@ -180,9 +185,9 @@ public class SAXVSMDirectSampler {
     classify(exactParams);
     classify(noredParams);
 
-    consoleLogger.info("all done in # "
-        + Long.valueOf(finish.getTime() - start.getTime()).toString() + " ms; that is "
-        + SAXProcessor.timeToString(start.getTime(), finish.getTime()));
+    consoleLogger
+        .info("all done in # " + Long.valueOf(finish.getTime() - start.getTime()).toString()
+            + " ms; that is " + SAXProcessor.timeToString(start.getTime(), finish.getTime()));
   }
 
   private static void classify(Params params) throws Exception {
@@ -292,8 +297,8 @@ public class SAXVSMDirectSampler {
       minCVvalues.add(resultMinimum[0]);
       if (hasToBreak(minCVvalues, SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD)) {
         consoleLogger.info("breaking iteration: " + iterationCounter
-            + " CV error delta is less than "
-            + SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD + " three consequitive times.");
+            + " CV error delta is less than " + SAXVSMDirectSamplerParams.ITERATIONS_BREAK_THRESHOLD
+            + " three consequitive times.");
         break;
       }
 
@@ -487,8 +492,8 @@ public class SAXVSMDirectSampler {
         saveCache(pointToSample1, f_m1, functionHash);
       }
       else {
-        consoleLogger.debug("** saved the computation at "
-            + Arrays.toString(pointToSample1.toArray()));
+        consoleLogger
+            .debug("** saved the computation at " + Arrays.toString(pointToSample1.toArray()));
       }
       // add to all points
       coordinates.add(ValuePointColored.at(pointToSample1, f_m1, false));
@@ -513,8 +518,8 @@ public class SAXVSMDirectSampler {
         saveCache(pointToSample2, f_m2, functionHash);
       }
       else {
-        consoleLogger.debug("** saved the computation at "
-            + Arrays.toString(pointToSample2.toArray()));
+        consoleLogger
+            .debug("** saved the computation at " + Arrays.toString(pointToSample2.toArray()));
       }
 
       // add to all points
@@ -661,9 +666,10 @@ public class SAXVSMDirectSampler {
     ArrayList<Integer> s_3 = new ArrayList<Integer>();
     if (differentDiagonalLength.size() - sameDiagonalIdxs[0] > 2) {
 
-      double a1 = diagonalLength.get(indexPotentialBestRec), a2 = differentDiagonalLength
-          .get(differentDiagonalLength.size() - 1), b1 = functionValues.get(indexPotentialBestRec), b2 = diagonalsMinFunc[differentDiagonalLength
-          .size() - 1];
+      double a1 = diagonalLength.get(indexPotentialBestRec),
+          a2 = differentDiagonalLength.get(differentDiagonalLength.size() - 1),
+          b1 = functionValues.get(indexPotentialBestRec),
+          b2 = diagonalsMinFunc[differentDiagonalLength.size() - 1];
 
       // The line is defined by: y = slope*x + const
       double slope = (b2 - b1) / (a2 - a1);

@@ -1,6 +1,11 @@
 package net.seninp.jmotif.direct;
 
 /**
+ * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
+ * SAX-VSM needs.
+ * 
+ * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
+ * 
  * An immutable point wrapper to represent the value of a function at a specified point. The
  * immutability makes this class threadsafe.
  * 
@@ -84,9 +89,8 @@ public class ValuePoint implements Comparable<ValuePoint> {
   public int hashCode() {
     int hash = 5;
     hash = 17 * hash + (this.point != null ? this.point.hashCode() : 0);
-    hash = 17
-        * hash
-        + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
+    hash = 17 * hash + (int) (Double.doubleToLongBits(this.value)
+        ^ (Double.doubleToLongBits(this.value) >>> 32));
     return hash;
   }
 

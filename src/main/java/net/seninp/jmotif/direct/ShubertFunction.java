@@ -1,5 +1,14 @@
 package net.seninp.jmotif.direct;
 
+/**
+ * A test function.
+ * 
+ * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
+ * SAX-VSM needs.
+ * 
+ * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
+ *
+ */
 public class ShubertFunction {
 
   public static double compute(double x1, double x2) {

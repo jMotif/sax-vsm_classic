@@ -3,12 +3,21 @@ package net.seninp.jmotif.direct;
 import java.util.Arrays;
 
 /**
+ * 
+ * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
+ * SAX-VSM needs. Below is the original DOC.
+ * 
+ * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
+ * 
  * Wrapper class around a point (or input vector) array. This class is immutable making it
  * threadsafe. It is not extendible because it has no public constructor. Creation is handled by a
  * static factory method an ideal point for caching or hashcode precomputation.
  * 
- * Added value: <li>more abstraction</li> <li>default inplementations of equals + hashcode</li> <li>
- * can be used in collections</li> <li>caching</li>
+ * Added value:
+ * <li>more abstraction</li>
+ * <li>default inplementations of equals + hashcode</li>
+ * <li>can be used in collections</li>
+ * <li>caching</li>
  * 
  * @author ytoh
  */

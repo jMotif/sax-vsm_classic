@@ -20,7 +20,10 @@ import ch.qos.logback.classic.Logger;
 /**
  * This computes the cross-validation classification error given the set of parameters.
  * 
- * @author psenin
+ * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
+ * SAX-VSM needs.
+ * 
+ * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
  */
 public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
 
