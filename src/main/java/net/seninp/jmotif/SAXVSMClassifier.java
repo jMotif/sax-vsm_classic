@@ -46,6 +46,9 @@ public class SAXVSMClassifier {
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 
+  private SAXVSMClassifier() {
+  }
+
   public static void main(String[] args) throws SAXException{
 
     try {

@@ -29,6 +29,9 @@ public class TextKMeans {
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 
+  private TextKMeans() {
+  }
+
   /**
    * This clusters a map data structure of pairs bagName wordBag which is used as tfidf throughout
    * of JMotif.

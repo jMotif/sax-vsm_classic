@@ -11,6 +11,9 @@ package net.seninp.jmotif.direct;
  */
 public class GoldsteinPriceFunction {
 
+  private GoldsteinPriceFunction() {
+  }
+
   public static double compute(double x1, double x2) {
 
     double z1 = x1 / 10;

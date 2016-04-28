@@ -70,6 +70,9 @@ public class SAXVSMPatternExplorer {
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 
+  private SAXVSMPatternExplorer() {
+  }
+
   /**
    * @param args
    * @throws Exception
