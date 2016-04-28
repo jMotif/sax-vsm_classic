@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeSet;
 import net.seninp.jmotif.text.CosineDistanceMatrix;
 
@@ -83,7 +84,7 @@ public class FurthestFirstStrategy implements StartStrategy {
    * @param matrix
    * @return
    */
-  private double minCosineDistance(String furthestElement, TreeSet<String> resultKeys,
+  private double minCosineDistance(String furthestElement, Set<String> resultKeys,
       CosineDistanceMatrix matrix) {
     double minDist = 0.0D;
     for (String currKey : resultKeys) {

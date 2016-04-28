@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Implements cosine distance matrix.
@@ -32,7 +33,7 @@ public class CosineDistanceMatrix {
    * 
    * @param tfidf The data to use.
    */
-  public CosineDistanceMatrix(HashMap<String, HashMap<String, Double>> tfidf) {
+  public CosineDistanceMatrix(Map<String, HashMap<String, Double>> tfidf) {
 
     Locale.setDefault(Locale.US);
 

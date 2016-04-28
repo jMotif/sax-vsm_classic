@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import net.seninp.jmotif.text.CosineDistanceMatrix;
 import net.seninp.jmotif.text.TextProcessor;
@@ -82,8 +83,8 @@ public class TextKMeans {
     return tp.tfidfToTable(centroids).toCharArray();
   }
 
-  private static double computeIntraSS(HashMap<String, HashMap<String, Double>> tfidf,
-      HashMap<String, List<String>> clusters) {
+  private static double computeIntraSS(Map<String, HashMap<String, Double>> tfidf,
+      Map<String, List<String>> clusters) {
     double res = 0;
     for (Entry<String, List<String>> e : clusters.entrySet()) {
       for (int i = 0; i < e.getValue().size(); i++) {
@@ -98,8 +99,8 @@ public class TextKMeans {
     return res;
   }
 
-  private static boolean updateCentroids(LinkedHashMap<String, HashMap<String, Double>> centroids,
-      HashMap<String, List<String>> clusters, HashMap<String, HashMap<String, Double>> tfidf) {
+  private static boolean updateCentroids(Map<String, HashMap<String, Double>> centroids,
+                                         Map<String, List<String>> clusters, HashMap<String, HashMap<String, Double>> tfidf) {
 
     boolean res = false;
 
@@ -125,7 +126,7 @@ public class TextKMeans {
    * @return
    */
   public static HashMap<String, Double> computeCentroid(
-      HashMap<String, HashMap<String, Double>> tfidf, List<String> members) {
+          Map<String, HashMap<String, Double>> tfidf, List<String> members) {
 
     // extract the list of all words into a new bag
     //
@@ -158,8 +159,8 @@ public class TextKMeans {
    * @return
    */
   private static HashMap<String, List<String>> clusterize(
-      LinkedHashMap<String, HashMap<String, Double>> centroids,
-      HashMap<String, HashMap<String, Double>> tfidf) {
+      Map<String, HashMap<String, Double>> centroids,
+      Map<String, HashMap<String, Double>> tfidf) {
 
     // build centroids
     //

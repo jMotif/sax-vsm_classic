@@ -35,9 +35,9 @@ public class RandomStartStrategy implements StartStrategy {
 
     Random random = new Random();
 
-    LinkedHashMap<String, HashMap<String, Double>> res = new LinkedHashMap<String, HashMap<String, Double>>();
+    LinkedHashMap<String, HashMap<String, Double>> res = new LinkedHashMap<>();
 
-    ArrayList<String> keys = new ArrayList<String>();
+    ArrayList<String> keys = new ArrayList<>();
     for (String k : data.keySet()) {
       keys.add(k.substring(0));
     }
@@ -49,7 +49,7 @@ public class RandomStartStrategy implements StartStrategy {
       keys.remove(rand);
       consoleLogger.info("random cluster " + i + ", center: " + key);
 
-      HashMap<String, Double> value = new HashMap<String, Double>();
+      HashMap<String, Double> value = new HashMap<>();
       for (Entry<String, Double> e : data.get(key).entrySet()) {
         value.put(e.getKey().substring(0), new Double(e.getValue()));
       }

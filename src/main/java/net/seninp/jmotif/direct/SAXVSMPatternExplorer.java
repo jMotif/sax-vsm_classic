@@ -123,7 +123,7 @@ public class SAXVSMPatternExplorer {
     // sort words by their weight and print top 10 of these for each class
     for (Entry<String, HashMap<String, Double>> e : tfidf.entrySet()) {
       String className = e.getKey();
-      ArrayList<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
+      List<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
       values.addAll(e.getValue().entrySet());
 
       Collections.sort(values, new TfIdfEntryComparator());
@@ -145,7 +145,7 @@ public class SAXVSMPatternExplorer {
 
       // class name and weights vector
       String className = e.getKey();
-      ArrayList<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
+      List<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
       values.addAll(e.getValue().entrySet());
 
       // form the output
@@ -204,7 +204,7 @@ public class SAXVSMPatternExplorer {
   }
 
   private static double[] seriesValuesAsHeat(double[] series, String className,
-      HashMap<String, HashMap<String, Double>> tfidf, Params params) throws Exception {
+                                             Map<String, HashMap<String, Double>> tfidf, Params params) throws Exception {
 
     Alphabet a = new NormalAlphabet();
 
