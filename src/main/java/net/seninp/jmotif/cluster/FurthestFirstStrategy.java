@@ -19,8 +19,8 @@ public class FurthestFirstStrategy implements StartStrategy {
     //
     CosineDistanceMatrix matrix = new CosineDistanceMatrix(data);
 
-    TreeSet<String> keys = new TreeSet<String>();
-    TreeSet<String> resultKeys = new TreeSet<String>();
+    TreeSet<String> keys = new TreeSet<>();
+    TreeSet<String> resultKeys = new TreeSet<>();
     for (String k : data.keySet()) {
       keys.add(k.substring(0));
     }
@@ -60,10 +60,10 @@ public class FurthestFirstStrategy implements StartStrategy {
     }
 
     // compose the result map
-    LinkedHashMap<String, HashMap<String, Double>> res = new LinkedHashMap<String, HashMap<String, Double>>();
+    LinkedHashMap<String, HashMap<String, Double>> res = new LinkedHashMap<>();
     int counter = 0;
     for (String key : resultKeys) {
-      HashMap<String, Double> value = new HashMap<String, Double>();
+      HashMap<String, Double> value = new HashMap<>();
       for (Entry<String, Double> e : data.get(key).entrySet()) {
         value.put(e.getKey().substring(0), new Double(e.getValue()));
       }

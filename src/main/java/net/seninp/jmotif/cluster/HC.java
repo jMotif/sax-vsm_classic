@@ -33,7 +33,7 @@ public class HC {
 
     // first put everything into own clusters
     //
-    List<Cluster> activeClusters = new ArrayList<Cluster>();
+    List<Cluster> activeClusters = new ArrayList<>();
     for (String key : tfidfData.keySet()) {
       Cluster c = new Cluster(key);
       activeClusters.add(c);
@@ -41,7 +41,7 @@ public class HC {
 
     // make a stack structure
     //
-    Stack<Cluster> stack = new Stack<Cluster>();
+    Stack<Cluster> stack = new Stack<>();
 
     // main loop goes on while there is more then one element in the active set
     while (activeClusters.size() > 1) {

@@ -16,7 +16,7 @@ public class SAXVSMClassifierParams {
   // general setup
   //
   @Parameter
-  public List<String> parameters = new ArrayList<String>();
+  public List<String> parameters = new ArrayList<>();
 
   // datasets
   //

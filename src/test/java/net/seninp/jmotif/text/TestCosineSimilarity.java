@@ -92,7 +92,7 @@ public class TestCosineSimilarity {
     assertEquals("Testing cosine similarity", TEST_VALUE, distLong, TEST_PASS_PRECISION);
 
     // normalize vectors
-    HashMap<String, HashMap<String, Double>> vectors = new HashMap<String, HashMap<String, Double>>();
+    HashMap<String, HashMap<String, Double>> vectors = new HashMap<>();
     vectors.put("first", wbLong);
     vectors.put("second", wb2.getWordsAsDoubles());
     vectors = tp.normalizeToUnitVectors(vectors);

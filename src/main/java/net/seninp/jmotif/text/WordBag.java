@@ -29,7 +29,7 @@ public class WordBag implements Cloneable {
   public WordBag(String bagLabel) {
     super();
     this.label = bagLabel.substring(0);
-    this.words = new HashMap<String, AtomicInteger>();
+    this.words = new HashMap<>();
   }
 
   /**
@@ -40,7 +40,7 @@ public class WordBag implements Cloneable {
    */
   public WordBag(String bagName, HashMap<String, Integer> words) {
     this.label = bagName;
-    this.words = new HashMap<String, AtomicInteger>();
+    this.words = new HashMap<>();
     for (Entry<String, Integer> e : words.entrySet()) {
       this.words.put(e.getKey(), new AtomicInteger(e.getValue()));
     }
@@ -144,7 +144,7 @@ public class WordBag implements Cloneable {
    * @return The map of words as keys with frequencies as values.
    */
   public synchronized HashMap<String, Double> getWordsAsDoubles() {
-    HashMap<String, Double> res = new HashMap<String, Double>();
+    HashMap<String, Double> res = new HashMap<>();
     for (Entry<String, AtomicInteger> e : this.words.entrySet()) {
       res.put(e.getKey(), e.getValue().doubleValue());
     }
@@ -157,7 +157,7 @@ public class WordBag implements Cloneable {
    * @return The map of words as keys with frequencies as values.
    */
   public synchronized HashMap<String, Integer> getWords() {
-    HashMap<String, Integer> res = new HashMap<String, Integer>(this.words.size());
+    HashMap<String, Integer> res = new HashMap<>(this.words.size());
     for (Entry<String, AtomicInteger> e : this.words.entrySet()) {
       res.put(e.getKey(), e.getValue().intValue());
     }

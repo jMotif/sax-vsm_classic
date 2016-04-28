@@ -114,7 +114,7 @@ public final class TextProcessor {
       throws SAXException {
 
     // make a map of resulting bags
-    Map<String, WordBag> preRes = new HashMap<String, WordBag>();
+    Map<String, WordBag> preRes = new HashMap<>();
 
     // process series one by one building word bags
     for (Entry<String, List<double[]>> e : data.entrySet()) {
@@ -130,7 +130,7 @@ public final class TextProcessor {
       preRes.put(classLabel, bag);
     }
 
-    List<WordBag> res = new ArrayList<WordBag>();
+    List<WordBag> res = new ArrayList<>();
     res.addAll(preRes.values());
     return res;
   }
@@ -147,10 +147,10 @@ public final class TextProcessor {
     int totalDocs = texts.size();
 
     // the result. map of document names to the pairs word - tfidf weight
-    HashMap<String, HashMap<String, Double>> res = new HashMap<String, HashMap<String, Double>>();
+    HashMap<String, HashMap<String, Double>> res = new HashMap<>();
 
     // build a collection of all observed words and their frequency in corpus
-    HashMap<String, AtomicInteger> allWords = new HashMap<String, AtomicInteger>();
+    HashMap<String, AtomicInteger> allWords = new HashMap<>();
     for (WordBag bag : texts) {
 
       // here populate result map with empty entries
@@ -323,7 +323,7 @@ public final class TextProcessor {
 
     // melt together sets of keys
     //
-    TreeSet<String> words = new TreeSet<String>();
+    TreeSet<String> words = new TreeSet<>();
     for (HashMap<String, Double> t : tfidf.values()) {
       words.addAll(t.keySet());
     }
@@ -382,7 +382,7 @@ public final class TextProcessor {
       sum = sum + value * value;
     }
     sum = Math.sqrt(sum);
-    HashMap<String, Double> res = new HashMap<String, Double>();
+    HashMap<String, Double> res = new HashMap<>();
     for (Entry<String, Double> e : vector.entrySet()) {
       res.put(e.getKey(), e.getValue() / sum);
     }
@@ -398,7 +398,7 @@ public final class TextProcessor {
   public HashMap<String, HashMap<String, Double>> normalizeToUnitVectors(
       HashMap<String, HashMap<String, Double>> data) {
     // result
-    HashMap<String, HashMap<String, Double>> res = new HashMap<String, HashMap<String, Double>>();
+    HashMap<String, HashMap<String, Double>> res = new HashMap<>();
     // cosine normalize these rows corresponding to docs TFIDF
     //
     for (Entry<String, HashMap<String, Double>> e : data.entrySet()) {
@@ -414,7 +414,7 @@ public final class TextProcessor {
       double sqRoot = Math.sqrt(sum);
 
       // now all the elements must be divided by its value
-      HashMap<String, Double> newEntry = new HashMap<String, Double>(e.getValue().size());
+      HashMap<String, Double> newEntry = new HashMap<>(e.getValue().size());
       for (Entry<String, Double> val : e.getValue().entrySet()) {
         if (val.getValue().equals(0D)) {
           newEntry.put(val.getKey(), 0D);
@@ -443,7 +443,7 @@ public final class TextProcessor {
     Set<String> unionKey = map2.keySet();
     if (!(map1.keySet().equals(map2.keySet()))) {
       System.err.println("WARN: Uneven vectors in the cosineDistance(), adjusting...");
-      unionKey = new HashSet<String>(map1.keySet());
+      unionKey = new HashSet<>(map1.keySet());
       // seninp: I take intersect here, because zeroes do not matter
       //
       unionKey.retainAll(map2.keySet());
@@ -817,7 +817,7 @@ public final class TextProcessor {
 
   public String wordBagToTable(WordBag bag) {
 
-    TreeSet<String> words = new TreeSet<String>();
+    TreeSet<String> words = new TreeSet<>();
     words.addAll(bag.getWordSet());
 
     // name
@@ -844,14 +844,14 @@ public final class TextProcessor {
 
     // melt together sets of keys
     //
-    TreeSet<String> words = new TreeSet<String>();
+    TreeSet<String> words = new TreeSet<>();
     for (WordBag bag : bags) {
       words.addAll(bag.getWordSet());
     }
 
     // print keys - the dictionaries names
     //
-    LinkedHashMap<String, Integer> bagKeys = new LinkedHashMap<String, Integer>();
+    LinkedHashMap<String, Integer> bagKeys = new LinkedHashMap<>();
     StringBuilder sb = new StringBuilder("\"\",");
     int index = 0;
     for (WordBag bag : bags) {

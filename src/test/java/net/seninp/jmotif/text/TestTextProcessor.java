@@ -35,7 +35,7 @@ public class TestTextProcessor {
     bag1 = buildBag("bag1", BAG1);
     bag2 = buildBag("bag2", BAG2);
     bag3 = buildBag("bag3", BAG3);
-    bags = new HashMap<String, WordBag>();
+    bags = new HashMap<>();
     bags.put(bag1.getLabel(), bag1);
     bags.put(bag2.getLabel(), bag2);
     bags.put(bag3.getLabel(), bag3);
