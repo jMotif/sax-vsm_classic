@@ -196,9 +196,8 @@ public class WordBag implements Cloneable {
     this.changed = true;
     for (Entry<String, Integer> entry : otherBag.getWords().entrySet())
       if (this.words.containsKey(entry.getKey())) {
-        this.words.get(entry.getKey()).set(
-            words.get(entry.getKey()).intValue()
-                + otherBag.getWordFrequency(entry.getKey()).intValue());
+        this.words.get(entry.getKey()).set(words.get(entry.getKey()).intValue()
+            + otherBag.getWordFrequency(entry.getKey()).intValue());
       }
       else {
         this.words.put(entry.getKey(), new AtomicInteger(entry.getValue()));
@@ -228,26 +227,27 @@ public class WordBag implements Cloneable {
   /**
    * Get the maximal observed frequency. Useful for normalized tf.
    * 
-   * @return
+   * @return the maximal observed frequency in the bag.
    */
   public synchronized int getMaxFrequency() {
-    if (changed) {
-      this.cachedMax = 0;
-      int res = 0;
-      for (AtomicInteger num : this.words.values()) {
-        res = res + num.intValue();
-        if (this.cachedMax < num.intValue()) {
-          this.cachedMax = num.intValue();
-        }
-      }
-      this.cachedAverage = (double) res / (double) this.words.size();
-      this.changed = false;
-      return this.cachedMax;
-    }
+    updateFrequenciesSummary();
     return this.cachedMax;
   }
 
-  public double getAverageFrequency() {
+  /**
+   * Get the maximal observed frequency. Useful for averaged tf.
+   * 
+   * @return the average frequency in the bag.
+   */
+  public synchronized double getAverageFrequency() {
+    updateFrequenciesSummary();
+    return this.cachedAverage;
+  }
+
+  /**
+   * Computes maximal and average observed frequencies.
+   */
+  private void updateFrequenciesSummary() {
     if (changed) {
       int res = 0;
       this.cachedMax = 0;
@@ -259,9 +259,7 @@ public class WordBag implements Cloneable {
       }
       this.cachedAverage = (double) res / (double) this.words.size();
       this.changed = false;
-      return this.cachedAverage;
     }
-    return this.cachedAverage;
   }
 
   @Override
