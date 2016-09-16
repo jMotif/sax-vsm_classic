@@ -74,7 +74,7 @@ public final class TextProcessor {
     // scan across the time series extract sub sequences, and convert them to strings
     char[] previousString = null;
 
-    for (int i = 0; i < ts.length - (params.windowSize - 1); i++) {
+    for (int i = 0; i < ts.length - params.windowSize; i++) {
 
       // fix the current subsection
       double[] subSection = Arrays.copyOfRange(ts, i, i + params.windowSize);

@@ -1,6 +1,7 @@
 package net.seninp.jmotif.text;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -95,7 +96,7 @@ public class TestWordBag {
     }
     assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
     assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
-    
+
     // testing the caching behind frequencies
     assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
     assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
@@ -108,7 +109,13 @@ public class TestWordBag {
     assertEquals(17, bag2.getInternalWords().get("test3").get());
     assertEquals(7.833333333333333, bag2.getAverageFrequency(), 0.000001);
     assertEquals(17.0, bag2.getMaxFrequency(), 0.000001);
-    
+
+    // test the word removal
+    //
+    bag2.addWord("test3", -17);
+    assertNull(bag2.getInternalWords().get("test3"));
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
 
   }
 
