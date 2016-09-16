@@ -93,14 +93,22 @@ public class TestWordBag {
     for (Entry<String, AtomicInteger> word : bag2.getInternalWords().entrySet()) {
       assertEquals(6, bag2.getInternalWords().get(word.getKey()).get());
     }
-
     assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
+    
+    // testing the caching behind frequencies
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
 
+    // adding the new word via merge and testing frequencies again
     WordBag bag3 = new WordBag("bag3");
     bag3.addWord("test3", 17);
 
     bag2.mergeWith(bag3);
     assertEquals(17, bag2.getInternalWords().get("test3").get());
+    assertEquals(7.833333333333333, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(17.0, bag2.getMaxFrequency(), 0.000001);
+    
 
   }
 

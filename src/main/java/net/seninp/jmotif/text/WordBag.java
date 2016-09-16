@@ -233,11 +233,14 @@ public class WordBag implements Cloneable {
   public synchronized int getMaxFrequency() {
     if (changed) {
       this.cachedMax = 0;
+      int res = 0;
       for (AtomicInteger num : this.words.values()) {
+        res = res + num.intValue();
         if (this.cachedMax < num.intValue()) {
           this.cachedMax = num.intValue();
         }
       }
+      this.cachedAverage = (double) res / (double) this.words.size();
       this.changed = false;
       return this.cachedMax;
     }
@@ -247,8 +250,12 @@ public class WordBag implements Cloneable {
   public double getAverageFrequency() {
     if (changed) {
       int res = 0;
+      this.cachedMax = 0;
       for (AtomicInteger num : this.words.values()) {
         res = res + num.intValue();
+        if (this.cachedMax < num.intValue()) {
+          this.cachedMax = num.intValue();
+        }
       }
       this.cachedAverage = (double) res / (double) this.words.size();
       this.changed = false;
