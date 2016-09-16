@@ -83,16 +83,24 @@ public class TestWordBag {
   @Test
   public void testMerge() {
 
-    WordBag bag = new WordBag("bag2");
+    WordBag bag2 = new WordBag("bag2");
     for (int i = 0; i < TEST_WORDS.length; i++) {
-      bag.addWord(TEST_WORDS[TEST_WORDS.length - 1 - i], i + 1);
+      bag2.addWord(TEST_WORDS[TEST_WORDS.length - 1 - i], i + 1);
     }
 
-    bag.mergeWith(new WordBag(TEST_BAG_NAME, map));
+    bag2.mergeWith(new WordBag(TEST_BAG_NAME, map));
 
-    for (Entry<String, AtomicInteger> word : bag.getInternalWords().entrySet()) {
-      assertEquals(6, bag.getInternalWords().get(word.getKey()).get());
+    for (Entry<String, AtomicInteger> word : bag2.getInternalWords().entrySet()) {
+      assertEquals(6, bag2.getInternalWords().get(word.getKey()).get());
     }
+
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+
+    WordBag bag3 = new WordBag("bag3");
+    bag3.addWord("test3", 17);
+
+    bag2.mergeWith(bag3);
+    assertEquals(17, bag2.getInternalWords().get("test3").get());
 
   }
 
