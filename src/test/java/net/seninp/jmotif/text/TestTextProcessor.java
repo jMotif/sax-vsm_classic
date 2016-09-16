@@ -150,12 +150,39 @@ public class TestTextProcessor {
     NumerosityReductionStrategy numerosityRedStrategy = NumerosityReductionStrategy.NONE;
     double normThreshold = 0.01;
 
+    // test NONE
+    //
     SAXRecords sax = sp.ts2saxViaWindow(series, slidingWindowSize, paaSize,
         na.getCuts(alphabetSize), numerosityRedStrategy, normThreshold);
+    WordBag bag = tp.seriesToWordBag("series1", series,
+        new Params(slidingWindowSize, paaSize, alphabetSize, normThreshold, numerosityRedStrategy));
+    for (SAXRecord sr : sax) {
+      String word = String.valueOf(sr.getPayload());
+      int freq = sr.getIndexes().size();
+      assertEquals(freq, bag.getInternalWords().get(word).get());
+    }
 
-    Params params = new Params(slidingWindowSize, paaSize, alphabetSize, normThreshold,
-        numerosityRedStrategy);
-    WordBag bag = tp.seriesToWordBag("series1", series, params);
+    // test EXACT
+    //
+    numerosityRedStrategy = NumerosityReductionStrategy.EXACT;
+    sax = sp.ts2saxViaWindow(series, slidingWindowSize, paaSize, na.getCuts(alphabetSize),
+        numerosityRedStrategy, normThreshold);
+    bag = tp.seriesToWordBag("series1", series,
+        new Params(slidingWindowSize, paaSize, alphabetSize, normThreshold, numerosityRedStrategy));
+
+    for (SAXRecord sr : sax) {
+      String word = String.valueOf(sr.getPayload());
+      int freq = sr.getIndexes().size();
+      assertEquals(freq, bag.getInternalWords().get(word).get());
+    }
+
+    // test MINDIST
+    //
+    numerosityRedStrategy = NumerosityReductionStrategy.MINDIST;
+    sax = sp.ts2saxViaWindow(series, slidingWindowSize, paaSize, na.getCuts(alphabetSize),
+        numerosityRedStrategy, normThreshold);
+    bag = tp.seriesToWordBag("series1", series, new Params(slidingWindowSize, paaSize, alphabetSize,
+        normThreshold, numerosityRedStrategy, 0.01));
 
     for (SAXRecord sr : sax) {
       String word = String.valueOf(sr.getPayload());
