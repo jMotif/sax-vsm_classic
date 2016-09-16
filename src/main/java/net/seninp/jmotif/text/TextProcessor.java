@@ -74,7 +74,7 @@ public final class TextProcessor {
     // scan across the time series extract sub sequences, and convert them to strings
     char[] previousString = null;
 
-    for (int i = 0; i < ts.length - params.windowSize; i++) {
+    for (int i = 0; i <= ts.length - params.windowSize; i++) {
 
       // fix the current subsection
       double[] subSection = Arrays.copyOfRange(ts, i, i + params.windowSize);
@@ -212,8 +212,8 @@ public final class TextProcessor {
 
           // compute the IDF
           //
-          double idfLOGValue = Math.log10(Integer.valueOf(totalDocs).doubleValue()
-              / word.getValue().doubleValue());
+          double idfLOGValue = Math
+              .log10(Integer.valueOf(totalDocs).doubleValue() / word.getValue().doubleValue());
 
           // and the TF-IDF
           //
@@ -490,7 +490,8 @@ public final class TextProcessor {
   // return res / (m1 * m2);
   // }
 
-  public CosineDistanceMatrix getCosineDistanceMatrix(HashMap<String, HashMap<String, Double>> tfidf) {
+  public CosineDistanceMatrix getCosineDistanceMatrix(
+      HashMap<String, HashMap<String, Double>> tfidf) {
     CosineDistanceMatrix res = new CosineDistanceMatrix(tfidf);
     return res;
   }

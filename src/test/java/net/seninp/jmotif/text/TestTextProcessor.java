@@ -1,9 +1,22 @@
 package net.seninp.jmotif.text;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
+import net.seninp.jmotif.SAXVSMClassifierParams;
+import net.seninp.jmotif.sax.NumerosityReductionStrategy;
+import net.seninp.jmotif.sax.SAXException;
+import net.seninp.jmotif.sax.SAXProcessor;
+import net.seninp.jmotif.sax.alphabet.NormalAlphabet;
+import net.seninp.jmotif.sax.datastructure.SAXRecord;
+import net.seninp.jmotif.sax.datastructure.SAXRecords;
+import net.seninp.util.UCRUtils;
 
 /**
  * Test the text utilities class.
@@ -18,6 +31,7 @@ public class TestTextProcessor {
       { "cow", "2" }, { "grass", "4" } };
   private static final String[][] BAG3 = { { "the", "3" }, { "hill", "2" }, { "meadow", "4" },
       { "cow", "4" }, { "air", "2" } };
+  private static final String TRAIN_FILE = "src/resources/data/cbf/CBF_TRAIN";
 
   private WordBag bag1;
   private WordBag bag2;
@@ -108,4 +122,47 @@ public class TestTextProcessor {
     return res;
   }
 
+  /**
+   * Test time series to the bag conversion.
+   * 
+   * @throws SAXException if error occurs.
+   */
+  @Test
+  public void testSeriesToBag() throws SAXException {
+    Map<String, List<double[]>> trainData = null;
+    try {
+      trainData = UCRUtils.readUCRData(TRAIN_FILE);
+    }
+    catch (NumberFormatException e) {
+      fail("exception shall not be thrown!");
+    }
+    catch (IOException e) {
+      fail("exception shall not be thrown!");
+    }
+
+    double[] series = trainData.get("1").get(0);
+
+    SAXProcessor sp = new SAXProcessor();
+    NormalAlphabet na = new NormalAlphabet();
+
+    int slidingWindowSize = 30;
+    int paaSize = 6;
+    int alphabetSize = 3;
+    NumerosityReductionStrategy numerosityRedStrategy = NumerosityReductionStrategy.NONE;
+    double normThreshold = 0.01;
+
+    SAXRecords sax = sp.ts2saxViaWindow(series, slidingWindowSize, paaSize,
+        na.getCuts(alphabetSize), numerosityRedStrategy, normThreshold);
+
+    Params params = new Params(slidingWindowSize, paaSize, alphabetSize, normThreshold,
+        numerosityRedStrategy);
+    WordBag bag = tp.seriesToWordBag("series1", series, params);
+
+    for (SAXRecord sr : sax) {
+      String word = String.valueOf(sr.getPayload());
+      int freq = sr.getIndexes().size();
+      assertEquals(freq, bag.getInternalWords().get(word).get());
+    }
+
+  }
 }
