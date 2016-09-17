@@ -34,6 +34,9 @@ public class TestPoint {
 
     assertTrue(Point.getDefault().equals(Point.at()));
 
+    Point p3 = Point.random(11);
+    assertEquals(11, p3.toArray().length);
+    
   }
 
 }
