@@ -1,8 +1,7 @@
 package net.seninp.jmotif.direct;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class TestLOOCVStackEntry {
