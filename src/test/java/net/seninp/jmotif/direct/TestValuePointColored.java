@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestValuePoint {
+public class TestValuePointColored {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
@@ -20,11 +20,11 @@ public class TestValuePoint {
 
   @Test
   public void testPoint() {
-    ValuePoint p1 = ValuePoint.at(Point.at(10.0), 1.0);
-    ValuePoint p2 = ValuePoint.at(Point.at(10.0), 1.0);
+    ValuePointColored p1 = ValuePointColored.at(Point.at(10.0), 1.0, true);
+    ValuePointColored p2 = ValuePointColored.at(Point.at(10.0), 1.0, true);
 
-    ValuePoint p3 = ValuePoint.at(Point.at(13.0), 1.0);
-    ValuePoint p4 = ValuePoint.at(Point.at(10.0), 2.0);
+    ValuePointColored p3 = ValuePointColored.at(Point.at(13.0), 1.0, true);
+    ValuePointColored p4 = ValuePointColored.at(Point.at(10.0), 2.0, false);
 
     assertTrue(p1.equals(p2));
     assertEquals(p1.hashCode(), p2.hashCode());
@@ -40,9 +40,13 @@ public class TestValuePoint {
     assertEquals(1, p1.getValue(), 0.000001);
     assertEquals(Point.at(10.0), p1.getPoint());
 
-    assertTrue(p4.compareTo(p3) > 0);
-    assertTrue(p3.compareTo(p4) < 0);
-    assertTrue(ValuePoint.at(Point.at(19.0), 2.0).compareTo(p4) == 0);
+    assertTrue(p1.getBest());
+    assertFalse(p4.getBest());
+
+    assertTrue(p4.compareTo(ValuePoint.at(Point.at(13.0), 1.0)) > 0);
+    assertTrue(p3.compareTo(ValuePoint.at(Point.at(10.0), 2.0)) < 0);
+    assertTrue(ValuePointColored.at(Point.at(19.0), 2.0, true)
+        .compareTo(ValuePoint.at(Point.at(10.0), 2.0)) == 0);
 
   }
 
