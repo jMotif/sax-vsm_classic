@@ -178,5 +178,8 @@ The following table was obtained in automated mode when using DiRect-driven para
 | WordsSynonyms               | 25      | 270     | 0.3824        | **0.3511**   | 0.4404  |
 | Yoga                        | 2       | 426     | 0.1697        | 0.1637   | **0.1510**  |
 
+
+![Cite please!](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/citation.jpg)
+
 ### Made with Aloha!
 ![Made with Aloha!](https://raw.githubusercontent.com/GrammarViz2/grammarviz2_src/master/src/resources/assets/aloha.jpg)
