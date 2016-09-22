@@ -49,7 +49,9 @@ The code is written in Java and I use maven to build it:
 ### 2.0 Running the classifier
 Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
 
-	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -w 33 -p 17 -a 15 
+	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
+	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
+	  -w 33 -p 17 -a 15 
 	trainData classes: 2, series length: 150
 	 training class: 2 series: 26
 	 training class: 1 series: 24
@@ -63,7 +65,9 @@ Symbolic discretization with SAX -- the first step of our algorithm -- requires 
 
 The code implements the DiRect sampler which can be called from the command line. Below is the trace of running the sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
 
-	$ java -jar target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
+	$ java -jar target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
+	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
+	  -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
 	trainData classes: 2, series length: 150
 	 training class: 2 series: 26
 	 training class: 1 series: 24
