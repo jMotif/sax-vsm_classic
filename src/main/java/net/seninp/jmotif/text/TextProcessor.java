@@ -150,7 +150,7 @@ public final class TextProcessor {
     HashMap<String, HashMap<String, Double>> res = new HashMap<String, HashMap<String, Double>>();
 
     // build a collection of all observed words and their frequency in corpus
-    HashMap<String, AtomicInteger> allWords = new HashMap<String, AtomicInteger>();
+    Map<String, AtomicInteger> allWords = new HashMap<String, AtomicInteger>();
     for (WordBag bag : texts) {
 
       // here populate result map with empty entries
@@ -174,7 +174,7 @@ public final class TextProcessor {
 
       // fix the doc name
       String bagName = bag.getLabel();
-      HashMap<String, AtomicInteger> bagWords = bag.getInternalWords(); // these are words of
+      Map<String, AtomicInteger> bagWords = bag.getInternalWords(); // these are words of
                                                                         // documents
 
       // what we want to do for TF*IDF is to compute it for all WORDS ever seen in set
@@ -297,7 +297,7 @@ public final class TextProcessor {
    * @param string The string term.
    * @return The DF value.
    */
-  public int df(HashMap<String, WordBag> bags, String string) {
+  public int df(Map<String, WordBag> bags, String string) {
     int res = 0;
     for (WordBag b : bags.values()) {
       if (b.contains(string)) {
@@ -319,12 +319,12 @@ public final class TextProcessor {
         / Integer.valueOf(df(bags, string)).doubleValue();
   }
 
-  public String tfidfToTable(HashMap<String, HashMap<String, Double>> tfidf) {
+  public String tfidfToTable(Map<String, HashMap<String, Double>> tfidf) {
 
     // melt together sets of keys
     //
-    TreeSet<String> words = new TreeSet<String>();
-    for (HashMap<String, Double> t : tfidf.values()) {
+    Set<String> words = new TreeSet<String>();
+    for (Map<String, Double> t : tfidf.values()) {
       words.addAll(t.keySet());
     }
 
@@ -345,7 +345,7 @@ public final class TextProcessor {
       rowSB.append("\"").append(w).append("\",");
 
       for (String key : tfidf.keySet()) {
-        HashMap<String, Double> data = tfidf.get(key);
+        Map<String, Double> data = tfidf.get(key);
 
         if (data.keySet().contains(w)) {
           rowSB.append(data.get(w)).append(",");
@@ -376,7 +376,7 @@ public final class TextProcessor {
    * @param vector the vector.
    * @return normalized vector.
    */
-  public HashMap<String, Double> normalizeToUnitVector(HashMap<String, Double> vector) {
+  public HashMap<String, Double> normalizeToUnitVector(Map<String, Double> vector) {
     double sum = 0d;
     for (double value : vector.values()) {
       sum = sum + value * value;
@@ -396,7 +396,7 @@ public final class TextProcessor {
    * @return The normalized tfidf statistics.
    */
   public HashMap<String, HashMap<String, Double>> normalizeToUnitVectors(
-      HashMap<String, HashMap<String, Double>> data) {
+      Map<String, HashMap<String, Double>> data) {
     // result
     HashMap<String, HashMap<String, Double>> res = new HashMap<String, HashMap<String, Double>>();
     // cosine normalize these rows corresponding to docs TFIDF
@@ -438,7 +438,7 @@ public final class TextProcessor {
    * @param map2 The data vector 2.
    * @return The cosine distance.
    */
-  public double cosineDistance(HashMap<String, Double> map1, HashMap<String, Double> map2) {
+  public double cosineDistance(Map<String, Double> map1, Map<String, Double> map2) {
 
     Set<String> unionKey = map2.keySet();
     if (!(map1.keySet().equals(map2.keySet()))) {
@@ -466,7 +466,7 @@ public final class TextProcessor {
     return numerator / denominator;
   }
 
-  public double cosineSimilarity(WordBag testSample, HashMap<String, Double> weightVector) {
+  public double cosineSimilarity(WordBag testSample, Map<String, Double> weightVector) {
     double res = 0;
     for (Entry<String, Integer> entry : testSample.getWords().entrySet()) {
       if (weightVector.containsKey(entry.getKey())) {
@@ -517,7 +517,7 @@ public final class TextProcessor {
   }
 
   public double cosineSimilarityInstrumented(WordBag testSample,
-      HashMap<String, Double> weightVector, HashMap<String, Double> insight) {
+                                             Map<String, Double> weightVector, Map<String, Double> insight) {
     double res = 0;
     for (Entry<String, Integer> entry : testSample.getWords().entrySet()) {
       if (weightVector.containsKey(entry.getKey())) {
@@ -648,7 +648,7 @@ public final class TextProcessor {
   }
 
   public int classify(String trueClassLabel, WordBag test,
-      HashMap<String, HashMap<String, Double>> tfidf, Params params) {
+                      Map<String, HashMap<String, Double>> tfidf, Params params) {
 
     // it is Cosine similarity,
     //
@@ -692,7 +692,7 @@ public final class TextProcessor {
     return 0;
   }
 
-  public String classify(WordBag test, HashMap<String, HashMap<String, Double>> tfidf) {
+  public String classify(WordBag test, Map<String, HashMap<String, Double>> tfidf) {
 
     // it is Cosine similarity,
     //
@@ -818,7 +818,7 @@ public final class TextProcessor {
 
   public String wordBagToTable(WordBag bag) {
 
-    TreeSet<String> words = new TreeSet<String>();
+    Set<String> words = new TreeSet<String>();
     words.addAll(bag.getWordSet());
 
     // name
@@ -845,14 +845,14 @@ public final class TextProcessor {
 
     // melt together sets of keys
     //
-    TreeSet<String> words = new TreeSet<String>();
+    Set<String> words = new TreeSet<String>();
     for (WordBag bag : bags) {
       words.addAll(bag.getWordSet());
     }
 
     // print keys - the dictionaries names
     //
-    LinkedHashMap<String, Integer> bagKeys = new LinkedHashMap<String, Integer>();
+    Map<String, Integer> bagKeys = new LinkedHashMap<String, Integer>();
     StringBuilder sb = new StringBuilder("\"\",");
     int index = 0;
     for (WordBag bag : bags) {
@@ -872,7 +872,7 @@ public final class TextProcessor {
 
       for (Entry<String, Integer> bagKey : bagKeys.entrySet()) {
         WordBag bag = bags.get(bagKey.getValue());
-        HashMap<String, Integer> data = bag.getWords();
+        Map<String, Integer> data = bag.getWords();
 
         if (data.keySet().contains(w)) {
           rowSB.append(data.get(w)).append(",");

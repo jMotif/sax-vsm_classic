@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 import net.seninp.jmotif.text.CosineDistanceMatrix;
 
@@ -72,7 +73,7 @@ public class Cluster {
    * @param criterion The linkage criterion.
    * @return The distance between clusters based on the distances and the linkage.
    */
-  public Double distanceTo(Cluster otherCluster, HashMap<String, HashMap<String, Double>> data,
+  public Double distanceTo(Cluster otherCluster, Map<String, HashMap<String, Double>> data,
       CosineDistanceMatrix distanceMatrix, LinkageCriterion criterion) {
     if (otherCluster.keys.size() == 1 && this.keys.size() == 1) {
       return distanceMatrix.distanceBetween(otherCluster.keys.first(), this.keys.first());

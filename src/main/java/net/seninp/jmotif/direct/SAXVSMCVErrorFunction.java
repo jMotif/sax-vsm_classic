@@ -109,10 +109,10 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
       consoleLogger.debug(params.toString());
 
       // cache for word bags
-      HashMap<String, WordBag> seriesBags = new HashMap<String, WordBag>();
+      Map<String, WordBag> seriesBags = new HashMap<String, WordBag>();
 
       // the class series bags
-      HashMap<String, WordBag> bags = new HashMap<String, WordBag>();
+      Map<String, WordBag> bags = new HashMap<String, WordBag>();
 
       // push into stack all the samples we are going to validate for
       Stack<String> samples2go = new Stack<String>();
@@ -175,7 +175,7 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
 
         // adjust word bags
         //
-        HashMap<String, WordBag> basisBags = adjustWordBags(bags, wordsToRemove);
+        Map<String, WordBag> basisBags = adjustWordBags(bags, wordsToRemove);
 
         // validation phase
         //
@@ -210,8 +210,8 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
 
   }
 
-  private HashMap<String, WordBag> adjustWordBags(HashMap<String, WordBag> bags,
-      HashMap<String, WordBag> wordsToRemove) {
+  private HashMap<String, WordBag> adjustWordBags(Map<String, WordBag> bags,
+      Map<String, WordBag> wordsToRemove) {
 
     HashMap<String, WordBag> res = new HashMap<String, WordBag>();
     for (Entry<String, WordBag> e : bags.entrySet()) {

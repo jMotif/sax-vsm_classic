@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
 import net.seninp.jmotif.sax.NumerosityReductionStrategy;
 import net.seninp.jmotif.sax.SAXProcessor;
 import net.seninp.jmotif.text.Params;
@@ -40,10 +42,10 @@ public class SAXVSMDirectSampler {
   private static DecimalFormat fmt = new DecimalFormat("0.00###", otherSymbols);
 
   // array with all rectangle centerpoints
-  private static ArrayList<Double[]> centerPoints;
+  private static List<Double[]> centerPoints;
 
   // array with all rectangle side lengths in each dimension
-  private static ArrayList<Double[]> lengthsSide;
+  private static List<Double[]> lengthsSide;
 
   // array with distances from center points to the vertices
   private static ArrayList<Double> diagonalLength;
@@ -58,7 +60,7 @@ public class SAXVSMDirectSampler {
   private static ArrayList<Double> functionValues;
 
   // array used to track sampled points and function values
-  private static ArrayList<ValuePointColored> coordinates;
+  private static List<ValuePointColored> coordinates;
   private static HashMap<String, Double> functionHash;
 
   private static final double precision = 1E-16;
@@ -331,7 +333,7 @@ public class SAXVSMDirectSampler {
     // generally, we want a shorter window
     //
     StringBuffer sb = new StringBuffer();
-    HashSet<String> minimalValueParameters = new HashSet<String>();
+    Set<String> minimalValueParameters = new HashSet<String>();
     double minimalValue = resultMinimum[0];
 
     sb.append("min CV error ").append(fmt.format(minimalValue)).append(" reached at ");
@@ -411,7 +413,7 @@ public class SAXVSMDirectSampler {
     while (true) {
       double diagonalTmp = differentDiagonalLength.get(i1);
       Integer[] indx = findNonMatches(differentDiagonalLength, diagonalTmp);
-      ArrayList<Double> diagonalCopy = differentDiagonalLength;
+      List<Double> diagonalCopy = differentDiagonalLength;
       differentDiagonalLength = new ArrayList<Double>();
       differentDiagonalLength.add(diagonalTmp);
 
@@ -545,7 +547,7 @@ public class SAXVSMDirectSampler {
 
   }
 
-  private static void saveCache(Point point, Double value, HashMap<String, Double> cache) {
+  private static void saveCache(Point point, Double value, Map<String, Double> cache) {
     // formatting the string
     StringBuffer sb = new StringBuffer();
     for (double d : point.toArray()) {
@@ -556,7 +558,7 @@ public class SAXVSMDirectSampler {
     // consoleLogger.info(sb.toString() + ", " + value);
   }
 
-  private static Double checkCache(Point point, HashMap<String, Double> cache) {
+  private static Double checkCache(Point point, Map<String, Double> cache) {
     // formatting the string
     StringBuffer sb = new StringBuffer();
     for (double d : point.toArray()) {
@@ -662,7 +664,7 @@ public class SAXVSMDirectSampler {
 
     // s_1 now includes all rectangles i, with diagonals[i] >= diagonals(indexPotentialBestRec)
     //
-    ArrayList<Integer> s_2 = new ArrayList<Integer>();
+    List<Integer> s_2 = new ArrayList<Integer>();
     ArrayList<Integer> s_3 = new ArrayList<Integer>();
     if (differentDiagonalLength.size() - sameDiagonalIdxs[0] > 2) {
 

@@ -2,6 +2,7 @@ package net.seninp.jmotif.text;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,7 +39,7 @@ public class WordBag implements Cloneable {
    * @param bagName The name for the collection.
    * @param words The words data for the collection.
    */
-  public WordBag(String bagName, HashMap<String, Integer> words) {
+  public WordBag(String bagName, Map<String, Integer> words) {
     this.label = bagName;
     this.words = new HashMap<String, AtomicInteger>();
     for (Entry<String, Integer> e : words.entrySet()) {
