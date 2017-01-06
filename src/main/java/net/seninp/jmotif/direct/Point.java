@@ -112,26 +112,25 @@ public class Point {
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final Point other = (Point) obj;
-    if (this.array != other.array
-        && (this.array == null || !Arrays.equals(this.array, other.array))) {
-      return false;
-    }
-    return true;
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(array);
+    return result;
   }
 
   @Override
-  public int hashCode() {
-    int hash = 3;
-    hash = 89 * hash + (this.array != null ? this.array.hashCode() : 0);
-    return hash;
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Point other = (Point) obj;
+    if (!Arrays.equals(array, other.array))
+      return false;
+    return true;
   }
 
   public int[] toIntArray() {

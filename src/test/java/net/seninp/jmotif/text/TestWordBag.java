@@ -1,6 +1,7 @@
 package net.seninp.jmotif.text;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -83,16 +84,38 @@ public class TestWordBag {
   @Test
   public void testMerge() {
 
-    WordBag bag = new WordBag("bag2");
+    WordBag bag2 = new WordBag("bag2");
     for (int i = 0; i < TEST_WORDS.length; i++) {
-      bag.addWord(TEST_WORDS[TEST_WORDS.length - 1 - i], i + 1);
+      bag2.addWord(TEST_WORDS[TEST_WORDS.length - 1 - i], i + 1);
     }
 
-    bag.mergeWith(new WordBag(TEST_BAG_NAME, map));
+    bag2.mergeWith(new WordBag(TEST_BAG_NAME, map));
 
-    for (Entry<String, AtomicInteger> word : bag.getInternalWords().entrySet()) {
-      assertEquals(6, bag.getInternalWords().get(word.getKey()).get());
+    for (Entry<String, AtomicInteger> word : bag2.getInternalWords().entrySet()) {
+      assertEquals(6, bag2.getInternalWords().get(word.getKey()).get());
     }
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
+
+    // testing the caching behind frequencies
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
+
+    // adding the new word via merge and testing frequencies again
+    WordBag bag3 = new WordBag("bag3");
+    bag3.addWord("test3", 17);
+
+    bag2.mergeWith(bag3);
+    assertEquals(17, bag2.getInternalWords().get("test3").get());
+    assertEquals(7.833333333333333, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(17.0, bag2.getMaxFrequency(), 0.000001);
+
+    // test the word removal
+    //
+    bag2.addWord("test3", -17);
+    assertNull(bag2.getInternalWords().get("test3"));
+    assertEquals(6.0, bag2.getAverageFrequency(), 0.000001);
+    assertEquals(6.0, bag2.getMaxFrequency(), 0.000001);
 
   }
 
