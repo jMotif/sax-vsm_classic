@@ -188,7 +188,7 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
         // is this sample correctly classified?
         for (String e : currentValidationSample) {
           String trueClassLabel = e.substring(0, e.indexOf(DELIMITER));
-          int res = tp.classify(trueClassLabel, seriesBags.get(e), tfidf, params);
+          int res = tp.classify(trueClassLabel, seriesBags.get(e), tfidf);
           if (0 == res) {
             missclassifiedSamples = missclassifiedSamples + 1;
           }

@@ -643,11 +643,11 @@ public final class TextProcessor {
 
     WordBag test = seriesToWordBag("test", series, params);
 
-    return classify(classKey, test, tfidf, params);
+    return classify(classKey, test, tfidf);
   }
 
   public int classify(String trueClassLabel, WordBag test,
-      HashMap<String, HashMap<String, Double>> tfidf, Params params) {
+      HashMap<String, HashMap<String, Double>> tfidf) {
 
     // it is Cosine similarity,
     //
