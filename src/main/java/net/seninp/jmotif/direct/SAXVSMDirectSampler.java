@@ -101,6 +101,9 @@ public class SAXVSMDirectSampler {
 
   private static TextProcessor tp = new TextProcessor();
 
+  private SAXVSMDirectSampler() {
+  }
+
   public static void main(String[] args) throws Exception {
 
     try {

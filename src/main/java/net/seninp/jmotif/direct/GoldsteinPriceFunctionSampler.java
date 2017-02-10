@@ -19,6 +19,9 @@ public class GoldsteinPriceFunctionSampler {
 
   private static final double step = 0.5;
 
+  private GoldsteinPriceFunctionSampler() {
+  }
+
   public static void main(String[] args) {
 
     double x1 = X1_START;

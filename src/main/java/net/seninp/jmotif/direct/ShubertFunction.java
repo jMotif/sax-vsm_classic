@@ -11,6 +11,9 @@ package net.seninp.jmotif.direct;
  */
 public class ShubertFunction {
 
+  private ShubertFunction() {
+  }
+
   public static double compute(double x1, double x2) {
 
     double p1 = 0.0;

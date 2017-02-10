@@ -10,6 +10,9 @@ public class ClusterUtils {
   private static final String CR = "\n";
   private static final DecimalFormat df = new DecimalFormat("#0.00000");
 
+  private ClusterUtils() {
+  }
+
   public static String centroidsToString(LinkedHashMap<String, HashMap<String, Double>> centroids) {
 
     StringBuffer res = new StringBuffer();

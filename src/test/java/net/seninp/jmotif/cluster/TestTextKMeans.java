@@ -25,6 +25,9 @@ public class TestTextKMeans {
 
   private static final TextProcessor tp = new TextProcessor();
 
+  private TestTextKMeans() {
+  }
+
   public static void main(String[] args) throws Exception {
 
     HashMap<String, HashMap<String, Double>> tfidf = new HashMap<String, HashMap<String, Double>>();
