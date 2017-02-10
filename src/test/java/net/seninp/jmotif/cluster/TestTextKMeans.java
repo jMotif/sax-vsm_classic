@@ -27,11 +27,11 @@ public class TestTextKMeans {
 
   public static void main(String[] args) throws Exception {
 
-    HashMap<String, HashMap<String, Double>> tfidf = new HashMap<String, HashMap<String, Double>>();
+    HashMap<String, HashMap<String, Double>> tfidf = new HashMap<>();
 
     int counter = 0;
     for (double[] p : data) {
-      HashMap<String, Double> cl = new HashMap<String, Double>();
+      HashMap<String, Double> cl = new HashMap<>();
       cl.put("x", p[0]);
       cl.put("y", p[1]);
       cl.put("z", p[2]);

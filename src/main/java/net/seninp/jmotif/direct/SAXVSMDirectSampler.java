@@ -225,15 +225,15 @@ public class SAXVSMDirectSampler {
 
     // the whole bunch of inits
     //
-    centerPoints = new ArrayList<Double[]>();
-    lengthsSide = new ArrayList<Double[]>();
-    diagonalLength = new ArrayList<Double>();
-    differentDiagonalLength = new ArrayList<Double>();
+    centerPoints = new ArrayList<>();
+    lengthsSide = new ArrayList<>();
+    diagonalLength = new ArrayList<>();
+    differentDiagonalLength = new ArrayList<>();
     diagonalsMinFunc = new double[1];
-    functionValues = new ArrayList<Double>();
+    functionValues = new ArrayList<>();
 
-    coordinates = new ArrayList<ValuePointColored>();
-    functionHash = new HashMap<String, Double>();
+    coordinates = new ArrayList<>();
+    functionHash = new HashMap<>();
 
     sampledPoints = 0;
     rectangleCounter = 1;
@@ -277,7 +277,7 @@ public class SAXVSMDirectSampler {
 
     ArrayList<Integer> potentiallyOptimalRectangles = null;
 
-    ArrayList<Double> minCVvalues = new ArrayList<Double>();
+    ArrayList<Double> minCVvalues = new ArrayList<>();
 
     // optimization loop
     //
@@ -331,7 +331,7 @@ public class SAXVSMDirectSampler {
     // generally, we want a shorter window
     //
     StringBuffer sb = new StringBuffer();
-    HashSet<String> minimalValueParameters = new HashSet<String>();
+    HashSet<String> minimalValueParameters = new HashSet<>();
     double minimalValue = resultMinimum[0];
 
     sb.append("min CV error ").append(fmt.format(minimalValue)).append(" reached at ");
@@ -412,7 +412,7 @@ public class SAXVSMDirectSampler {
       double diagonalTmp = differentDiagonalLength.get(i1);
       Integer[] indx = findNonMatches(differentDiagonalLength, diagonalTmp);
       ArrayList<Double> diagonalCopy = differentDiagonalLength;
-      differentDiagonalLength = new ArrayList<Double>();
+      differentDiagonalLength = new ArrayList<>();
       differentDiagonalLength.add(diagonalTmp);
 
       for (int i2 = 1; i2 < indx.length + 1; i2++) {
@@ -429,7 +429,7 @@ public class SAXVSMDirectSampler {
     diagonalsMinFunc = new double[differentDiagonalLength.size()];
     for (i1 = 0; i1 < differentDiagonalLength.size(); i1++) {
       Integer[] indx1 = findMatches(diagonalLength, differentDiagonalLength.get(i1));
-      ArrayList<Double> fTmp = new ArrayList<Double>();
+      ArrayList<Double> fTmp = new ArrayList<>();
       for (int i2 = 0; i2 < indx1.length; i2++) {
         fTmp.add(functionValues.get(indx1[i2]));
       }
@@ -652,7 +652,7 @@ public class SAXVSMDirectSampler {
     Integer[] sameDiagonalIdxs = findMatches(differentDiagonalLength,
         diagonalLength.get(indexPotentialBestRec));
 
-    ArrayList<Integer> s_1 = new ArrayList<Integer>();
+    ArrayList<Integer> s_1 = new ArrayList<>();
     for (int i = sameDiagonalIdxs[0]; i < differentDiagonalLength.size(); i++) {
       Integer[] indx3 = findMatches(functionValues, diagonalsMinFunc[i]);
       Integer[] indx4 = findMatches(diagonalLength, differentDiagonalLength.get(i));
@@ -662,8 +662,8 @@ public class SAXVSMDirectSampler {
 
     // s_1 now includes all rectangles i, with diagonals[i] >= diagonals(indexPotentialBestRec)
     //
-    ArrayList<Integer> s_2 = new ArrayList<Integer>();
-    ArrayList<Integer> s_3 = new ArrayList<Integer>();
+    ArrayList<Integer> s_2 = new ArrayList<>();
+    ArrayList<Integer> s_3 = new ArrayList<>();
     if (differentDiagonalLength.size() - sameDiagonalIdxs[0] > 2) {
 
       double a1 = diagonalLength.get(indexPotentialBestRec),
@@ -900,7 +900,7 @@ public class SAXVSMDirectSampler {
    * Finds matches.
    */
   private static Integer[] findMatches(Double[] array, double value) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
+    ArrayList<Integer> res = new ArrayList<>();
     for (int i = 0; i < array.length; i++) {
       if (Math.abs(array[i] - value) <= precision) {
         res.add(i);
@@ -913,7 +913,7 @@ public class SAXVSMDirectSampler {
    * Finds matches.
    */
   private static Integer[] findMatches(ArrayList<Double> array, double value) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
+    ArrayList<Integer> res = new ArrayList<>();
     for (int i = 0; i < array.size(); i++) {
       if (Math.abs(array.get(i) - value) <= precision) {
         res.add(i);
@@ -926,7 +926,7 @@ public class SAXVSMDirectSampler {
    * Finds array elements that are not equal to the value up to threshold.
    */
   private static Integer[] findNonMatches(ArrayList<Double> array, double value) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
+    ArrayList<Integer> res = new ArrayList<>();
     for (int i = 0; i < array.size(); i++) {
       if (Math.abs(array.get(i) - value) > precision) {
         res.add(i);
@@ -939,7 +939,7 @@ public class SAXVSMDirectSampler {
    * Returns arrays intersection.
    */
   private static Integer[] findArrayIntersection(Integer[] arr1, Integer[] arr2) {
-    ArrayList<Integer> res = new ArrayList<Integer>();
+    ArrayList<Integer> res = new ArrayList<>();
     for (int i1 = 0; i1 < arr1.length; i1++) {
       for (int i2 = 0; i2 < arr2.length; i2++) {
         if (arr1[i1] == arr2[i2]) {

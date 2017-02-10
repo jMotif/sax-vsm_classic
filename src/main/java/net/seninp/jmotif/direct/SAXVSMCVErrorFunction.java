@@ -62,7 +62,7 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
       double nThreshold, NumerosityReductionStrategy strategy) {
 
     this.tp = new TextProcessor();
-    this.tsData = new HashMap<String, double[]>();
+    this.tsData = new HashMap<>();
 
     for (Entry<String, List<double[]>> e : data.entrySet()) {
       String classLabel = e.getKey();
@@ -109,13 +109,13 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
       consoleLogger.debug(params.toString());
 
       // cache for word bags
-      HashMap<String, WordBag> seriesBags = new HashMap<String, WordBag>();
+      HashMap<String, WordBag> seriesBags = new HashMap<>();
 
       // the class series bags
-      HashMap<String, WordBag> bags = new HashMap<String, WordBag>();
+      HashMap<String, WordBag> bags = new HashMap<>();
 
       // push into stack all the samples we are going to validate for
-      Stack<String> samples2go = new Stack<String>();
+      Stack<String> samples2go = new Stack<>();
       for (Entry<String, double[]> e : this.tsData.entrySet()) {
 
         String seriesKey = e.getKey();
@@ -154,8 +154,8 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
 
         // extracting validation samples batch and building to remove collection
         //
-        HashMap<String, WordBag> wordsToRemove = new HashMap<String, WordBag>();
-        List<String> currentValidationSample = new ArrayList<String>();
+        HashMap<String, WordBag> wordsToRemove = new HashMap<>();
+        List<String> currentValidationSample = new ArrayList<>();
         for (int i = 0; i < this.holdOutSampleSize && !samples2go.isEmpty(); i++) {
 
           String seriesKey = samples2go.pop();
@@ -213,7 +213,7 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
   private HashMap<String, WordBag> adjustWordBags(HashMap<String, WordBag> bags,
       HashMap<String, WordBag> wordsToRemove) {
 
-    HashMap<String, WordBag> res = new HashMap<String, WordBag>();
+    HashMap<String, WordBag> res = new HashMap<>();
     for (Entry<String, WordBag> e : bags.entrySet()) {
       res.put(e.getKey(), e.getValue().clone());
     }

@@ -129,14 +129,14 @@ public class TextKMeans {
 
     // extract the list of all words into a new bag
     //
-    List<String> words = new ArrayList<String>();
+    List<String> words = new ArrayList<>();
     for (String word : tfidf.entrySet().iterator().next().getValue().keySet()) {
       words.add(word.substring(0));
     }
 
     // compute weights for these words one by one
     //
-    HashMap<String, Double> res = new HashMap<String, Double>();
+    HashMap<String, Double> res = new HashMap<>();
     for (String word : words) {
       double sum = 0D;
       for (String bagKey : members) {
@@ -163,7 +163,7 @@ public class TextKMeans {
 
     // build centroids
     //
-    HashMap<String, List<String>> res = new HashMap<String, List<String>>();
+    HashMap<String, List<String>> res = new HashMap<>();
     for (String cName : centroids.keySet()) {
       res.put(cName.substring(0), new ArrayList<String>());
     }

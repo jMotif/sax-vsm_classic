@@ -19,7 +19,7 @@ public class CosineDistanceMatrix {
   /** Row names. */
   private String[] rows;
 
-  private HashMap<String, Integer> keysToIndex = new HashMap<String, Integer>();
+  private HashMap<String, Integer> keysToIndex = new HashMap<>();
 
   private static final String COMMA = ",";
   private static final String CR = "\n";

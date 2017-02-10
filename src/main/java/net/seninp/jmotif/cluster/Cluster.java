@@ -44,7 +44,7 @@ public class Cluster {
    */
   public Cluster(String key) {
     super();
-    this.keys = new TreeSet<String>();
+    this.keys = new TreeSet<>();
     keys.add(key);
   }
 
@@ -57,7 +57,7 @@ public class Cluster {
   public void merge(Cluster left, Cluster right, Double distance) {
     this.left = left;
     this.right = right;
-    this.keys = new TreeSet<String>();
+    this.keys = new TreeSet<>();
     this.keys.addAll(left.keys);
     this.keys.addAll(right.keys);
     this.distanceBetween = distance;

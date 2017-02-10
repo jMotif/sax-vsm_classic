@@ -34,13 +34,13 @@ public class TestHC {
 
   @Before
   public void setUp() {
-    data = new HashMap<String, HashMap<String, Double>>();
+    data = new HashMap<>();
     data.put(words[0], makeMap(words, a));
     data.put(words[1], makeMap(words, b));
     data.put(words[2], makeMap(words, c));
     data.put(words[3], makeMap(words, d));
 
-    data1 = new HashMap<String, HashMap<String, Double>>();
+    data1 = new HashMap<>();
     data1.put(words[0], makeMap(words, a1));
     data1.put(words[1], makeMap(words, b1));
     data1.put(words[2], makeMap(words, c1));
@@ -66,7 +66,7 @@ public class TestHC {
   }
 
   private HashMap<String, Double> makeMap(String[] words, Double[] weights) {
-    HashMap<String, Double> res = new HashMap<String, Double>();
+    HashMap<String, Double> res = new HashMap<>();
     int i = 0;
     for (String w : words) {
       res.put(w, weights[i]);

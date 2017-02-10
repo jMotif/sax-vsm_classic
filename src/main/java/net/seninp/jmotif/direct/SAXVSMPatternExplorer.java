@@ -123,7 +123,7 @@ public class SAXVSMPatternExplorer {
     // sort words by their weight and print top 10 of these for each class
     for (Entry<String, HashMap<String, Double>> e : tfidf.entrySet()) {
       String className = e.getKey();
-      ArrayList<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
+      ArrayList<Entry<String, Double>> values = new ArrayList<>();
       values.addAll(e.getValue().entrySet());
 
       Collections.sort(values, new TfIdfEntryComparator());
@@ -145,7 +145,7 @@ public class SAXVSMPatternExplorer {
 
       // class name and weights vector
       String className = e.getKey();
-      ArrayList<Entry<String, Double>> values = new ArrayList<Entry<String, Double>>();
+      ArrayList<Entry<String, Double>> values = new ArrayList<>();
       values.addAll(e.getValue().entrySet());
 
       // form the output
@@ -209,7 +209,7 @@ public class SAXVSMPatternExplorer {
     Alphabet a = new NormalAlphabet();
 
     double[] weights = new double[series.length];
-    HashMap<String, Integer> words = new HashMap<String, Integer>();
+    HashMap<String, Integer> words = new HashMap<>();
 
     for (int i = 0; i <= series.length - params.getWindowSize(); i++) {
       double[] subseries = tsp.subseriesByCopy(series, i, i + params.getWindowSize());
@@ -247,12 +247,12 @@ public class SAXVSMPatternExplorer {
 
     Alphabet a = new NormalAlphabet();
 
-    Map<Integer, Integer[]> res = new HashMap<Integer, Integer[]>();
+    Map<Integer, Integer[]> res = new HashMap<>();
 
     int seriesCounter = 0;
     for (double[] series : trainData.get(className)) {
 
-      List<Integer> arr = new ArrayList<Integer>();
+      List<Integer> arr = new ArrayList<>();
 
       for (int i = 0; i <= series.length - params.getWindowSize(); i++) {
         double[] paa = tsp.paa(
