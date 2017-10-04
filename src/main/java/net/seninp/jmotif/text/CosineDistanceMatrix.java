@@ -56,7 +56,7 @@ public class CosineDistanceMatrix {
   /**
    * Get all the row names - i.e. keys.
    * 
-   * @return
+   * @return row names.
    */
   public String[] getRows() {
     return this.rows;
@@ -65,7 +65,7 @@ public class CosineDistanceMatrix {
   /**
    * Get the distances as matrix.
    * 
-   * @return
+   * @return the distance matrix.
    */
   public double[][] getDistances() {
     return this.distances;

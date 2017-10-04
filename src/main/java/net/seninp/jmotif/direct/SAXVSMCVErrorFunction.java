@@ -55,8 +55,10 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
   /**
    * Constructor.
    * 
-   * @param data
-   * @param holdOutSampleSize
+   * @param data data to use.
+   * @param holdOutSampleSize the holdout sample size.
+   * @param nThreshold the normalization threshod.
+   * @param strategy the nr strategy.
    */
   public SAXVSMCVErrorFunction(Map<String, List<double[]>> data, int holdOutSampleSize,
       double nThreshold, NumerosityReductionStrategy strategy) {
@@ -81,8 +83,8 @@ public class SAXVSMCVErrorFunction implements AbstractErrorFunction {
   /**
    * Computes the value at point.
    * 
-   * @param point
-   * @return
+   * @param point the point to compute at.
+   * @return computed CV value.
    */
   public double valueAt(Point point) {
 

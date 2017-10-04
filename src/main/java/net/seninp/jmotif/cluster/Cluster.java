@@ -51,8 +51,9 @@ public class Cluster {
   /**
    * Merging together clusters.
    * 
-   * @param left The left cluster.
-   * @param right The right cluster.
+   * @param left the left cluster.
+   * @param right the right cluster.
+   * @param distance the distance between clusters.
    */
   public void merge(Cluster left, Cluster right, Double distance) {
     this.left = left;
@@ -66,11 +67,11 @@ public class Cluster {
   /**
    * Compute the distance between words clusters.
    * 
-   * @param otherCluster The other cluster.
-   * @param data
-   * @param distanceMatrix The pre-computed distance matrix.
-   * @param criterion The linkage criterion.
-   * @return The distance between clusters based on the distances and the linkage.
+   * @param otherCluster the other cluster.
+   * @param data this cluster.
+   * @param distanceMatrix the pre-computed distance matrix.
+   * @param criterion the linkage criterion.
+   * @return the distance between clusters based on the distances and the linkage.
    */
   public Double distanceTo(Cluster otherCluster, HashMap<String, HashMap<String, Double>> data,
       CosineDistanceMatrix distanceMatrix, LinkageCriterion criterion) {

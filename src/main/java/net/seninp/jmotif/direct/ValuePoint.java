@@ -4,7 +4,7 @@ package net.seninp.jmotif.direct;
  * The direct code was taken from JCOOL (Java COntinuous Optimization Library), and altered for
  * SAX-VSM needs.
  * 
- * @see <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
+ * See <a href="https://github.com/dhonza/JCOOL/wiki">https://github.com/dhonza/JCOOL/wiki</a>
  * 
  * An immutable point wrapper to represent the value of a function at a specified point. The
  * immutability makes this class threadsafe.
@@ -19,9 +19,10 @@ public class ValuePoint implements Comparable<ValuePoint> {
   private static final ValuePoint DEFAULT = new ValuePoint(Point.getDefault(), Double.NaN);
 
   /**
+   * Constructor.
    * 
-   * @param point
-   * @param value
+   * @param point coordinates.
+   * @param value the payload.
    */
   private ValuePoint(Point point, double value) {
     this.point = point;
@@ -29,34 +30,38 @@ public class ValuePoint implements Comparable<ValuePoint> {
   }
 
   /**
+   * Constructor.
    * 
-   * @return
+   * @return a new instance.
    */
   public static ValuePoint getDefault() {
     return DEFAULT;
   }
 
   /**
+   * Constructor.
    * 
-   * @param p
-   * @param value
-   * @return
+   * @param p coordinates.
+   * @param value the payload.
+   * @return a new instance.
    */
   public static ValuePoint at(Point p, double value) {
     return new ValuePoint(p, value);
   }
 
   /**
+   * Getter.
    * 
-   * @return
+   * @return the payload.
    */
   public double getValue() {
     return value;
   }
 
   /**
+   * Getter.
    * 
-   * @return
+   * @return the coordinates.
    */
   public Point getPoint() {
     return point;

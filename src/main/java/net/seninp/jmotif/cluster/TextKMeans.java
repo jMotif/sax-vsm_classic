@@ -36,7 +36,7 @@ public class TextKMeans {
    * @param tfidf the data to cluster.
    * @param clustersNum desired clusters number.
    * @param strategy The clustering strategy.
-   * @return
+   * @return clusters.
    */
   public static HashMap<String, List<String>> cluster(
       HashMap<String, HashMap<String, Double>> tfidf, Integer clustersNum, StartStrategy strategy) {
@@ -120,9 +120,9 @@ public class TextKMeans {
   /**
    * This computes centroid for a set of vectors.
    * 
-   * @param tfidf
-   * @param members
-   * @return
+   * @param tfidf the tfidf vectors.
+   * @param members centroid members to select from all vectors.
+   * @return the centroid.
    */
   public static HashMap<String, Double> computeCentroid(
       HashMap<String, HashMap<String, Double>> tfidf, List<String> members) {

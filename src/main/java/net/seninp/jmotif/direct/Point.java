@@ -13,11 +13,12 @@ import java.util.Arrays;
  * threadsafe. It is not extendible because it has no public constructor. Creation is handled by a
  * static factory method an ideal point for caching or hashcode precomputation.
  * 
- * Added value:
- * <li>more abstraction</li>
- * <li>default inplementations of equals + hashcode</li>
- * <li>can be used in collections</li>
- * <li>caching</li>
+ * Added value:<ul>
+ * <li>more abstraction
+ * <li>default inplementations of equals + hashcode
+ * <li>can be used in collections
+ * <li>caching
+ * </ul>
  * 
  * @author ytoh
  */
@@ -87,8 +88,9 @@ public class Point {
   }
 
   /**
+   * Constructor.
    * 
-   * @return
+   * @return a new instance.
    */
   public static final Point getDefault() {
     return DEFAULT;

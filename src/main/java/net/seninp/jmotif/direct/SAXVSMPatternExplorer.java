@@ -71,8 +71,10 @@ public class SAXVSMPatternExplorer {
   }
 
   /**
-   * @param args
-   * @throws Exception
+   * The main runnable.
+   * 
+   * @param args the args list.
+   * @throws Exception if error occurs.
    */
   public static void main(String[] args) throws Exception {
 
@@ -160,8 +162,8 @@ public class SAXVSMPatternExplorer {
 
         StringBuffer seriesBuff = new StringBuffer("series = c(");
         StringBuffer offsetBuff = new StringBuffer("offsets = c(");
-        Map<Integer, Integer[]> hits = getPatternLocationsForTheClass(className, trainData,
-            pattern, params);
+        Map<Integer, Integer[]> hits = getPatternLocationsForTheClass(className, trainData, pattern,
+            params);
 
         int k = 0;
         int printedK = 0;
@@ -169,8 +171,8 @@ public class SAXVSMPatternExplorer {
           if (hits.get(k).length > 0) {
             System.out.print(k + ": " + Arrays.toString(hits.get(k)) + ", ");
             System.out.println(Arrays.toString(trainData.get(className).get(k)));
-            System.out.println(Arrays.toString(seriesValuesAsHeat(trainData.get(className).get(k),
-                className, tfidf, params)));
+            System.out.println(Arrays.toString(
+                seriesValuesAsHeat(trainData.get(className).get(k), className, tfidf, params)));
             for (int offset : hits.get(k)) {
               seriesBuff.append(String.valueOf(k + 1) + ",");
               offsetBuff.append(String.valueOf(offset + 1) + ",");
@@ -181,8 +183,8 @@ public class SAXVSMPatternExplorer {
         }
         while (k < hits.size() && printedK < MAX_SERIES_2PRINT);
 
-        System.out.print(seriesBuff.delete(seriesBuff.length() - 1, seriesBuff.length()).toString()
-            + ")" + CR);
+        System.out.print(
+            seriesBuff.delete(seriesBuff.length() - 1, seriesBuff.length()).toString() + ")" + CR);
         System.out.print(offsetBuff.delete(offsetBuff.length() - 1, offsetBuff.length()).toString()
             + ")" + CR + "#" + CR);
 
@@ -255,9 +257,8 @@ public class SAXVSMPatternExplorer {
       List<Integer> arr = new ArrayList<Integer>();
 
       for (int i = 0; i <= series.length - params.getWindowSize(); i++) {
-        double[] paa = tsp.paa(
-            tsp.znorm(tsp.subseriesByCopy(series, i, i + params.getWindowSize()),
-                params.getnThreshold()), params.getPaaSize());
+        double[] paa = tsp.paa(tsp.znorm(tsp.subseriesByCopy(series, i, i + params.getWindowSize()),
+            params.getnThreshold()), params.getPaaSize());
         char[] sax = tsp.ts2String(paa, a.getCuts(params.getAlphabetSize()));
         if (pattern.equalsIgnoreCase(String.valueOf(sax))) {
           arr.add(i);
