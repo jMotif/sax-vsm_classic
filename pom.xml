@@ -31,7 +31,7 @@
 
 	<scm>
 		<url>https://github.com/jMotif/sax-vsm_classic.git</url>
-		<connection>https://github.com/jMotif/sax-vsm_classic.git</connection>
+		<connection>scm:git:git://git@github.com/jMotif/sax-vsm_classic.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/jMotif/sax-vsm_classic.git</developerConnection>
 	</scm>
 
