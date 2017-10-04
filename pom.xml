@@ -181,7 +181,7 @@
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<!-- disable 'release' profile from super pom -->
 							<useReleaseProfile>false</useReleaseProfile>
-							<releaseProfiles>ossrh</releaseProfiles>
+							<releaseProfiles>release</releaseProfiles>
 							<goals>deploy</goals>
 						</configuration>
 					</plugin>
