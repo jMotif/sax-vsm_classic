@@ -65,7 +65,7 @@ public class FurthestFirstStrategy implements StartStrategy {
     for (String key : resultKeys) {
       HashMap<String, Double> value = new HashMap<String, Double>();
       for (Entry<String, Double> e : data.get(key).entrySet()) {
-        value.put(e.getKey().substring(0), new Double(e.getValue()));
+        value.put(e.getKey().substring(0), Double.valueOf(e.getValue()));
       }
       res.put(String.valueOf(counter), value);
       counter++;

@@ -51,7 +51,7 @@ public class RandomStartStrategy implements StartStrategy {
 
       HashMap<String, Double> value = new HashMap<String, Double>();
       for (Entry<String, Double> e : data.get(key).entrySet()) {
-        value.put(e.getKey().substring(0), new Double(e.getValue()));
+        value.put(e.getKey().substring(0), Double.valueOf(e.getValue()));
       }
 
       res.put(String.valueOf(i), value);

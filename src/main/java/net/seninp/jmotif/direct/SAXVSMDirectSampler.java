@@ -106,12 +106,14 @@ public class SAXVSMDirectSampler {
     try {
 
       SAXVSMDirectSamplerParams params = new SAXVSMDirectSamplerParams();
-      JCommander jct = new JCommander(params, args);
+      JCommander jct = new JCommander(params);
 
       if (0 == args.length) {
         jct.usage();
         System.exit(-10);
       }
+      
+      jct.parse(args);
 
       StringBuffer sb = new StringBuffer(1024);
       sb.append("SAX-VSM DiRect Sampler").append(CR);
