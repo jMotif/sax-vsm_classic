@@ -2,6 +2,7 @@
 
 ![maven build](https://github.com/jMotif/sax-vsm_classic/actions/workflows/maven.yml/badge.svg) 
 [![codecov.io](http://codecov.io/github/jMotif/sax-vsm_classic/coverage.svg?branch=master)](http://codecov.io/github/jMotif/sax-vsm_classic?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm)
 [![License](http://img.shields.io/:license-gpl2-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 
 #### This code supports our publication:
