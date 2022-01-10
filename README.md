@@ -5,6 +5,8 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm)
 [![License](http://img.shields.io/:license-gpl2-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=jMotif_sax-vsm_classic)
+
 #### This code supports our publication:
 
 Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](https://github.com/csdl/techreports/raw/master/techreports/2011/11-09/11-09.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
