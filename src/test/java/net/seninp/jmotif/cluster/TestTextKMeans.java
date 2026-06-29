@@ -1,6 +1,7 @@
 package net.seninp.jmotif.cluster;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,11 @@ public class TestTextKMeans {
 
     Cluster clusters = HC.Hc(tfidf, LinkageCriterion.COMPLETE);
     System.out.println((new CosineDistanceMatrix(tfidf)).toString());
-    BufferedWriter bw = new BufferedWriter(new FileWriter("/home/psenin/dendroscope/test2.newick"));
+    File newick = File.createTempFile("saxvsm_cluster", ".newick");
+    BufferedWriter bw = new BufferedWriter(new FileWriter(newick));
     bw.write("(" + clusters.toNewick() + ")");
     bw.close();
+    System.out.println("wrote dendrogram (Newick) to " + newick.getAbsolutePath());
 
   }
 }

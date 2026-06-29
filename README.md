@@ -55,64 +55,85 @@ The whole process is illustrated below:
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
 ### 1.0 Building
-The code is written in Java and I use maven to build it:
+The code is written in Java and I use maven to build it. The `single` profile assembles the fat jar:
 	
-	$ mvn package -P single
+	$ mvn -P single -DskipTests package
 	[INFO] Scanning for projects...
 	[INFO] ------------------------------------------------------------------------
-	[INFO] Building sax-vsm
-	[INFO]    task-segment: [package]
-	...
-	[INFO] Building jar: /media/Stock/git/sax-vsm_classic.git/target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+	[INFO] Building sax-vsm 2.0.0
 	[INFO] ------------------------------------------------------------------------
-	[INFO] BUILD SUCCESSFUL
+	...
+	[INFO] Building jar: target/sax-vsm-2.0.0.jar
+	[INFO] Building jar: target/sax-vsm-2.0.0-jar-with-dependencies.jar
+	[INFO] ------------------------------------------------------------------------
+	[INFO] BUILD SUCCESS
+	[INFO] ------------------------------------------------------------------------
+	[INFO] Total time:  7.xxx s
+
+Drop `-DskipTests` to run the test suite as part of the build. The build produces two
+artifacts: the thin `target/sax-vsm-2.0.0.jar` and the self-contained
+`target/sax-vsm-2.0.0-jar-with-dependencies.jar` used in the examples below.
 
 ### 2.0 Running the classifier
-Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. Here is a trace of running SAX-VSM with Gun/Point dataset:
+Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. The options are `-train`, `-test`, `-w`/`--window_size` (default 30), `-p`/`--word_size` (default 4), `-a`/`--alphabet_size` (default 3), `--strategy` one of `[NONE, EXACT, MINDIST]` (default `EXACT`), and `--threshold` (default 0.01). Here is a trace of running SAX-VSM with the Gun/Point dataset:
 
-	$ java -cp "target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
+	$ java -cp "target/sax-vsm-2.0.0-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -w 33 -p 17 -a 15 
-	trainData classes: 2, series length: 150
-	 training class: 2 series: 26
-	 training class: 1 series: 24
-	testData classes: 2, series length: 150
-	 test class: 2 series: 74
-	 test class: 1 series: 76
-	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
+	12:34:56.001 [main] INFO net.seninp.jmotif.SAXVSMClassifier - trainData classes: 2, series length: 150
+	12:34:56.003 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  training class: 2 series: 26
+	12:34:56.003 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  training class: 1 series: 24
+	12:34:56.004 [main] INFO net.seninp.jmotif.SAXVSMClassifier - testData classes: 2, series length: 150
+	12:34:56.004 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  test class: 2 series: 74
+	12:34:56.004 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  test class: 1 series: 76
+	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 0.98667,  error 0.01333
+
+Note, that as of 2.0.0 the run log goes through SLF4J -- every line above except the
+final `classification results:` line (plain stdout) is prefixed with
+`HH:MM:SS.mmm [main] INFO net.seninp.jmotif.SAXVSMClassifier - `.
+
+Note also, that this `-w 33 -p 17 -a 15` operating point used to report `accuracy 1.00, error 0.00`
+in pre-2.0.0 releases. With the `jmotif-sax` 2.0.0 SAX layer and the `log1p` TF·IDF
+alignment (see *Cross-implementation alignment* above) it now reports
+`accuracy 0.98667, error 0.01333` -- a two-series shift, and the same numbers the
+DiRect sampler's `NONE` strategy lands on in §3.0. The alignment dataset CBF, e.g.
+`-train src/resources/data/cbf/CBF_TRAIN -test src/resources/data/cbf/CBF_TEST -w 60 -p 8 -a 6`,
+classifies at `accuracy 1.00, error 0.00`.
 
 ### 3.0 Running the parameters sampler (optimizer)
 Symbolic discretization with SAX -- the first step of our algorithm -- requires hyperparameters to be specified by the user. Unfortunately, their optimal selection is not trivial. We proposed to use Dividing Rectangles optimization scheme for accelerated selection of optimal parameter values.  
 
-The code implements the DiRect sampler which can be called from the command line. Below is the trace of running the sampler for Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
+The code implements the DiRect sampler which can be called from the command line (it is the main class of the fat jar, so `java -jar` runs it). The options are `-wmin`/`-wmax` (default 10/100), `-pmin`/`-pmax` (default 3/10), `-amin`/`-amax` (default 3/5), `--hold_out` (default 1), `-i`/`--iter` (default 1), and `-b`/`--break` (default 0.001). Below is the trace of running the sampler for the Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
 
-	$ java -jar target/sax-vsm-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
+	$ java -jar target/sax-vsm-2.0.0-jar-with-dependencies.jar \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
-	trainData classes: 2, series length: 150
-	 training class: 2 series: 26
-	 training class: 1 series: 24
-	testData classes: 2, series length: 150
-	 test class: 2 series: 74
-	 test class: 1 series: 76
-	running sampling for MINDIST strategy...
-	 iteration: 0, minimal value 0.18 at 80, 40, 10
-	 iteration: 1, minimal value 0.04 at 80, 17, 10
-	 iteration: 2, minimal value 0.04 at 80, 17, 10
-	min CV error 0.04 reached at [80, 17, 10], will use Params [windowSize=80, paaSize=17, alphabetSize=10, nThreshold=0.01, nrStartegy=MINDIST]
-	running sampling for EXACT strategy...
+	12:40:01.101 [main] INFO ... - trainData classes: 2, series length: 150
+	12:40:01.103 [main] INFO ... -  training class: 2 series: 26
+	12:40:01.103 [main] INFO ... -  training class: 1 series: 24
+	12:40:01.104 [main] INFO ... - testData classes: 2, series length: 150
+	12:40:01.104 [main] INFO ... -  test class: 2 series: 74
+	12:40:01.104 [main] INFO ... -  test class: 1 series: 76
+	12:40:01.110 [main] INFO ... - running sampling for NONE strategy...
+	@0.18	80	40	10
+	@0.04	80	17	10
+	...
 	 iteration: 0, minimal value 0.0 at 80, 40, 10
 	 iteration: 1, minimal value 0.0 at 80, 40, 10
 	 iteration: 2, minimal value 0.0 at 80, 40, 10
-	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=EXACT]
-	running sampling for NONE strategy...
-	 iteration: 0, minimal value 0.0 at 80, 40, 10
-	 iteration: 1, minimal value 0.0 at 80, 40, 10
-	 iteration: 2, minimal value 0.0 at 80, 40, 10
-	min CV error 0.00 reached at [80, 40, 10], [64, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=NONE]
-	classification results: strategy MINDIST, window 80, PAA 17, alphabet 10,  accuracy 0.92667,  error 0.07333
-	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 1.00,  error 0.00
-	classification results: strategy NONE, window 33, PAA 17, alphabet 15,  accuracy 0.97333,  error 0.02667
+	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=NONE, cvError=0.0]
+	error 0.06,    strategy MINDIST, window 33, PAA 17, alphabet 15, (CV error 0.02)
+	error 0.02667, strategy EXACT,   window 33, PAA 17, alphabet 10, (CV error 0.00)
+	error 0.01333, strategy NONE,    window 33, PAA 17, alphabet 15, (CV error 0.00)
+	all done in # ~2394 ms
+
+Note, that each evaluated point is logged as `@<error>\t<window>\t<paa>\t<alpha>`,
+each iteration prints a `iteration: N, minimal value ... at w, p, a` summary, and the
+per-strategy result lines and `all done in # ... ms` close the run. Several parameter
+combinations tie at the minimal CV error (here `[80, 40, 10]` and `[33, 17, 15]`); the
+sampler breaks ties by choosing the set with the smallest sliding window. The `NONE`
+optimum `[33, 17, 15]` lands at `error 0.01333` -- the same point and number as the
+direct `§2.0` classifier run.
 
 As shown in our work, DiRect provides a significant speed-up when compared with the grid search. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DiRect in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DiRect, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
 
@@ -128,7 +149,7 @@ Note, that the time series ranges highlighted by the approach correspond to dist
 ### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
-Also note that code implements 5 ways the TF (term frequency value) can be computed:
+Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.0 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
 
 	double tfValue = Math.log(1.0D + Integer.valueOf(wordInBagFrequency).doubleValue());
 	// double tfValue = 1.0D + Math.log(Integer.valueOf(wordInBagFrequency).doubleValue());
@@ -144,6 +165,13 @@ Finally, note, that when cosine similarity is computed within the classification
 
 ### 6.0 The classification accuracy table
 The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
+
+**Caveat (2026-06-29):** this table predates the 2.0.0 `log1p` alignment -- it was
+generated with the earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`). With the
+2.0.0 SAX + `log1p` TF·IDF layer the per-dataset numbers may shift slightly (for
+example the §2.0 Gun_Point operating point moved from error 0.00 to 0.01333, which is
+consistent with the GunPoint row below). A full UCR re-benchmark on 2.0.0 is pending;
+the numbers in the table have not been altered.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
