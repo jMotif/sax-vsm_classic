@@ -92,14 +92,16 @@ public class TestTextProcessor {
     HashMap<String, HashMap<String, Double>> tfidf = tp.computeTFIDF(bags.values());
     assertTrue(0.0D == tfidf.get("bag1").get("the"));
 
-    double tfHill2 = tp.logTF(bag2, "hill");
-    double tfHill3 = tp.logTF(bag3, "hill");
+    // Cross-implementation alignment: computeTFIDF uses log1p TF, ln(1 + tf),
+    // and a natural-log IDF, ln(N / df), to match saxpy and jmotif-R.
+    double tfHill2 = Math.log(1.0D + bag2.getWordFrequency("hill").doubleValue());
+    double tfHill3 = Math.log(1.0D + bag3.getWordFrequency("hill").doubleValue());
 
     double idfHill = tp.idf(bags, "hill");
 
-    double tfidfHill2 = tfHill2 * Math.log10(idfHill);
+    double tfidfHill2 = tfHill2 * Math.log(idfHill);
 
-    double tfidfHill3 = tfHill3 * Math.log10(idfHill);
+    double tfidfHill3 = tfHill3 * Math.log(idfHill);
 
     assertTrue(tfidfHill2 == tfidf.get("bag2").get("hill"));
 

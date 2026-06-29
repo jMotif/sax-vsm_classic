@@ -11,7 +11,25 @@
 
 Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](https://github.com/csdl/techreports/raw/master/techreports/2011/11-09/11-09.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
-##### Note, that SAX-VSM stack is also [available in R](https://github.com/jMotif/jmotif-R).
+##### Note, that the SAX-VSM stack is also available in [R](https://github.com/jMotif/jmotif-R) and [Python (saxpy)](https://github.com/seninp/saxpy).
+
+#### Cross-implementation alignment
+
+This Java code, the R/C++ ([jmotif-R](https://github.com/jMotif/jmotif-R)), and
+the Python ([saxpy](https://github.com/seninp/saxpy)) implementations are kept
+aligned. As of 2.0.0 this build depends on the aligned `jmotif-sax` 2.0.0, so
+the SAX layer (population-std z-normalization, fractional PAA, Gaussian
+breakpoints, on-breakpoint→symbol-above) matches the other two to
+floating-point precision. The TF\*IDF weight uses **log1p term frequency,
+`ln(1 + tf)`, and a natural-log IDF, `ln(N / df)`** — matching saxpy and
+jmotif-R. (Earlier versions of this repo used the SMART `1 + ln(tf)` / `log10`
+scheme; a cross-implementation accuracy study over CBF, Gun_Point, Coffee, Beef,
+OSULeaf and Adiac found `log1p` ties or beats SMART at the tuned operating point
+on every dataset and wins more parameter points overall, so `log1p` is now
+canonical across all three.) The IDF *base* (`ln` vs `log10`) is a uniform
+per-word factor that cancels in the cosine similarity, so it never changes a
+classification — only the printed weight magnitudes. The five TF variants shown
+in §5.0 NOTES remain available in the source for experimentation.
 
 #### Our algorithm is based on the following work:
 
