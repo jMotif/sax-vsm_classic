@@ -9,7 +9,7 @@
 
 #### This code supports our publication:
 
-Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series ClassiCfication Using SAX and Vector Space Model*](https://github.com/csdl/techreports/raw/master/techreports/2011/11-09/11-09.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
+Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](https://github.com/csdl/techreports/raw/master/techreports/2011/11-09/11-09.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
 ##### Note, that the SAX-VSM stack is also available in [R](https://github.com/jMotif/jmotif-R) and [Python (saxpy)](https://github.com/seninp/saxpy).
 
@@ -135,7 +135,7 @@ sampler breaks ties by choosing the set with the smallest sliding window. The `N
 optimum `[33, 17, 15]` lands at `error 0.01333` -- the same point and number as the
 direct `§2.0` classifier run.
 
-As shown in our work, DiRect provides a significant speed-up when compared with the grid search. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DiRect in the space `PAA ∗ W ndow ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DiRect, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densily sampled slice).
+As shown in our work, DiRect provides a significant speed-up when compared with the grid search. Below is an illustration of DiRect-driven parameters optimization for SyntheticControl dataset. Left panel shows all points sampled by DiRect in the space `PAA ∗ Window ∗ Alphabet`: red points correspond to high error values while green points correspond to low error values in cross-validation experiments. Note the green points concentration at W=42 (where the optimal value is). Middle panel shows the classification error heat map obtained by a complete scan of all **432** points of the hypercube slice when W=42. Right panel shows the classification error heat map of the same slice when the parameters search optimized by DiRect, the optimal solution (P=8,A=4) was found by sampling of **43** points (i.e., 10X speed-up for the densely sampled slice).
 
 ![An example of the DiRect sampler run](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/direct_sampling.png)
 
@@ -161,7 +161,7 @@ For many datasets, these yield quite different accuracy.
 
 The normalization threshold (used in SAX discretization) is also quite important hidden parameter -- changing it from 0.001 to 0.01 may significantly change the classification accuracy on a number of datasets where the original signal standard deviation is small, such as Beef.
 
-Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was missclassified, but you may want to assign it to one of the classes randomly.
+Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was misclassified, but you may want to assign it to one of the classes randomly.
 
 ### 6.0 The classification accuracy table
 The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
