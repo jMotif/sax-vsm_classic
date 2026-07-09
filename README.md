@@ -59,7 +59,15 @@ The whole process is illustrated below:
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
 ### 1.0 Building
-The code is written in Java and I use maven to build it. The `single` profile assembles the fat jar:
+The code is written in Java and I use maven to build it. Version **2.0.1** depends on
+**`jmotif-sax` 2.0.1**, which is not yet on Maven Central — install it from the
+[jMotif/SAX](https://github.com/jMotif/SAX) checkout first:
+
+	$ git clone https://github.com/jMotif/SAX.git ../SAX
+	$ mvn -f ../SAX/pom.xml install -P single -DskipTests
+	$ mvn -P single -DskipTests package
+
+The `single` profile assembles the fat jar:
 	
 	$ mvn -P single -DskipTests package
 	[INFO] Scanning for projects...
@@ -125,7 +133,7 @@ The code implements the DiRect sampler which can be called from the command line
 	 iteration: 0, minimal value 0.0 at 80, 40, 10
 	 iteration: 1, minimal value 0.0 at 80, 40, 10
 	 iteration: 2, minimal value 0.0 at 80, 40, 10
-	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStartegy=NONE, cvError=0.0]
+	min CV error 0.00 reached at [80, 40, 10], [33, 17, 15], will use Params [windowSize=33, paaSize=17, alphabetSize=15, nThreshold=0.01, nrStrategy=NONE, cvError=0.0]
 	error 0.06,    strategy MINDIST, window 33, PAA 17, alphabet 15, (CV error 0.02)
 	error 0.02667, strategy EXACT,   window 33, PAA 17, alphabet 10, (CV error 0.00)
 	error 0.01333, strategy NONE,    window 33, PAA 17, alphabet 15, (CV error 0.00)
@@ -153,7 +161,7 @@ Note, that the time series ranges highlighted by the approach correspond to dist
 ### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
-Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.0 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
+Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.1 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
 
 	double tfValue = Math.log(1.0D + Integer.valueOf(wordInBagFrequency).doubleValue());
 	// double tfValue = 1.0D + Math.log(Integer.valueOf(wordInBagFrequency).doubleValue());
@@ -172,11 +180,12 @@ The following table was obtained in automated mode when using DiRect-driven para
 
 **Archival only (pre-2.0.0):** the SAX-VSM column below was produced with the
 earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`) and the pre-alignment SAX
-layer. Do **not** treat it as current 2.0.0 regression data. Verified 2.0.0
+layer. Do **not** treat it as current regression data. Verified **2.0.1**
 spot checks on bundled UCR subsets instead: Gun_Point at `-w 33 -p 17 -a 15`
 reports error **0.01333** (§2.0), CBF at `-w 60 -p 8 -a 6` reports error
-**0.00** (§2.0). A full UCR re-benchmark under `log1p` remains pending; the
-table rows are unchanged for historical reference only.
+**0.00** (§2.0). Cross-language locks for those operating points live in
+[jmotif-conformance](https://github.com/jMotif/jmotif-conformance); the table
+rows below are unchanged for historical reference only.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|

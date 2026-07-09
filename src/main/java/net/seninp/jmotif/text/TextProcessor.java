@@ -84,12 +84,12 @@ public final class TextProcessor {
 
       if (null != previousString) {
 
-        if (NumerosityReductionStrategy.EXACT.equals(params.nrStartegy)
+        if (NumerosityReductionStrategy.EXACT.equals(params.getNrStrategy())
             && Arrays.equals(previousString, currentString)) {
           // NumerosityReduction
           continue;
         }
-        else if (NumerosityReductionStrategy.MINDIST.equals(params.nrStartegy)
+        else if (NumerosityReductionStrategy.MINDIST.equals(params.getNrStrategy())
             && sp.checkMinDistIsZero(previousString, currentString)) {
           continue;
         }
@@ -183,7 +183,7 @@ public final class TextProcessor {
         // System.out.println("excluded: " + word.getKey());
         // }
         // if this document contains the word - here we go
-        if (bagWords.containsKey(word.getKey()) & (totalDocs != word.getValue().intValue())) {
+        if (bagWords.containsKey(word.getKey()) && (totalDocs != word.getValue().intValue())) {
 
           int wordInBagFrequency = bagWords.get(word.getKey()).intValue();
 

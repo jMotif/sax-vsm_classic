@@ -79,6 +79,15 @@ public class Params {
     this.nrStartegy = nrStartegy;
   }
 
+  /** Preferred spelling; {@link #getNrStartegy()} is retained for compatibility. */
+  public NumerosityReductionStrategy getNrStrategy() {
+    return nrStartegy;
+  }
+
+  public void setNrStrategy(NumerosityReductionStrategy nrStrategy) {
+    this.nrStartegy = nrStrategy;
+  }
+
   public double getCvError() {
     return cvError;
   }
@@ -130,7 +139,7 @@ public class Params {
   @Override
   public String toString() {
     return "Params [windowSize=" + windowSize + ", paaSize=" + paaSize + ", alphabetSize="
-        + alphabetSize + ", nThreshold=" + nThreshold + ", nrStartegy=" + nrStartegy + ", cvError="
+        + alphabetSize + ", nThreshold=" + nThreshold + ", nrStrategy=" + nrStartegy + ", cvError="
         + cvError + "]";
   }
 
