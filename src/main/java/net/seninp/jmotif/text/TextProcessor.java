@@ -19,9 +19,8 @@ import net.seninp.jmotif.sax.SAXProcessor;
 import net.seninp.jmotif.sax.TSProcessor;
 import net.seninp.jmotif.sax.alphabet.Alphabet;
 import net.seninp.jmotif.sax.alphabet.NormalAlphabet;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 /**
  * Implements text statistics and mining utilities.
@@ -44,12 +43,7 @@ public final class TextProcessor {
 
   // logging stuff
   //
-  private static Logger consoleLogger;
-  private static Level LOGGING_LEVEL = Level.DEBUG;
-  static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(TextProcessor.class);
-    consoleLogger.setLevel(LOGGING_LEVEL);
-  }
+  private static final Logger consoleLogger = LoggerFactory.getLogger(TextProcessor.class);
 
   /**
    * Constructor.

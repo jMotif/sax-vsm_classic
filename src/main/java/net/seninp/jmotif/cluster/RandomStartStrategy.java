@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Random;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 /**
  * Implements a random strategy
@@ -18,13 +17,7 @@ import ch.qos.logback.classic.Logger;
 public class RandomStartStrategy implements StartStrategy {
 
   // logger business
-  private static Logger consoleLogger;
-  private static Level LOGGING_LEVEL = Level.INFO;
-
-  static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(RandomStartStrategy.class);
-    consoleLogger.setLevel(LOGGING_LEVEL);
-  }
+  private static final Logger consoleLogger = LoggerFactory.getLogger(RandomStartStrategy.class);
 
   /**
    * {@inheritDoc}

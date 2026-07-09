@@ -18,9 +18,8 @@ import net.seninp.jmotif.text.Params;
 import net.seninp.jmotif.text.TextProcessor;
 import net.seninp.jmotif.text.WordBag;
 import net.seninp.util.UCRUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 /**
  * Hunts for best scoring patterns for the class and prints them out.
@@ -63,12 +62,7 @@ public class SAXVSMPatternExplorer {
 
   // static block - we instantiate the logger
   //
-  private static final Logger consoleLogger;
-  private static final Level LOGGING_LEVEL = Level.INFO;
-  static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(SAXVSMPatternExplorer.class);
-    consoleLogger.setLevel(LOGGING_LEVEL);
-  }
+  private static final Logger consoleLogger = LoggerFactory.getLogger(SAXVSMPatternExplorer.class);
 
   /**
    * The main runnable.

@@ -2,20 +2,16 @@ package net.seninp.jmotif;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import net.seninp.jmotif.sax.SAXException;
 import net.seninp.jmotif.text.Params;
-import net.seninp.jmotif.text.TextProcessor;
-import net.seninp.jmotif.text.WordBag;
 import net.seninp.util.StackTrace;
 import net.seninp.util.UCRUtils;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import com.beust.jcommander.JCommander;
 
 /**
@@ -31,25 +27,15 @@ public class SAXVSMClassifier {
   private static final Object CR = "\n";
   private static final String COMMA = ", ";
 
-  private static TextProcessor tp = new TextProcessor();
-
   private static Map<String, List<double[]>> trainData;
   private static Map<String, List<double[]>> testData;
 
-  // static block - we instantiate the logger
-  //
-  private static final Logger consoleLogger;
-  private static final Level LOGGING_LEVEL = Level.INFO;
+  private static final Logger consoleLogger = LoggerFactory.getLogger(SAXVSMClassifier.class);
 
-  static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(SAXVSMClassifier.class);
-    consoleLogger.setLevel(LOGGING_LEVEL);
-  }
-
-  public static void main(String[] args) throws SAXException{
+  public static void main(String[] args) throws SAXException {
 
     try {
-      
+
       SAXVSMClassifierParams params = new SAXVSMClassifierParams();
       JCommander jct = new JCommander(params);
 
@@ -57,7 +43,7 @@ public class SAXVSMClassifier {
         jct.usage();
         System.exit(-10);
       }
-      
+
       jct.parse(args);
 
       StringBuffer sb = new StringBuffer(1024);
@@ -94,33 +80,13 @@ public class SAXVSMClassifier {
     Params params = new Params(SAXVSMClassifierParams.SAX_WINDOW_SIZE,
         SAXVSMClassifierParams.SAX_PAA_SIZE, SAXVSMClassifierParams.SAX_ALPHABET_SIZE,
         SAXVSMClassifierParams.SAX_NORM_THRESHOLD, SAXVSMClassifierParams.SAX_NR_STRATEGY);
-    classify(params);
+    SAXVSMEvaluator.Result result = SAXVSMEvaluator.evaluate(trainData, testData, params);
+    System.out.println("classification results: "
+        + toLogStr(params, result.getAccuracy(), result.getError()));
   }
 
-  private static void classify(Params params) throws SAXException {
-    // making training bags collection
-    List<WordBag> bags = tp.labeledSeries2WordBags(trainData, params);
-    // getting TFIDF done
-    HashMap<String, HashMap<String, Double>> tfidf = tp.computeTFIDF(bags);
-    // classifying
-    int testSampleSize = 0;
-    int positiveTestCounter = 0;
-    for (String label : tfidf.keySet()) {
-      List<double[]> testD = testData.get(label);
-      for (double[] series : testD) {
-        positiveTestCounter = positiveTestCounter
-            + tp.classify(label, series, tfidf, params);
-        testSampleSize++;
-      }
-    }
-
-    // accuracy and error
-    double accuracy = (double) positiveTestCounter / (double) testSampleSize;
-    double error = 1.0d - accuracy;
-
-    // report results
-    System.out.println("classification results: " + toLogStr(params, accuracy, error));
-
+  static SAXVSMEvaluator.Result evaluateLoadedData(Params params) throws SAXException {
+    return SAXVSMEvaluator.evaluate(trainData, testData, params);
   }
 
   protected static String toLogStr(Params params, double accuracy, double error) {

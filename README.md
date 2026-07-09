@@ -17,7 +17,7 @@ Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series Classif
 
 This Java code, the R/C++ ([jmotif-R](https://github.com/jMotif/jmotif-R)), and
 the Python ([saxpy](https://github.com/seninp/saxpy)) implementations are kept
-aligned. As of 2.0.0 this build depends on the aligned `jmotif-sax` 2.0.0, so
+aligned. As of 2.0.1 this build depends on the aligned `jmotif-sax` 2.0.1, so
 the SAX layer (population-std z-normalization, fractional PAA, Gaussian
 breakpoints, on-breakpoint→symbol-above) matches the other two to
 floating-point precision. The TF\*IDF weight uses **log1p term frequency,
@@ -32,9 +32,8 @@ classification — only the printed weight magnitudes. The five TF variants show
 in §5.0 NOTES remain available in the source for experimentation.
 
 Cross-language checks for the shared SAX layer (discord search, sliding-window
-SAX, RePair) live in
-[jmotif-conformance](https://github.com/jMotif/jmotif-conformance); dedicated
-SAX-VSM classifier golden cases are planned there next.
+SAX, RePair) and SAX-VSM classifier accuracy (CBF, Gun_Point) live in
+[jmotif-conformance](https://github.com/jMotif/jmotif-conformance).
 
 #### Our algorithm is based on the following work:
 
@@ -65,24 +64,24 @@ The code is written in Java and I use maven to build it. The `single` profile as
 	$ mvn -P single -DskipTests package
 	[INFO] Scanning for projects...
 	[INFO] ------------------------------------------------------------------------
-	[INFO] Building sax-vsm 2.0.0
+	[INFO] Building sax-vsm 2.0.1
 	[INFO] ------------------------------------------------------------------------
 	...
-	[INFO] Building jar: target/sax-vsm-2.0.0.jar
-	[INFO] Building jar: target/sax-vsm-2.0.0-jar-with-dependencies.jar
+	[INFO] Building jar: target/sax-vsm-2.0.1.jar
+	[INFO] Building jar: target/sax-vsm-2.0.1-jar-with-dependencies.jar
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESS
 	[INFO] ------------------------------------------------------------------------
 	[INFO] Total time:  7.xxx s
 
 Drop `-DskipTests` to run the test suite as part of the build. The build produces two
-artifacts: the thin `target/sax-vsm-2.0.0.jar` and the self-contained
-`target/sax-vsm-2.0.0-jar-with-dependencies.jar` used in the examples below.
+artifacts: the thin `target/sax-vsm-2.0.1.jar` and the self-contained
+`target/sax-vsm-2.0.1-jar-with-dependencies.jar` used in the examples below.
 
 ### 2.0 Running the classifier
 Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. The options are `-train`, `-test`, `-w`/`--window_size` (default 30), `-p`/`--word_size` (default 4), `-a`/`--alphabet_size` (default 3), `--strategy` one of `[NONE, EXACT, MINDIST]` (default `EXACT`), and `--threshold` (default 0.01). Here is a trace of running SAX-VSM with the Gun/Point dataset:
 
-	$ java -cp "target/sax-vsm-2.0.0-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
+	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -w 33 -p 17 -a 15 
 	12:34:56.001 [main] INFO net.seninp.jmotif.SAXVSMClassifier - trainData classes: 2, series length: 150
@@ -93,12 +92,12 @@ Class `SAXVSMClassifier` is runnable from command line; running it without param
 	12:34:56.004 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  test class: 1 series: 76
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 0.98667,  error 0.01333
 
-Note, that as of 2.0.0 the run log goes through SLF4J -- every line above except the
+Note, that as of 2.0.1 the run log goes through SLF4J -- every line above except the
 final `classification results:` line (plain stdout) is prefixed with
 `HH:MM:SS.mmm [main] INFO net.seninp.jmotif.SAXVSMClassifier - `.
 
 Note also, that this `-w 33 -p 17 -a 15` operating point used to report `accuracy 1.00, error 0.00`
-in pre-2.0.0 releases. With the `jmotif-sax` 2.0.0 SAX layer and the `log1p` TF·IDF
+in pre-2.0.1 releases. With the `jmotif-sax` 2.0.x SAX layer and the `log1p` TF·IDF
 alignment (see *Cross-implementation alignment* above) it now reports
 `accuracy 0.98667, error 0.01333` -- a two-series shift, and the same numbers the
 DiRect sampler's `NONE` strategy lands on in §3.0. The alignment dataset CBF, e.g.
@@ -110,7 +109,7 @@ Symbolic discretization with SAX -- the first step of our algorithm -- requires 
 
 The code implements the DiRect sampler which can be called from the command line (it is the main class of the fat jar, so `java -jar` runs it). The options are `-wmin`/`-wmax` (default 10/100), `-pmin`/`-pmax` (default 3/10), `-amin`/`-amax` (default 3/5), `--hold_out` (default 1), `-i`/`--iter` (default 1), and `-b`/`--break` (default 0.001). Below is the trace of running the sampler for the Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
 
-	$ java -jar target/sax-vsm-2.0.0-jar-with-dependencies.jar \
+	$ java -jar target/sax-vsm-2.0.1-jar-with-dependencies.jar \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
 	12:40:01.101 [main] INFO ... - trainData classes: 2, series length: 150

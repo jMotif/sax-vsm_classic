@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import net.seninp.jmotif.text.CosineDistanceMatrix;
 import net.seninp.jmotif.text.TextProcessor;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 public class TextKMeans {
 
@@ -19,15 +18,9 @@ public class TextKMeans {
   private static final double THRESHOLD = 0.000000001;
 
   // logger business
-  private static Logger consoleLogger;
-  private static Level LOGGING_LEVEL = Level.INFO;
+  private static final Logger consoleLogger = LoggerFactory.getLogger(TextKMeans.class);
 
   private static final TextProcessor tp = new TextProcessor();
-
-  static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(TextKMeans.class);
-    consoleLogger.setLevel(LOGGING_LEVEL);
-  }
 
   /**
    * This clusters a map data structure of pairs bagName wordBag which is used as tfidf throughout
