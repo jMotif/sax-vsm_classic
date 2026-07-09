@@ -4,3 +4,11 @@
 /target
 /.settings/
 .DS_Store
+
+# Cursor / Claude / agent artifacts — never commit
+.cursor/
+.claude/
+audit/
+audit-report.html
+AGENTS.md
+*.mdc
