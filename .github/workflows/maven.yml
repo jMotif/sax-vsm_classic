@@ -36,6 +36,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Upload coverage to Codecov
+      if: matrix.java == 21 && matrix.os == 'ubuntu-latest'
       uses: codecov/codecov-action@v4
       with:
         directory: ./target/site/jacoco

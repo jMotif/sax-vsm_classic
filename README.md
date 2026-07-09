@@ -31,6 +31,11 @@ per-word factor that cancels in the cosine similarity, so it never changes a
 classification — only the printed weight magnitudes. The five TF variants shown
 in §5.0 NOTES remain available in the source for experimentation.
 
+Cross-language checks for the shared SAX layer (discord search, sliding-window
+SAX, RePair) live in
+[jmotif-conformance](https://github.com/jMotif/jmotif-conformance); dedicated
+SAX-VSM classifier golden cases are planned there next.
+
 #### Our algorithm is based on the following work:
 
 [1] Lin, J., Keogh, E., Wei, L. and Lonardi, S., [*Experiencing SAX: a Novel Symbolic Representation of Time Series*](https://web.archive.org/web/2021/http://cs.gmu.edu/~jessica/SAX_DAMI_preprint.pdf). [DMKD Journal](http://link.springer.com/article/10.1007%2Fs10618-007-0064-z), 2007.
@@ -166,12 +171,13 @@ Finally, note, that when cosine similarity is computed within the classification
 ### 6.0 The classification accuracy table
 The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
 
-**Caveat (2026-06-29):** this table predates the 2.0.0 `log1p` alignment -- it was
-generated with the earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`). With the
-2.0.0 SAX + `log1p` TF·IDF layer the per-dataset numbers may shift slightly (for
-example the §2.0 Gun_Point operating point moved from error 0.00 to 0.01333, which is
-consistent with the GunPoint row below). A full UCR re-benchmark on 2.0.0 is pending;
-the numbers in the table have not been altered.
+**Archival only (pre-2.0.0):** the SAX-VSM column below was produced with the
+earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`) and the pre-alignment SAX
+layer. Do **not** treat it as current 2.0.0 regression data. Verified 2.0.0
+spot checks on bundled UCR subsets instead: Gun_Point at `-w 33 -p 17 -a 15`
+reports error **0.01333** (§2.0), CBF at `-w 60 -p 8 -a 6` reports error
+**0.00** (§2.0). A full UCR re-benchmark under `log1p` remains pending; the
+table rows are unchanged for historical reference only.
 
 | Dataset                 | Classes |  Length | Euclidean 1NN | DTW 1NN | SAX-VSM |
 |-------------------------|:-------:|:-------:|--------------:|--------:|--------:|
