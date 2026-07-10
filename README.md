@@ -205,6 +205,24 @@ double hcPurity = hc.labelPurity(labels);
 
 Golden tests: [`TestSAXVSMClustering`](src/test/java/net/seninp/jmotif/cluster/TestSAXVSMClustering.java). Reproduce the figure: `Rscript src/resources/RCode/cbf_clustering_plots.R` (requires [jmotif-R](https://github.com/jMotif/jmotif-R)).
 
+**Command-line clustering** — class [`SAXVSMClusteringCLI`](src/main/java/net/seninp/jmotif/cluster/SAXVSMClusteringCLI.java); running without parameters prints usage. Options mirror the classifier SAX knobs plus `-train`, `-k`, `-m`/`--method` (`kmeans` or `hierarchical`), `--linkage` (`single` or `complete`), `--init` (`random` or `furthest_first`), `--seed`, and optional `--newick_out`. Example on CBF train:
+
+	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
+	  -train src/resources/data/cbf/CBF_TRAIN -k 3 -w 60 -p 8 -a 6 --init furthest_first --seed 2
+	clustering results: method kmeans, strategy EXACT, window 60, PAA 8, alphabet 6, k 3, init furthest_first, seed 2, purity 0.90
+	  cluster 0 (n=7): {2=1, 3=6}
+	  cluster 1 (n=12): {1=10, 3=2}
+	  cluster 2 (n=11): {2=11}
+
+Single-linkage hierarchical clustering with a 3-way partition:
+
+	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
+	  -train src/resources/data/cbf/CBF_TRAIN -k 3 -m hierarchical --linkage single -w 60 -p 8 -a 6
+	clustering results: method hierarchical, strategy EXACT, window 60, PAA 8, alphabet 6, k 3, linkage single, purity 1.00
+	newick: (...)
+
+Log lines go through SLF4J; the `clustering results:` line, per-cluster counts, and optional `newick:` line are plain stdout (same pattern as `SAXVSMClassifier`).
+
 ### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
