@@ -1,11 +1,9 @@
 ## SAX-VSM public code release
 
-![maven build](https://github.com/jMotif/sax-vsm_classic/actions/workflows/maven.yml/badge.svg) 
-[![codecov.io](http://codecov.io/github/jMotif/sax-vsm_classic/coverage.svg?branch=master)](http://codecov.io/github/jMotif/sax-vsm_classic?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.seninp/sax-vsm)
-[![License](http://img.shields.io/:license-gpl2-green.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
-
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=jMotif_sax-vsm_classic)
+[![build](https://github.com/jMotif/sax-vsm_classic/actions/workflows/maven.yml/badge.svg)](https://github.com/jMotif/sax-vsm_classic/actions/workflows/maven.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/net.seninp/sax-vsm)](https://central.sonatype.com/artifact/net.seninp/sax-vsm)
+[![coverage](https://codecov.io/github/jMotif/sax-vsm_classic/graph/badge.svg?branch=master)](https://codecov.io/github/jMotif/sax-vsm_classic?branch=master)
+[![License](https://img.shields.io/github/license/jMotif/sax-vsm_classic)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 #### This code supports our publication:
 
