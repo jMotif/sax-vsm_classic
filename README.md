@@ -158,6 +158,53 @@ The class named `SAXVSMPatternExplorer` prints the most significant class-charac
 
 Note, that the time series ranges highlighted by the approach correspond to distinctive class features: class Gun is characterized the most by articulated movements for prop retrieval and aiming, class Point is characterized by the ‘overshoot’ phenomenon and simple (when compared to Gun) movement before aiming.
 
+### 4.1 Unsupervised clustering
+
+Classification merges all training series of a class into **one bag per class**. Clustering uses the same SAX-VSM tf·idf geometry but builds **one vector per series** (`class:index` labels) and groups them with k-means or hierarchical clustering. The facade is [`SAXVSMClustering`](src/main/java/net/seninp/jmotif/cluster/SAXVSMClustering.java) in package `net.seninp.jmotif.cluster`.
+
+![CBF clustering overview](src/resources/assets/cbf_clustering_overview.png)
+
+*Figure: CBF train sample (30 series) — single-linkage dendrogram on per-series tf·idf vectors (top) and the three canonical shapes (bottom). Generated with [`cbf_clustering_plots.R`](src/resources/RCode/cbf_clustering_plots.R).*
+
+**Clustering purity** (fraction of series whose true class matches the plurality label in their assigned cluster) on bundled UCR train subsets at the same SAX parameters as §2.0:
+
+| Dataset | Train series | *k* | Classifier test error | k-means purity | HC single purity (*k*-cut) |
+|---------|:------------:|:---:|----------------------:|---------------:|---------------------------:|
+| CBF | 30 | 3 | **0.00** (900 test) | **0.90** (furthest-first, seed 2) | **1.00** |
+| Gun_Point | 50 | 2 | **0.0133** (150 test) | **0.86** (furthest-first, seed 21) | 0.52–0.56 (root cut)* |
+
+\*Gun_Point does not split cleanly at the dendrogram root; use k-means or a [`Dendrogram.partition(k)`](src/main/java/net/seninp/jmotif/cluster/Dendrogram.java) cut rather than the top merge alone. CBF is the better clustering demo: three shapes separate almost perfectly in tf·idf space (matching 100% classifier accuracy on the full test set).
+
+**Short Java tutorial** (JUnit-style; data under `src/resources/data/cbf/`):
+
+```java
+import java.util.List;
+import java.util.Map;
+import net.seninp.jmotif.cluster.*;
+import net.seninp.jmotif.sax.NumerosityReductionStrategy;
+import net.seninp.jmotif.text.Params;
+import net.seninp.util.UCRUtils;
+
+Map<String, List<double[]>> train =
+    UCRUtils.readUCRData("src/resources/data/cbf/CBF_TRAIN");
+Params params = new Params(60, 8, 6, 0.01, NumerosityReductionStrategy.EXACT);
+
+Map<String, Map<String, Double>> tfidf = SAXVSMClustering.seriesTfidf(train, params);
+Map<String, String> labels = SAXVSMClustering.seriesLabels(train);
+
+// k-means (golden test: purity 0.90)
+ClusterAssignments km =
+    SAXVSMClustering.kMeans(tfidf, 3, KMeansInit.FURTHEST_FIRST, 2L);
+double kmPurity = km.labelPurity(labels);
+
+// hierarchical clustering + greedy 3-way cut (golden test: purity 1.00)
+Dendrogram tree = SAXVSMClustering.hierarchical(tfidf, Linkage.SINGLE);
+ClusterAssignments hc = tree.partition(3);
+double hcPurity = hc.labelPurity(labels);
+```
+
+Golden tests: [`TestSAXVSMClustering`](src/test/java/net/seninp/jmotif/cluster/TestSAXVSMClustering.java). Reproduce the figure: `Rscript src/resources/RCode/cbf_clustering_plots.R` (requires [jmotif-R](https://github.com/jMotif/jmotif-R)).
+
 ### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 

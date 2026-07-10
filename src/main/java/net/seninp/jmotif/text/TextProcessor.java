@@ -130,6 +130,27 @@ public final class TextProcessor {
   }
 
   /**
+   * Builds one word bag per time series (labels {@code classLabel + ":" + index}).
+   *
+   * <p>Use with {@link #computeTFIDF} for per-series tf·idf vectors. Contrast with
+   * {@link #labeledSeries2WordBags}, which merges all series of a class into a single bag for
+   * classification.</p>
+   */
+  public List<WordBag> perSeriesWordBags(Map<String, List<double[]>> data, Params params)
+      throws SAXException {
+
+    List<WordBag> res = new ArrayList<WordBag>();
+    for (Entry<String, List<double[]>> e : data.entrySet()) {
+      String classLabel = e.getKey();
+      int index = 0;
+      for (double[] series : e.getValue()) {
+        res.add(seriesToWordBag(classLabel + ":" + index++, series, params));
+      }
+    }
+    return res;
+  }
+
+  /**
    * Computes TF*IDF values.
    * 
    * @param texts The collection of text documents for which the statistics need to be computed.
