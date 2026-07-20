@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ruleset name="jmotif-quality" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+  <description>
+    Bug-focused PMD gate for the jMotif stack. Intentionally narrow: only the
+    error-prone and multithreading categories, which catch real defects rather
+    than stylistic nits.
+
+    The rules excluded below are pre-existing findings in this module's current
+    code (a baseline as of the gate's introduction). Excluding them lets the
+    gate block on NEW violations of every other rule while not forcing an
+    immediate cleanup of long-standing, mostly-opinionated warnings.
+  </description>
+
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="AvoidDuplicateLiterals"/>
+    <exclude name="AvoidFieldNameMatchingMethodName"/>
+    <exclude name="AvoidFieldNameMatchingTypeName"/>
+    <exclude name="AvoidLiteralsInIfCondition"/>
+    <exclude name="ConstructorCallsOverridableMethod"/>
+    <exclude name="NullAssignment"/>
+    <exclude name="ProperCloneImplementation"/>
+    <exclude name="ReturnEmptyCollectionRatherThanNull"/>
+    <exclude name="UnnecessaryCaseChange"/>
+    <exclude name="UseLocaleWithCaseConversions"/>
+  </rule>
+
+  <rule ref="category/java/multithreading.xml">
+    <exclude name="AvoidSynchronizedAtMethodLevel"/>
+    <exclude name="AvoidSynchronizedStatement"/>
+    <exclude name="AvoidUsingVolatile"/>
+    <exclude name="DoNotUseThreads"/>
+    <exclude name="UnsynchronizedStaticFormatter"/>
+    <exclude name="UseConcurrentHashMap"/>
+  </rule>
+
+</ruleset>

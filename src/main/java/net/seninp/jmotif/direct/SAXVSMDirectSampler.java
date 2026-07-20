@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import net.seninp.jmotif.sax.NumerosityReductionStrategy;
 import net.seninp.jmotif.sax.SAXProcessor;
 import net.seninp.jmotif.text.Params;
@@ -938,7 +939,7 @@ public class SAXVSMDirectSampler {
     ArrayList<Integer> res = new ArrayList<Integer>();
     for (int i1 = 0; i1 < arr1.length; i1++) {
       for (int i2 = 0; i2 < arr2.length; i2++) {
-        if (arr1[i1] == arr2[i2]) {
+        if (Objects.equals(arr1[i1], arr2[i2])) {
           res.add(arr2[i2]);
         }
       }

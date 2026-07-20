@@ -21,20 +21,16 @@ public class GoldsteinPriceFunctionSampler {
 
   public static void main(String[] args) {
 
-    double x1 = X1_START;
-    double x2 = X2_START;
+    int x1Steps = (int) ((X1_END - X1_START) / step) + 1;
+    int x2Steps = (int) ((X2_END - X2_START) / step) + 1;
 
-    while ((x1 < X1_END) && (x2 < X2_END)) {
+    for (int i2 = 0; i2 < x2Steps; i2++) {
+      double x2 = X2_START + i2 * step;
+      for (int i1 = 0; i1 < x1Steps; i1++) {
+        double x1 = X1_START + i1 * step;
 
-      @SuppressWarnings("unused")
-      double value = GoldsteinPriceFunction.compute(x1, x2);
-
-      // increment variable values
-      //
-      x1 = x1 + step;
-      if ((x1 >= X1_END) && (x2 < X2_END)) {
-        x1 = X1_START;
-        x2 = x2 + step;
+        @SuppressWarnings("unused")
+        double value = GoldsteinPriceFunction.compute(x1, x2);
       }
     }
 

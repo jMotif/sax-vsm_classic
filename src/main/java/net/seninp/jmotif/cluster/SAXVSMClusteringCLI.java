@@ -93,9 +93,9 @@ public final class SAXVSMClusteringCLI {
       assignments = tree.partition(k);
       newick = tree.toNewick();
       if (SAXVSMClusteringParams.NEWICK_OUT != null) {
-        FileWriter fw = new FileWriter(SAXVSMClusteringParams.NEWICK_OUT);
-        fw.write("(" + newick + ")\n");
-        fw.close();
+        try (FileWriter fw = new FileWriter(SAXVSMClusteringParams.NEWICK_OUT)) {
+          fw.write("(" + newick + ")\n");
+        }
       }
     }
     else {
