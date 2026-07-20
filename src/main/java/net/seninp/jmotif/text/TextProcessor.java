@@ -200,9 +200,6 @@ public final class TextProcessor {
         //
         double tfidf = 0;
 
-        // if (totalDocs == word.getValue().intValue()) {
-        // System.out.println("excluded: " + word.getKey());
-        // }
         // if this document contains the word - here we go
         if (bagWords.containsKey(word.getKey()) && (totalDocs != word.getValue().intValue())) {
 
@@ -468,7 +465,7 @@ public final class TextProcessor {
 
     Set<String> unionKey = map2.keySet();
     if (!(map1.keySet().equals(map2.keySet()))) {
-      System.err.println("WARN: Uneven vectors in the cosineDistance(), adjusting...");
+      consoleLogger.warn("uneven vectors in cosineDistance(), adjusting...");
       unionKey = new HashSet<String>(map1.keySet());
       // seninp: I take intersect here, because zeroes do not matter
       //
@@ -715,9 +712,6 @@ public final class TextProcessor {
     if (!(allEqual) && className.equalsIgnoreCase(trueClassLabel)) {
       return 1;
     }
-
-    // System.out.println("all equal " + allEqual + ", assigned to " + className + " instead of " +
-    // classKey);
 
     return 0;
   }
@@ -1009,8 +1003,6 @@ public final class TextProcessor {
   //
   // char[] sax = tp.ts2String(paa, a.getCuts(alphabetSize));
   //
-  // // System.out.println(Arrays.toString(tp.subseries(series, i, windowSize)) + "->"
-  // // + Arrays.toString(paa));
   //
   // if (SAXNumerosityReductionStrategy.CLASSIC.equals(strategy)) {
   // if (oldStr.length() > 0 && SAXFactory.strDistance(sax, oldStr.toCharArray()) == 0) {
