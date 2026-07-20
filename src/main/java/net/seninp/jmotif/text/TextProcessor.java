@@ -405,6 +405,9 @@ public final class TextProcessor {
       sum = sum + value * value;
     }
     sum = Math.sqrt(sum);
+    if (sum == 0.0) {
+      return new HashMap<String, Double>(vector);
+    }
     HashMap<String, Double> res = new HashMap<String, Double>();
     for (Entry<String, Double> e : vector.entrySet()) {
       res.put(e.getKey(), e.getValue() / sum);
@@ -672,6 +675,10 @@ public final class TextProcessor {
 
   public int classify(String trueClassLabel, WordBag test,
       HashMap<String, HashMap<String, Double>> tfidf) {
+
+    if (tfidf == null || tfidf.isEmpty()) {
+      throw new IllegalArgumentException("tfidf must not be empty");
+    }
 
     // it is Cosine similarity,
     //

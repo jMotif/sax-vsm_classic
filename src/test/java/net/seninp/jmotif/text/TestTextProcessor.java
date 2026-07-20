@@ -85,6 +85,36 @@ public class TestTextProcessor {
   }
 
   /**
+   * Zero-norm vectors must stay all-zero (no NaN from 0/0).
+   */
+  @Test
+  public void testNormalizeToUnitVectorZeroVector() {
+    HashMap<String, Double> zero = new HashMap<String, Double>();
+    zero.put("a", 0.0);
+    zero.put("b", 0.0);
+    HashMap<String, Double> result = tp.normalizeToUnitVector(zero);
+    assertEquals(0.0, result.get("a").doubleValue(), 0.0);
+    assertEquals(0.0, result.get("b").doubleValue(), 0.0);
+  }
+
+  /**
+   * Empty training vocabulary must fail clearly, not with ArrayIndexOutOfBoundsException.
+   */
+  @Test
+  public void testClassifyEmptyTfidf() {
+    WordBag test = new WordBag("test");
+    test.addWord("foo", 1);
+    HashMap<String, HashMap<String, Double>> tfidf = new HashMap<String, HashMap<String, Double>>();
+    try {
+      tp.classify("label", test, tfidf);
+      fail("expected IllegalArgumentException");
+    }
+    catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("tfidf must not be empty"));
+    }
+  }
+
+  /**
    * Test tf-idf statistics.
    */
   @Test
