@@ -1,6 +1,7 @@
 package net.seninp.jmotif.text;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -23,7 +24,8 @@ public class CosineDistanceMatrix {
 
   private static final String COMMA = ",";
   private static final String CR = "\n";
-  private static final DecimalFormat df = new DecimalFormat("#0.00000");
+  private static final DecimalFormat df = new DecimalFormat("#0.00000",
+      new DecimalFormatSymbols(Locale.US));
 
   private static final TextProcessor tp = new TextProcessor();
 
@@ -33,8 +35,6 @@ public class CosineDistanceMatrix {
    * @param tfidf The data to use.
    */
   public CosineDistanceMatrix(HashMap<String, HashMap<String, Double>> tfidf) {
-
-    Locale.setDefault(Locale.US);
 
     rows = tfidf.keySet().toArray(new String[0]);
 
