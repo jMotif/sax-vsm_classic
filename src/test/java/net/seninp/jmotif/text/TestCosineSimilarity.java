@@ -1,6 +1,7 @@
 package net.seninp.jmotif.text;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import org.junit.Test;
@@ -100,5 +101,67 @@ public class TestCosineSimilarity {
     double distNorm = tp.cosineDistance(vectors.get("first"), vectors.get("second"));
 
     assertEquals("Testing cosine similarity", TEST_VALUE, distNorm, TEST_PASS_PRECISION);
+  }
+
+  /**
+   * A zero-magnitude vector has no direction: cosineDistance must return 0.0, not 0/0 = NaN,
+   * so it cannot poison distance matrices or similarity-based class picks.
+   */
+  @Test
+  public void testCosineDistanceZeroVectorReturnsZero() {
+    HashMap<String, Double> zero = new HashMap<String, Double>();
+    zero.put("a", 0.0);
+    zero.put("b", 0.0);
+
+    HashMap<String, Double> nonzero = new HashMap<String, Double>();
+    nonzero.put("a", 1.0);
+    nonzero.put("b", 2.0);
+
+    double zeroVsNonzero = tp.cosineDistance(zero, nonzero);
+    double nonzeroVsZero = tp.cosineDistance(nonzero, zero);
+    double zeroVsZero = tp.cosineDistance(zero, zero);
+
+    assertFalse("zero vector must not yield NaN", Double.isNaN(zeroVsNonzero));
+    assertFalse("zero vector (rhs) must not yield NaN", Double.isNaN(nonzeroVsZero));
+    assertFalse("zero vs zero must not yield NaN", Double.isNaN(zeroVsZero));
+    assertEquals("zero-magnitude cosine distance", 0.0, zeroVsNonzero, TEST_PASS_PRECISION);
+    assertEquals("zero-magnitude cosine distance (rhs)", 0.0, nonzeroVsZero, TEST_PASS_PRECISION);
+    assertEquals("zero-vs-zero cosine distance", 0.0, zeroVsZero, TEST_PASS_PRECISION);
+  }
+
+  /**
+   * An empty test bag (zero magnitude) must yield a 0.0 similarity, not NaN, in
+   * cosineSimilarity(WordBag, weightVector).
+   */
+  @Test
+  public void testCosineSimilarityEmptyBagReturnsZero() {
+    WordBag empty = new WordBag("empty");
+
+    HashMap<String, Double> weights = new HashMap<String, Double>();
+    weights.put("me", 2.0);
+    weights.put("Julie", 1.0);
+
+    double sim = tp.cosineSimilarity(empty, weights);
+
+    assertFalse("empty bag must not yield NaN", Double.isNaN(sim));
+    assertEquals("empty-bag cosine similarity", 0.0, sim, TEST_PASS_PRECISION);
+  }
+
+  /**
+   * The instrumented overload must also guard the zero-magnitude denominator and return 0.0.
+   */
+  @Test
+  public void testCosineSimilarityInstrumentedEmptyBagReturnsZero() {
+    WordBag empty = new WordBag("empty");
+
+    HashMap<String, Double> weights = new HashMap<String, Double>();
+    weights.put("me", 2.0);
+    weights.put("Julie", 1.0);
+
+    HashMap<String, Double> insight = new HashMap<String, Double>();
+    double sim = tp.cosineSimilarityInstrumented(empty, weights, insight);
+
+    assertFalse("instrumented empty bag must not yield NaN", Double.isNaN(sim));
+    assertEquals("instrumented empty-bag similarity", 0.0, sim, TEST_PASS_PRECISION);
   }
 }
