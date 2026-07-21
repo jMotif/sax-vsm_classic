@@ -486,6 +486,12 @@ public final class TextProcessor {
     // seninp: but here I need the magnitude of the raw vectors
     double denominator = magnitude(map1.values()) * magnitude(map2.values());
 
+    // a zero-magnitude vector (all weights zero / empty bag) has no direction: guard the
+    // 0/0 -> NaN so it cannot poison distance matrices or similarity-based class picks
+    if (0.0 == denominator) {
+      return 0.0;
+    }
+
     return numerator / denominator;
   }
 
@@ -498,7 +504,12 @@ public final class TextProcessor {
     }
     double m1 = magnitude(testSample.getWordsAsDoubles().values());
     double m2 = magnitude(weightVector.values());
-    return res / (m1 * m2);
+    double denominator = m1 * m2;
+    // guard 0/0 -> NaN for empty test bags or all-zero weight vectors
+    if (0.0 == denominator) {
+      return 0.0;
+    }
+    return res / denominator;
   }
 
   // private double cosineSimilarity(BigramBag testSample, HashMap<Bigram, Double> weightVector) {
@@ -551,7 +562,12 @@ public final class TextProcessor {
     }
     double m1 = magnitude(testSample.getWordsAsDoubles().values());
     double m2 = magnitude(weightVector.values());
-    return res / (m1 * m2);
+    double denominator = m1 * m2;
+    // guard 0/0 -> NaN for empty test bags or all-zero weight vectors
+    if (0.0 == denominator) {
+      return 0.0;
+    }
+    return res / denominator;
   }
 
   // private double cosineSimilarity(BigramBag testSample, HashMap<Bigram, Double> weightVector) {
