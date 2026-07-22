@@ -53,7 +53,7 @@
 
   <groupId>net.seninp</groupId>
   <artifactId>sax-vsm</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.2</version>
   <packaging>jar</packaging>
 
   <name>sax-vsm</name>

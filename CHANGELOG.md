@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.2] — 2026-07-22
+
 Feature and hardening release on top of **2.0.1**.
 
 ### Added

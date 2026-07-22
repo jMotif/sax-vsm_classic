@@ -15,7 +15,7 @@ Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series Classif
 
 This Java code, the R/C++ ([jmotif-R](https://github.com/jMotif/jmotif-R)), and
 the Python ([saxpy](https://github.com/seninp/saxpy)) implementations are kept
-aligned. As of 2.0.1 this build depends on the aligned `jmotif-sax` 2.0.1, so
+aligned. As of 2.0.2 this build depends on the aligned `jmotif-sax` 2.0.1 from Maven Central, so
 the SAX layer (population-std z-normalization, fractional PAA, Gaussian
 breakpoints, on-breakpoint→symbol-above) matches the other two to
 floating-point precision. The TF\*IDF weight uses **log1p term frequency,
@@ -57,12 +57,9 @@ The whole process is illustrated below:
 ![SAX-VSM in a nutshell](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/inanutshell.png)
 
 ### 1.0 Building
-The code is written in Java and I use maven to build it. Version **2.0.1** depends on
-**`jmotif-sax` 2.0.1**, which is not yet on Maven Central — install it from the
-[jMotif/SAX](https://github.com/jMotif/SAX) checkout first:
+The code is written in Java and I use maven to build it. Version **2.0.2** depends on
+**`jmotif-sax` 2.0.1** from Maven Central:
 
-	$ git clone https://github.com/jMotif/SAX.git ../SAX
-	$ mvn -f ../SAX/pom.xml install -P single -DskipTests
 	$ mvn -P single -DskipTests package
 
 The `single` profile assembles the fat jar:
@@ -70,24 +67,24 @@ The `single` profile assembles the fat jar:
 	$ mvn -P single -DskipTests package
 	[INFO] Scanning for projects...
 	[INFO] ------------------------------------------------------------------------
-	[INFO] Building sax-vsm 2.0.1
+	[INFO] Building sax-vsm 2.0.2
 	[INFO] ------------------------------------------------------------------------
 	...
-	[INFO] Building jar: target/sax-vsm-2.0.1.jar
-	[INFO] Building jar: target/sax-vsm-2.0.1-jar-with-dependencies.jar
+	[INFO] Building jar: target/sax-vsm-2.0.2.jar
+	[INFO] Building jar: target/sax-vsm-2.0.2-jar-with-dependencies.jar
 	[INFO] ------------------------------------------------------------------------
 	[INFO] BUILD SUCCESS
 	[INFO] ------------------------------------------------------------------------
 	[INFO] Total time:  7.xxx s
 
 Drop `-DskipTests` to run the test suite as part of the build. The build produces two
-artifacts: the thin `target/sax-vsm-2.0.1.jar` and the self-contained
-`target/sax-vsm-2.0.1-jar-with-dependencies.jar` used in the examples below.
+artifacts: the thin `target/sax-vsm-2.0.2.jar` and the self-contained
+`target/sax-vsm-2.0.2-jar-with-dependencies.jar` used in the examples below.
 
 ### 2.0 Running the classifier
 Class `SAXVSMClassifier` is runnable from command line; running it without parameters prints usage help. The options are `-train`, `-test`, `-w`/`--window_size` (default 30), `-p`/`--word_size` (default 4), `-a`/`--alphabet_size` (default 3), `--strategy` one of `[NONE, EXACT, MINDIST]` (default `EXACT`), and `--threshold` (default 0.01). Here is a trace of running SAX-VSM with the Gun/Point dataset:
 
-	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
+	$ java -cp "target/sax-vsm-2.0.2-jar-with-dependencies.jar" net.seninp.jmotif.SAXVSMClassifier \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -w 33 -p 17 -a 15 
 	12:34:56.001 [main] INFO net.seninp.jmotif.SAXVSMClassifier - trainData classes: 2, series length: 150
@@ -103,7 +100,7 @@ final `classification results:` line (plain stdout) is prefixed with
 `HH:MM:SS.mmm [main] INFO net.seninp.jmotif.SAXVSMClassifier - `.
 
 Note also, that this `-w 33 -p 17 -a 15` operating point used to report `accuracy 1.00, error 0.00`
-in pre-2.0.1 releases. With the `jmotif-sax` 2.0.x SAX layer and the `log1p` TF·IDF
+in pre-2.0.2 releases. With the `jmotif-sax` 2.0.x SAX layer and the `log1p` TF·IDF
 alignment (see *Cross-implementation alignment* above) it now reports
 `accuracy 0.98667, error 0.01333` -- a two-series shift, and the same numbers the
 DiRect sampler's `NONE` strategy lands on in §3.0. The alignment dataset CBF, e.g.
@@ -115,7 +112,7 @@ Symbolic discretization with SAX -- the first step of our algorithm -- requires 
 
 The code implements the DiRect sampler which can be called from the command line (it is the main class of the fat jar, so `java -jar` runs it). The options are `-wmin`/`-wmax` (default 10/100), `-pmin`/`-pmax` (default 3/10), `-amin`/`-amax` (default 3/5), `--hold_out` (default 1), `-i`/`--iter` (default 1), and `-b`/`--break` (default 0.001). Below is the trace of running the sampler for the Gun/Point dataset. The series in this dataset have length 150, so I define the sliding window range as [10-150], PAA size as [5-75], and the alphabet [2-18]:
 
-	$ java -jar target/sax-vsm-2.0.1-jar-with-dependencies.jar \
+	$ java -jar target/sax-vsm-2.0.2-jar-with-dependencies.jar \
 	  -train src/resources/data/Gun_Point/Gun_Point_TRAIN -test src/resources/data/Gun_Point/Gun_Point_TEST \
 	  -wmin 10 -wmax 150 -pmin 5 -pmax 75 -amin 2 -amax 18 --hold_out 1 -i 3
 	12:40:01.101 [main] INFO ... - trainData classes: 2, series length: 150
@@ -205,7 +202,7 @@ Golden tests: [`TestSAXVSMClustering`](src/test/java/net/seninp/jmotif/cluster/T
 
 **Command-line clustering** — class [`SAXVSMClusteringCLI`](src/main/java/net/seninp/jmotif/cluster/SAXVSMClusteringCLI.java); running without parameters prints usage. Options mirror the classifier SAX knobs plus `-train`, `-k`, `-m`/`--method` (`kmeans` or `hierarchical`), `--linkage` (`single` or `complete`), `--init` (`random` or `furthest_first`), `--seed`, and optional `--newick_out`. Example on CBF train:
 
-	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
+	$ java -cp "target/sax-vsm-2.0.2-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
 	  -train src/resources/data/cbf/CBF_TRAIN -k 3 -w 60 -p 8 -a 6 --init furthest_first --seed 2
 	clustering results: method kmeans, strategy EXACT, window 60, PAA 8, alphabet 6, k 3, init furthest_first, seed 2, purity 0.90
 	  cluster 0 (n=7): {2=1, 3=6}
@@ -214,7 +211,7 @@ Golden tests: [`TestSAXVSMClustering`](src/test/java/net/seninp/jmotif/cluster/T
 
 Single-linkage hierarchical clustering with a 3-way partition:
 
-	$ java -cp "target/sax-vsm-2.0.1-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
+	$ java -cp "target/sax-vsm-2.0.2-jar-with-dependencies.jar" net.seninp.jmotif.cluster.SAXVSMClusteringCLI \
 	  -train src/resources/data/cbf/CBF_TRAIN -k 3 -m hierarchical --linkage single -w 60 -p 8 -a 6
 	clustering results: method hierarchical, strategy EXACT, window 60, PAA 8, alphabet 6, k 3, linkage single, purity 1.00
 	newick: (...)
@@ -224,7 +221,7 @@ Log lines go through SLF4J; the `clustering results:` line, per-cluster counts, 
 ### 5.0 NOTES
 Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
 
-Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.1 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
+Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.2 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
 
 	double tfValue = Math.log(1.0D + Integer.valueOf(wordInBagFrequency).doubleValue());
 	// double tfValue = 1.0D + Math.log(Integer.valueOf(wordInBagFrequency).doubleValue());
@@ -243,7 +240,7 @@ The following table was obtained in automated mode when using DiRect-driven para
 
 **Archival only (pre-2.0.0):** the SAX-VSM column below was produced with the
 earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`) and the pre-alignment SAX
-layer. Do **not** treat it as current regression data. Verified **2.0.1**
+layer. Do **not** treat it as current regression data. Verified **2.0.2**
 spot checks on bundled UCR subsets instead: Gun_Point at `-w 33 -p 17 -a 15`
 reports error **0.01333** (§2.0), CBF at `-w 60 -p 8 -a 6` reports error
 **0.00** (§2.0). Cross-language locks for those operating points live in
