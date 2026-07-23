@@ -9,7 +9,7 @@
 
 Senin, Pavel and Malinchik, Sergey, [*SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model*](https://github.com/csdl/techreports/raw/master/techreports/2011/11-09/11-09.pdf), Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
 
-##### Note, that the SAX-VSM stack is also available in [R](https://github.com/jMotif/jmotif-R) and [Python (saxpy)](https://github.com/seninp/saxpy).
+**Also available in** [R](https://github.com/jMotif/jmotif-R) and [Python (saxpy)](https://github.com/seninp/saxpy).
 
 #### Cross-implementation alignment
 
@@ -95,11 +95,11 @@ Class `SAXVSMClassifier` is runnable from command line; running it without param
 	12:34:56.004 [main] INFO net.seninp.jmotif.SAXVSMClassifier -  test class: 1 series: 76
 	classification results: strategy EXACT, window 33, PAA 17, alphabet 15,  accuracy 0.98667,  error 0.01333
 
-Note, that as of 2.0.1 the run log goes through SLF4J -- every line above except the
+As of 2.0.1 the run log goes through SLF4J -- every line above except the
 final `classification results:` line (plain stdout) is prefixed with
 `HH:MM:SS.mmm [main] INFO net.seninp.jmotif.SAXVSMClassifier - `.
 
-Note also, that this `-w 33 -p 17 -a 15` operating point used to report `accuracy 1.00, error 0.00`
+The pre-2.0.2 `-w 33 -p 17 -a 15` operating point used to report `accuracy 1.00, error 0.00`.
 in pre-2.0.2 releases. With the `jmotif-sax` 2.0.x SAX layer and the `log1p` TF·IDF
 alignment (see *Cross-implementation alignment* above) it now reports
 `accuracy 0.98667, error 0.01333` -- a two-series shift, and the same numbers the
@@ -134,7 +134,7 @@ The code implements the DiRect sampler which can be called from the command line
 	error 0.01333, strategy NONE,    window 33, PAA 17, alphabet 15, (CV error 0.00)
 	all done in # ~2394 ms
 
-Note, that each evaluated point is logged as `@<error>\t<window>\t<paa>\t<alpha>`,
+Each evaluated point is logged as `@<error>\t<window>\t<paa>\t<alpha>`,
 each iteration prints a `iteration: N, minimal value ... at w, p, a` summary, and the
 per-strategy result lines and `all done in # ... ms` close the run. Several parameter
 combinations tie at the minimal CV error (here `[80, 40, 10]` and `[33, 17, 15]`); the
@@ -151,7 +151,7 @@ The class named `SAXVSMPatternExplorer` prints the most significant class-charac
 
 ![An example of class-characteristic patterns localization in Gun/Point data](https://raw.githubusercontent.com/jMotif/sax-vsm_classic/master/src/resources/assets/gun_point_heat.png)
 
-Note, that the time series ranges highlighted by the approach correspond to distinctive class features: class Gun is characterized the most by articulated movements for prop retrieval and aiming, class Point is characterized by the ‘overshoot’ phenomenon and simple (when compared to Gun) movement before aiming.
+The highlighted time series ranges match distinctive class features: class Gun is characterized the most by articulated movements for prop retrieval and aiming, class Point is characterized by the ‘overshoot’ phenomenon and simpler (when compared to Gun) movement before aiming.
 
 ### 4.1 Unsupervised clustering
 
@@ -219,9 +219,9 @@ Single-linkage hierarchical clustering with a 3-way partition:
 Log lines go through SLF4J; the `clustering results:` line, per-cluster counts, and optional `newick:` line are plain stdout (same pattern as `SAXVSMClassifier`).
 
 ### 5.0 NOTES
-Note, that the default choice for the best parameters validation on TEST data is a parameters set corresponding to the shortest sliding window, which you may want to change - for example to choose the point whose neighborhood contains the highest density of sampled points.
+The default choice for validating the best parameters on TEST data is the parameter set with the shortest sliding window. You may prefer another tie-break — for example, the point whose neighborhood has the highest density of sampled points.
 
-Also note that code implements 5 ways the TF (term frequency value) can be computed. As of 2.0.2 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
+The code implements five ways to compute TF (term frequency). As of 2.0.2 the `log1p` variant (first line) is the canonical/default, uncommented, choice and is the one aligned with saxpy and jmotif-R:
 
 	double tfValue = Math.log(1.0D + Integer.valueOf(wordInBagFrequency).doubleValue());
 	// double tfValue = 1.0D + Math.log(Integer.valueOf(wordInBagFrequency).doubleValue());
@@ -233,10 +233,10 @@ For many datasets, these yield quite different accuracy.
 
 The normalization threshold (used in SAX discretization) is also quite important hidden parameter -- changing it from 0.001 to 0.01 may significantly change the classification accuracy on a number of datasets where the original signal standard deviation is small, such as Beef.
 
-Finally, note, that when cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. In that case, the current implementation considers that the time series was misclassified, but you may want to assign it to one of the classes randomly.
+When cosine similarity is computed within the classification procedure, it may happen that its value is the same for all classes. The current implementation treats that as a misclassification; you may prefer to assign the series to one of the classes at random.
 
 ### 6.0 The classification accuracy table
-The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. Note, that the minimal CV error is the same for a number of parameter combinations, the sampler breaks ties by choosing a parameters set with the smallest sliding window.
+The following table was obtained in automated mode when using DiRect-driven parameters optimization scheme. When the minimal CV error is the same for several parameter combinations, the sampler breaks ties by choosing the set with the smallest sliding window.
 
 **Archival only (pre-2.0.0):** the SAX-VSM column below was produced with the
 earlier SMART TF·IDF scheme (`1 + ln(tf)` / `log10`) and the pre-alignment SAX
