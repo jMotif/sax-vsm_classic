@@ -5,13 +5,27 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [2.0.2] — 2026-07-22
+## [2.1.0] — 2026-07-26
 
-Feature and hardening release on top of **2.0.1**.
+Feature and hardening release on top of **2.0.1**. Minor — not patch — because the
+clustering package was rewritten in place: the 2.0.1 `net.seninp.jmotif.cluster`
+classes are **removed**, not deprecated. (Briefly tagged `2.0.2`; never published
+under that version.)
+
+### Removed (breaking)
+- The 2.0.1 clustering API: `Cluster`, `ClusterUtils`, `FurthestFirstStrategy`, `HC`,
+  `LinkageCriterion`, `RandomStartStrategy`, `StartStrategy`, `TextKMeans`. Both 2.0.1
+  algorithms were defective — `HC` merged non-mutual nearest neighbors, and
+  furthest-first seeding used an unseeded RNG with an inverted distance comparison —
+  so the package was replaced rather than patched.
 
 ### Added
+- **Clustering API rewrite**: `SAXVSMClustering`, `KMeans` (seeded `RANDOM` /
+  `FURTHEST_FIRST` init), `HierarchicalClustering` (mutual-nearest-neighbor chain;
+  `SINGLE`/`COMPLETE`/`AVERAGE` linkage), `Dendrogram`/`ClusterNode`/`ClusterAssignments`;
+  CBF / Gun_Point benchmark documentation and golden tests.
 - **`SAXVSMClusteringCLI`** for command-line unsupervised clustering.
-- **Clustering API rewrite** with CBF / Gun_Point benchmark documentation.
+- `TextProcessor.perSeriesWordBags(...)`.
 
 ### Changed
 - **Build:** added a **PMD + SpotBugs** quality gate (`-Pquality`); fixed a resource leak
