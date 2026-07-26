@@ -81,6 +81,14 @@
     <tag>HEAD</tag>
   </scm>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/jMotif/sax-vsm_classic</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
