@@ -1,6 +1,7 @@
 package net.seninp.jmotif.text;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -33,7 +35,8 @@ public final class TextProcessor {
   @SuppressWarnings("unused")
   private static final String COMMA = ",";
   private static final String CR = "\n";
-  private static final DecimalFormat df = new DecimalFormat("#0.00000");
+  private static final DecimalFormat df = new DecimalFormat("#0.00000",
+      DecimalFormatSymbols.getInstance(Locale.US));
 
   private static final Alphabet na = new NormalAlphabet();
 

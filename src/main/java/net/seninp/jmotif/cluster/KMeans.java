@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 public final class KMeans {
 
   private static final double CONVERGENCE = 1e-9;
+  private static final int MAX_ITERATIONS = 500;
   private static final Logger LOGGER = LoggerFactory.getLogger(KMeans.class);
   private static final TextProcessor TP = new TextProcessor();
 
@@ -32,8 +33,13 @@ public final class KMeans {
     LinkedHashMap<String, Map<String, Double>> centroids = initialCentroids(tfidf, k, init, seed);
     Map<Integer, List<String>> groups = assignGroups(centroids, tfidf);
 
-    while (updateCentroids(centroids, groups, tfidf)) {
+    int iterations = 0;
+    while (updateCentroids(centroids, groups, tfidf) && ++iterations < MAX_ITERATIONS) {
       groups = assignGroups(centroids, tfidf);
+    }
+    if (iterations >= MAX_ITERATIONS) {
+      LOGGER.warn("k-means stopped at the {} iteration cap before converging",
+          Integer.valueOf(MAX_ITERATIONS));
     }
 
     LOGGER.debug("k-means finished with {} clusters", Integer.valueOf(k));
@@ -148,6 +154,11 @@ public final class KMeans {
       Map<Integer, List<String>> groups, Map<String, Map<String, Double>> tfidf) {
     boolean changed = false;
     for (Entry<Integer, List<String>> group : groups.entrySet()) {
+      if (group.getValue().isEmpty()) {
+        // an emptied cluster keeps its previous centroid; it may re-capture points
+        // as the other centroids move
+        continue;
+      }
       Map<String, Double> updated = meanVector(tfidf, group.getValue());
       String key = String.valueOf(group.getKey());
       double similarity = TP.cosineDistance(toHashMap(updated), toHashMap(centroids.get(key)));

@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- **`KMeans`:** an emptied cluster no longer crashes the run (`IllegalArgumentException`
+  from `meanVector`); it keeps its previous centroid and may re-capture points. Reachable
+  via duplicate tf·idf vectors picked as distinct centroids.
+- **`KMeans`:** added a 500-iteration cap — all-zero tf·idf vectors (zero centroid is
+  "maximally dissimilar" to itself under the cosine guard) could previously loop forever.
+- **`TextProcessor.tfidfToTable`:** the zero-fill `DecimalFormat` now pins `Locale.US`;
+  on decimal-comma locales it emitted `0,00000` inside comma-separated output.
+
 ## [2.1.0] — 2026-07-26
 
 Feature and hardening release on top of **2.0.1**. Minor — not patch — because the

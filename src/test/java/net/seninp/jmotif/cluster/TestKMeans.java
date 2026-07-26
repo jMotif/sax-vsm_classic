@@ -36,6 +36,33 @@ public class TestKMeans {
   }
 
   @Test
+  public void survivesDuplicateVectorsProducingAnEmptyCluster() {
+    Map<String, Map<String, Double>> tfidf = new HashMap<String, Map<String, Double>>();
+    tfidf.put("a", vector(0.9, 0.1, 0.0, 0.0));
+    tfidf.put("b", vector(0.9, 0.1, 0.0, 0.0));
+    tfidf.put("c", vector(0.9, 0.1, 0.0, 0.0));
+
+    ClusterAssignments result = KMeans.cluster(tfidf, 2, KMeansInit.RANDOM, 42L);
+    assertEquals(2, result.k());
+    int total = 0;
+    for (int cluster = 0; cluster < result.k(); cluster++) {
+      total += result.members(cluster).size();
+    }
+    assertEquals(3, total);
+  }
+
+  @Test
+  public void terminatesOnAllZeroVectors() {
+    Map<String, Map<String, Double>> tfidf = new HashMap<String, Map<String, Double>>();
+    tfidf.put("a", vector(0.0, 0.0, 0.0, 0.0));
+    tfidf.put("b", vector(0.0, 0.0, 0.0, 0.0));
+    tfidf.put("c", vector(0.0, 0.0, 0.0, 0.0));
+
+    ClusterAssignments result = KMeans.cluster(tfidf, 2, KMeansInit.RANDOM, 42L);
+    assertEquals(2, result.k());
+  }
+
+  @Test
   public void rejectsInvalidK() {
     Map<String, Map<String, Double>> tfidf = toyTfidf();
     try {
