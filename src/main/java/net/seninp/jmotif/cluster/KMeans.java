@@ -33,13 +33,13 @@ public final class KMeans {
     LinkedHashMap<String, Map<String, Double>> centroids = initialCentroids(tfidf, k, init, seed);
     Map<Integer, List<String>> groups = assignGroups(centroids, tfidf);
 
-    int iterations = 0;
-    while (updateCentroids(centroids, groups, tfidf) && ++iterations < MAX_ITERATIONS) {
+    for (int iteration = 0; updateCentroids(centroids, groups, tfidf); iteration++) {
+      if (iteration >= MAX_ITERATIONS) {
+        LOGGER.warn("k-means stopped at the {} iteration cap before converging",
+            Integer.valueOf(MAX_ITERATIONS));
+        break;
+      }
       groups = assignGroups(centroids, tfidf);
-    }
-    if (iterations >= MAX_ITERATIONS) {
-      LOGGER.warn("k-means stopped at the {} iteration cap before converging",
-          Integer.valueOf(MAX_ITERATIONS));
     }
 
     LOGGER.debug("k-means finished with {} clusters", Integer.valueOf(k));
